@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="page-header">
+    <h3 class="fw-bold mb-3">
+        Dashboard Statistik Sosial Kota Tangerang Selatan
+    </h3>
+</div>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="numbers">
+                    <p class="card-category">Total Dataset</p>
+                    <h4 class="card-title">{{ total_dataset }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="numbers">
+                    <p class="card-category">Data Siswa Miskin</p>
+                    <h4 class="card-title">{{ jumlah_siswa }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="numbers">
+                    <p class="card-category">Data Air Minum</p>
+                    <h4 class="card-title">{{ jumlah_air }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-3">
+
+    <div class="col-md-4">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="numbers">
+                    <p class="card-category">Data Kepemilikan Lahan</p>
+                    <h4 class="card-title">{{ jumlah_lahan }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="numbers">
+                    <p class="card-category">Status Kesejahteraan</p>
+                    <h4 class="card-title">{{ jumlah_sejahtera }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="numbers">
+                    <p class="card-category">Kepemilikan Rumah</p>
+                    <h4 class="card-title">{{ jumlah_rumah }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+    <div class="col-md-6">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">
+                    Jumlah Siswa Miskin per Kecamatan
+                </h4>
+            </div>
+
+            <div class="card-body" style="height:400px;">
+                <canvas id="siswaChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Kepemilikan Rumah
+                </h4>
+            </div>
+
+            <div class="card-body" style="height:400px;">
+                <canvas id="rumahChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">
+                    Status Kepemilikan Lahan
+                </h4>
+            </div>
+
+            <div class="card-body">
+                <div style="height:350px;">
+                    <canvas id="lahanChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // =========================
+        // CHART SISWA MISKIN
+        // =========================
+
+        const siswaLabels = {{ labels|safe }};
+        const siswaValues = {{ values|safe }};
+
+        const siswaCtx = document.getElementById("siswaChart");
+
+        new Chart(siswaCtx, {
+            type: "bar",
+            data: {
+                labels: siswaLabels,
+                datasets: [{
+                    label: "Jumlah Siswa Miskin",
+                    data: siswaValues,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+
+        // =========================
+        // CHART KEPEMILIKAN RUMAH
+        // =========================
+
+        const rumahLabels = {{ rumah_labels|safe }};
+        const rumahValues = {{ rumah_values|safe }};
+
+        const rumahCtx = document.getElementById("rumahChart");
+
+        new Chart(rumahCtx, {
+            type: "pie",
+            data: {
+                labels: rumahLabels,
+                datasets: [{
+                    data: rumahValues
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // =========================
+        // CHART KEPEMILIKAN LAHAN
+        // =========================
+
+        const lahanLabels = {{ lahan_labels|safe }};
+        const lahanValues = {{ lahan_values|safe }};
+
+        const lahanCtx = document.getElementById("lahanChart");
+
+        new Chart(lahanCtx, {
+            type: "doughnut",
+            data: {
+                labels: lahanLabels,
+                datasets: [{
+                    data: lahanValues
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+    });
+</script>
+{% endblock %}
