@@ -1,0 +1,382 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Data Siswa Miskin</h3>
+
+<div class="row mt-4">
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">
+                    Jumlah Siswa Miskin per Kecamatan
+                </h4>
+            </div>
+
+            <div class="card-body" style="height:400px;">
+                <canvas id="siswaChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">
+                    Jenjang Pendidikan
+                </h4>
+            </div>
+
+            <div class="card-body" style="height:400px;">
+                <canvas id="pendidikanChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0">Data Siswa Miskin</h4>
+
+        <a href="{% url 'download_siswa' %}" class="btn btn-success">
+            <i class="fa fa-download"></i> Download Excel
+        </a>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Kecamatan</th>
+                        <th>SD/SDLB</th>
+                        <th>SMP/SMPLB</th>
+                        <th>SMA/SMK</th>
+                        <th>M Aliyah</th>
+                        <th>M Ibtidaiyah</th>
+                        <th>M Tsanawiyah</th>
+                        <th>Paket A</th>
+                        <th>Paket B</th>
+                        <th>Paket C</th>
+                        <th>Perguruan Tinggi</th>
+                        <th>Lainnya</th>
+                        <th>Grand Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ row.kecamatan }}</td>
+                        <td>{{ row.sd }}</td>
+                        <td>{{ row.smp }}</td>
+                        <td>{{ row.sma }}</td>
+                        <td>{{ row.aliyah }}</td>
+                        <td>{{ row.ibtidaiyah }}</td>
+                        <td>{{ row.tsanawiyah }}</td>
+                        <td>{{ row.paket_a }}</td>
+                        <td>{{ row.paket_b }}</td>
+                        <td>{{ row.paket_c }}</td>
+                        <td>{{ row.pt }}</td>
+                        <td>{{ row.lainnya }}</td>
+                        <td>{{ row.total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ==========================
+    // DATA DARI DJANGO
+    // ==========================
+
+    const labels = {{ labels|safe }};
+    const total = {{ total|safe }};
+
+    const sd = {{ sd|safe }};
+    const smp = {{ smp|safe }};
+    const sma = {{ sma|safe }};
+
+    const aliyah = {{ aliyah|safe }};
+    const ibtidaiyah = {{ ibtidaiyah|safe }};
+    const tsanawiyah = {{ tsanawiyah|safe }};
+
+    const paket_a = {{ paket_a|safe }};
+    const paket_b = {{ paket_b|safe }};
+    const paket_c = {{ paket_c|safe }};
+
+    const pt = {{ pt|safe }};
+    const lainnya = {{ lainnya|safe }};
+
+
+
+    // ==========================================
+    // CHART 1
+    // ==========================================
+
+    const siswaCanvas = document.getElementById("siswaChart");
+
+    if (siswaCanvas){
+
+        new Chart(siswaCanvas,{
+
+            type:"bar",
+
+            data:{
+
+                labels:labels,
+
+                datasets:[{
+
+                    label:"Jumlah Siswa Miskin",
+
+                    data:total,
+
+                    borderWidth:1,
+
+                    backgroundColor:"#1572E8"
+
+                }]
+
+            },
+
+            options:{
+
+                responsive:true,
+
+                maintainAspectRatio:false,
+
+                plugins:{
+
+                    legend:{
+                        display:true
+                    }
+
+                },
+
+                scales:{
+
+                    x:{
+
+                        ticks:{
+                            autoSkip:false,
+                            maxRotation:45,
+                            minRotation:45
+                        }
+
+                    },
+
+                    y:{
+                        beginAtZero:true
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+
+
+    // ==========================================
+    // CHART 2
+    // ==========================================
+
+    const pendidikanCanvas = document.getElementById("pendidikanChart");
+
+    if (pendidikanCanvas){
+
+        new Chart(pendidikanCanvas,{
+
+            type:"bar",
+
+            data:{
+
+                labels:labels,
+
+                datasets:[
+
+                    {
+
+                        label:"SD",
+
+                        data:sd,
+
+                        backgroundColor:"#1572E8"
+
+                    },
+
+                    {
+
+                        label:"SMP",
+
+                        data:smp,
+
+                        backgroundColor:"#31CE36"
+
+                    },
+
+                    {
+
+                        label:"SMA",
+
+                        data:sma,
+
+                        backgroundColor:"#FFAD46"
+
+                    },
+
+                    {
+
+                        label:"MA",
+
+                        data:aliyah,
+
+                        backgroundColor:"#F25961"
+
+                    },
+
+                    {
+
+                        label:"MI",
+
+                        data:ibtidaiyah,
+
+                        backgroundColor:"#716aca"
+
+                    },
+
+                    {
+
+                        label:"MTs",
+
+                        data:tsanawiyah,
+
+                        backgroundColor:"#6861ce"
+
+                    },
+
+                    {
+
+                        label:"Paket A",
+
+                        data:paket_a,
+
+                        backgroundColor:"#fdaf4b"
+
+                    },
+
+                    {
+
+                        label:"Paket B",
+
+                        data:paket_b,
+
+                        backgroundColor:"#48abf7"
+
+                    },
+
+                    {
+
+                        label:"Paket C",
+
+                        data:paket_c,
+
+                        backgroundColor:"#31ce36"
+
+                    },
+
+                    {
+
+                        label:"Perguruan Tinggi",
+
+                        data:pt,
+
+                        backgroundColor:"#ff646d"
+
+                    },
+
+                    {
+
+                        label:"Lainnya",
+
+                        data:lainnya,
+
+                        backgroundColor:"#6d6875"
+
+                    }
+
+                ]
+
+            },
+
+            options:{
+
+                responsive:true,
+
+                maintainAspectRatio:false,
+
+                plugins:{
+
+                    legend:{
+                        position:"top"
+                    }
+
+                },
+
+                scales:{
+
+                    x:{
+
+                        ticks:{
+                            autoSkip:false,
+                            maxRotation:45,
+                            minRotation:45
+                        }
+
+                    },
+
+                    y:{
+                        beginAtZero:true
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

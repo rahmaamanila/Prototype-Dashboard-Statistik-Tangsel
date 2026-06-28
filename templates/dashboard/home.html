@@ -4,7 +4,7 @@
 
 <div class="page-header">
     <h3 class="fw-bold mb-3">
-        Dashboard Statistik Sosial Kota Tangerang Selatan
+        Dashboard Statistik Sosial Ekonomi Kota Tangerang Selatan
     </h3>
 </div>
 
@@ -132,19 +132,55 @@
 
         </div>
     </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Status Kesejahteraan
+                </h4>
+            </div>
+
+            <div class="card-body">
+                <div style="height:350px;">
+                    <canvas id="sejahteraChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Jenis Air Minum
+                </h4>
+            </div>
+
+            <div class="card-body">
+                <div style="height:450px;">
+                    <canvas id="airChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-        // =========================
-        // CHART SISWA MISKIN
-        // =========================
+    // =====================================
+    // CHART 1 - SISWA MISKIN
+    // =====================================
+
+    const siswaCtx = document.getElementById("siswaChart");
+
+    if (siswaCtx) {
 
         const siswaLabels = {{ labels|safe }};
         const siswaValues = {{ values|safe }};
-
-        const siswaCtx = document.getElementById("siswaChart");
 
         new Chart(siswaCtx, {
             type: "bar",
@@ -158,19 +194,27 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
         });
+    }
 
 
-        // =========================
-        // CHART KEPEMILIKAN RUMAH
-        // =========================
+    // =====================================
+    // CHART 2 - KEPEMILIKAN RUMAH
+    // =====================================
+
+    const rumahCtx = document.getElementById("rumahChart");
+
+    if (rumahCtx) {
 
         const rumahLabels = {{ rumah_labels|safe }};
         const rumahValues = {{ rumah_values|safe }};
-
-        const rumahCtx = document.getElementById("rumahChart");
 
         new Chart(rumahCtx, {
             type: "pie",
@@ -185,15 +229,19 @@
                 maintainAspectRatio: false
             }
         });
+    }
 
-        // =========================
-        // CHART KEPEMILIKAN LAHAN
-        // =========================
+
+    // =====================================
+    // CHART 3 - KEPEMILIKAN LAHAN
+    // =====================================
+
+    const lahanCtx = document.getElementById("lahanChart");
+
+    if (lahanCtx) {
 
         const lahanLabels = {{ lahan_labels|safe }};
         const lahanValues = {{ lahan_values|safe }};
-
-        const lahanCtx = document.getElementById("lahanChart");
 
         new Chart(lahanCtx, {
             type: "doughnut",
@@ -208,7 +256,124 @@
                 maintainAspectRatio: false
             }
         });
+    }
 
-    });
+
+    // =====================================
+    // CHART 4 - STATUS KESEJAHTERAAN
+    // =====================================
+
+    const sejahteraCtx =
+        document.getElementById("sejahteraChart");
+
+    if (sejahteraCtx) {
+
+        const sejahteraLabels = {{ sejahtera_labels|safe }};
+        const lakiValues = {{ laki_values|safe }};
+        const perempuanValues = {{ perempuan_values|safe }};
+
+        new Chart(sejahteraCtx, {
+
+            type: "bar",
+
+            data: {
+                labels: sejahteraLabels,
+
+                datasets: [
+                    {
+                        label: "Laki-laki",
+                        data: lakiValues,
+                        borderWidth: 1
+                    },
+                    {
+                        label: "Perempuan",
+                        data: perempuanValues,
+                        borderWidth: 1
+                    }
+                ]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        position: "top"
+                    }
+                },
+
+                scales: {
+                    x: {
+                        ticks: {
+                            maxRotation: 45,
+                            minRotation: 45
+                        }
+                    },
+
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // =====================================
+    // CHART 5 - JENIS AIR MINUM
+    // =====================================
+
+    const airCtx =
+        document.getElementById("airChart");
+
+    if (airCtx) {
+
+        const airLabels = {{ air_labels|safe }};
+        const airValues = {{ air_values|safe }};
+
+        new Chart(airCtx, {
+
+            type: "bar",
+
+            data: {
+
+                labels: airLabels,
+
+                datasets: [{
+                    label: "Jumlah Pengguna",
+                    data: airValues,
+                    borderWidth: 1
+                }]
+            },
+
+            options: {
+
+                indexAxis: 'y',
+
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    }
+
+                },
+
+                scales: {
+
+                    x: {
+                        beginAtZero: true
+                    }
+
+                }
+
+            }
+
+        });
+    }
+
+});
 </script>
 {% endblock %}

@@ -1,38 +1,32 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 import json
+import pandas as pd
 
 from .api import (
     get_siswa_miskin,
     get_air_minum,
     get_lahan,
     get_kesejahteraan,
-    get_rumah
+    get_rumah,
 )
 
+
+# =====================================================
+# DASHBOARD
+# =====================================================
 
 def home(request):
 
     siswa = get_siswa_miskin()
-    air = get_air_minum()
+    rumah = get_rumah()
     lahan = get_lahan()
     sejahtera = get_kesejahteraan()
-    rumah = get_rumah()
+    air = get_air_minum()
 
-    print("CONTOH SISWA:")
-    print(siswa[0])
-
-    print("CONTOH RUMAH:")
-    print(rumah[0])
-
-    print("CONTOH LAHAN:")
-    print(lahan[0])
-
-    print("KEY LAHAN:")
-    print(lahan[0].keys())
-
-    # =====================================
+    # =====================================================
     # CHART 1 - SISWA MISKIN
-    # =====================================
+    # =====================================================
 
     labels = []
     values = []
@@ -42,105 +36,225 @@ def home(request):
         kecamatan = item.get("KECAMATAN")
         total = item.get("Grand Total")
 
-        # Skip data kosong
-        if kecamatan is None or total is None:
+        if not kecamatan:
             continue
 
-        labels.append(kecamatan)
-        values.append(int(total))
+        labels.append(kecamatan.strip())
+        values.append(int(total or 0))
 
-    # =====================================
+    # =====================================================
     # CHART 2 - KEPEMILIKAN RUMAH
-    # =====================================
-
-    milik_sendiri = 0
-    kontrak_sewa = 0
-    lainnya = 0
-    bebas_sewa = 0
-    dinas = 0
-
-    for item in rumah:
-
-        milik_sendiri += int(item.get("Milik sendiri") or 0)
-        kontrak_sewa += int(item.get("Kontrak/sewa") or 0)
-        lainnya += int(item.get("Lainnya") or 0)
-        bebas_sewa += int(item.get("Bebas sewa") or 0)
-        dinas += int(item.get("Dinas") or 0)
+    # =====================================================
 
     rumah_labels = [
         "Milik Sendiri",
         "Kontrak/Sewa",
         "Lainnya",
         "Bebas Sewa",
-        "Dinas"
+        "Dinas",
     ]
 
     rumah_values = [
-        milik_sendiri,
-        kontrak_sewa,
-        lainnya,
-        bebas_sewa,
-        dinas
+        sum(int(x.get("Milik sendiri") or 0) for x in rumah),
+        sum(int(x.get("Kontrak/sewa") or 0) for x in rumah),
+        sum(int(x.get("Lainnya") or 0) for x in rumah),
+        sum(int(x.get("Bebas sewa") or 0) for x in rumah),
+        sum(int(x.get("Dinas") or 0) for x in rumah),
     ]
 
-    # =====================================
+    # =====================================================
     # CHART 3 - KEPEMILIKAN LAHAN
-    # =====================================
-
-    milik_sendiri_lahan = 0
-    milik_orang_lain = 0
-    tanah_negara = 0
-    lainnya_lahan = 0
-
-    for item in lahan:
-
-        milik_sendiri_lahan += int(item["Milik sendiri"] or 0)
-        milik_orang_lain += int(item["Milik orang lain"] or 0)
-        tanah_negara += int(item["Tanah negara"] or 0)
-        lainnya_lahan += int(item["Lainnya"] or 0)
+    # =====================================================
 
     lahan_labels = [
         "Milik Sendiri",
         "Milik Orang Lain",
         "Tanah Negara",
-        "Lainnya"
+        "Lainnya",
     ]
 
     lahan_values = [
-        milik_sendiri_lahan,
-        milik_orang_lain,
-        tanah_negara,
-        lainnya_lahan
+        sum(int(x.get("Milik sendiri") or 0) for x in lahan),
+        sum(int(x.get("Milik orang lain") or 0) for x in lahan),
+        sum(int(x.get("Tanah negara") or 0) for x in lahan),
+        sum(int(x.get("Lainnya") or 0) for x in lahan),
     ]
 
-    # =====================================
+    # =====================================================
+    # CHART 4 - STATUS KESEJAHTERAAN
+    # =====================================================
+
+    sejahtera_labels = []
+    laki_values = []
+    perempuan_values = []
+
+    for item in sejahtera:
+
+        kecamatan = item.get("KECAMATAN")
+
+        if not kecamatan:
+            continue
+
+        sejahtera_labels.append(kecamatan.strip())
+        laki_values.append(int(item.get("Laki-laki") or 0))
+        perempuan_values.append(int(item.get("Perempuan") or 0))
+
+    # =====================================================
+    # CHART 5 - AIR MINUM
+    # =====================================================
+
+    air_labels = [
+        "Air Isi Ulang",
+        "Air Kemasan",
+        "Air Sungai",
+        "Lainnya",
+        "Leding Eceran",
+        "Leding Meteran",
+        "Air Hujan",
+        "Mata Air Tak Terlindung",
+        "Mata Air Terlindung",
+        "Sumur Bor/Pompa",
+        "Sumur Tak Terlindung",
+        "Sumur Terlindung",
+    ]
+
+    air_keys = [
+        "Air isi ulang",
+        "Air kemasan bermerk",
+        "Air sungai/danau/waduk",
+        "Lainnya",
+        "Leding eceran",
+        "Leding meteran",
+        "Air hujan",
+        "Mata air tak terlindung",
+        "Mata air terlindung",
+        "Sumur bor/pompa",
+        "Sumur tak terlindung",
+        "Sumur terlindung",
+    ]
+
+    air_values = []
+
+    for key in air_keys:
+        air_values.append(
+            sum(int(x.get(key) or 0) for x in air)
+        )
+
+    # =====================================================
     # CONTEXT
-    # =====================================
+    # =====================================================
 
     context = {
 
         "total_dataset": 5,
 
         "jumlah_siswa": len(siswa),
-        "jumlah_air": len(air),
+        "jumlah_rumah": len(rumah),
         "jumlah_lahan": len(lahan),
         "jumlah_sejahtera": len(sejahtera),
-        "jumlah_rumah": len(rumah),
+        "jumlah_air": len(air),
 
-        # Chart Siswa Miskin
         "labels": json.dumps(labels),
         "values": json.dumps(values),
 
-        # Chart Rumah
         "rumah_labels": json.dumps(rumah_labels),
         "rumah_values": json.dumps(rumah_values),
-        # Chart Lahan
+
         "lahan_labels": json.dumps(lahan_labels),
         "lahan_values": json.dumps(lahan_values),
+
+        "sejahtera_labels": json.dumps(sejahtera_labels),
+        "laki_values": json.dumps(laki_values),
+        "perempuan_values": json.dumps(perempuan_values),
+
+        "air_labels": json.dumps(air_labels),
+        "air_values": json.dumps(air_values),
     }
 
-    return render(
-        request,
-        "dashboard/home.html",
-        context
+    return render(request, "dashboard/home.html", context)
+
+
+# =====================================================
+# HALAMAN SISWA MISKIN
+# =====================================================
+
+def siswa(request):
+
+    raw = get_siswa_miskin()
+
+    data = []
+
+    for item in raw:
+
+        if not isinstance(item, dict):
+            continue
+
+        kecamatan = item.get("KECAMATAN")
+
+        if not kecamatan:
+            continue
+
+        data.append({
+
+            "kecamatan": kecamatan.strip(),
+
+            "sd": int(item.get("SD/SDLB") or 0),
+            "smp": int(item.get("SMP/ SMPLB") or 0),
+            "sma": int(item.get("SMA/SMK /SMALB") or 0),
+            "aliyah": int(item.get("M Aliyah") or 0),
+            "ibtidaiyah": int(item.get("M Ibtidaiyah") or 0),
+            "tsanawiyah": int(item.get("M Tsanawiyah") or 0),
+            "paket_a": int(item.get("Paket A") or 0),
+            "paket_b": int(item.get("Paket B") or 0),
+            "paket_c": int(item.get("Paket C") or 0),
+            "pt": int(item.get("Perguruan Tinggi") or 0),
+            "lainnya": int(item.get("LAINNYA") or 0),
+            "total": int(item.get("Grand Total") or 0),
+
+        })
+
+    context = {
+
+        "data": data,
+
+        "labels": json.dumps([x["kecamatan"] for x in data]),
+        "total": json.dumps([x["total"] for x in data]),
+
+        "sd": json.dumps([x["sd"] for x in data]),
+        "smp": json.dumps([x["smp"] for x in data]),
+        "sma": json.dumps([x["sma"] for x in data]),
+        "aliyah": json.dumps([x["aliyah"] for x in data]),
+        "ibtidaiyah": json.dumps([x["ibtidaiyah"] for x in data]),
+        "tsanawiyah": json.dumps([x["tsanawiyah"] for x in data]),
+        "paket_a": json.dumps([x["paket_a"] for x in data]),
+        "paket_b": json.dumps([x["paket_b"] for x in data]),
+        "paket_c": json.dumps([x["paket_c"] for x in data]),
+        "pt": json.dumps([x["pt"] for x in data]),
+        "lainnya": json.dumps([x["lainnya"] for x in data]),
+
+    }
+
+    return render(request, "dashboard/siswa_miskin.html", context)
+
+
+# =====================================================
+# DOWNLOAD EXCEL
+# =====================================================
+
+def download_siswa(request):
+
+    df = pd.DataFrame(get_siswa_miskin())
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
+    response["Content-Disposition"] = 'attachment; filename="siswa_miskin.xlsx"'
+
+    df.to_excel(
+        response,
+        index=False,
+        engine="openpyxl"
+    )
+
+    return response
