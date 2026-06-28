@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Informasi Status Kesejahteraan Rumah Tangga dan Individu Menurut Kecamatan di Kota Tangerang Selatan Tahun 2020</h3>
+
+<div class="card">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h4 class="card-title mb-0">
+            Data Status Kesejahteraan
+        </h4>
+
+        <a href="{% url 'download_kesejahteraan' %}" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            Download Excel
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Kecamatan</th>
+                        <th>Laki-laki</th>
+                        <th>Perempuan</th>
+                        <th>Grand Total</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in data %}
+
+                    <tr>
+
+                        <td>{{ row.kecamatan }}</td>
+                        <td>{{ row.laki }}</td>
+                        <td>{{ row.perempuan }}</td>
+                        <td>{{ row.total }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">
+                    Jumlah Penduduk per Kecamatan
+                </h4>
+            </div>
+
+            <div class="card-body" style="height:400px">
+
+                <canvas id="totalChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-12 mt-4">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">
+                    Perbandingan Laki-laki dan Perempuan
+                </h4>
+            </div>
+
+            <div class="card-body" style="height:450px">
+
+                <canvas id="genderChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const labels = {{ labels|safe }};
+
+const total = {{ total|safe }};
+
+const laki = {{ laki|safe }};
+
+const perempuan = {{ perempuan|safe }};
+
+
+// ========================
+// Chart 1
+// ========================
+
+new Chart(document.getElementById("totalChart"),{
+
+    type:"bar",
+
+    data:{
+
+        labels:labels,
+
+        datasets:[{
+
+            label:"Jumlah Penduduk",
+
+            data:total,
+
+            backgroundColor:"#1572E8"
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        scales:{
+
+            x:{
+
+                ticks:{
+
+                    autoSkip:false,
+
+                    maxRotation:45,
+
+                    minRotation:45
+
+                }
+
+            },
+
+            y:{
+
+                beginAtZero:true
+
+            }
+
+        }
+
+    }
+
+});
+
+
+// ========================
+// Chart 2
+// ========================
+
+new Chart(document.getElementById("genderChart"),{
+
+    type:"bar",
+
+    data:{
+
+        labels:labels,
+
+        datasets:[
+
+            {
+
+                label:"Laki-laki",
+
+                data:laki,
+
+                backgroundColor:"#1572E8"
+
+            },
+
+            {
+
+                label:"Perempuan",
+
+                data:perempuan,
+
+                backgroundColor:"#F25961"
+
+            }
+
+        ]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        plugins:{
+
+            legend:{
+
+                position:"top"
+
+            }
+
+        },
+
+        scales:{
+
+            x:{
+
+                ticks:{
+
+                    autoSkip:false,
+
+                    maxRotation:45,
+
+                    minRotation:45
+
+                }
+
+            },
+
+            y:{
+
+                beginAtZero:true
+
+            }
+
+        }
+
+    }
+
+});
+
+});
+
+</script>
+
+{% endblock %}

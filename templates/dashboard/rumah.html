@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Jumlah Kepemilikan Rumah Keluarga Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun 2020</h3>
+
+<div class="card">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h4 class="card-title mb-0">
+            Data Kepemilikan Rumah
+        </h4>
+
+        <a href="{% url 'download_rumah' %}" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            Download Excel
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Kecamatan</th>
+                        <th>Bebas Sewa</th>
+                        <th>Dinas</th>
+                        <th>Kontrak / Sewa</th>
+                        <th>Lainnya</th>
+                        <th>Milik Sendiri</th>
+                        <th>Grand Total</th>
+                        
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in data %}
+
+                    <tr>
+
+                        <td>{{ row.kecamatan }}</td>
+                        <td>{{ row.bebas_sewa }}</td>
+                        <td>{{ row.dinas }}</td>
+                        <td>{{ row.kontrak }}</td>
+                        <td>{{ row.lainnya }}</td>
+                        <td>{{ row.milik_sendiri }}</td>
+                        <td>{{ row.total }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+<div class="row mt-4">
+
+    <!-- Grafik 1 -->
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h4 class="card-title">
+                    Jumlah Kepemilikan Rumah per Kecamatan
+                </h4>
+
+            </div>
+
+            <div class="card-body" style="height:400px;">
+
+                <canvas id="totalChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Grafik 2 -->
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h4 class="card-title">
+                    Jenis Kepemilikan Rumah
+                </h4>
+
+            </div>
+
+            <div class="card-body" style="height:450px;">
+
+                <canvas id="jenisChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const labels = {{ labels|safe }};
+    const total = {{ total|safe }};
+
+    const milik_sendiri = {{ milik_sendiri|safe }};
+    const kontrak = {{ kontrak|safe }};
+    const bebas_sewa = {{ bebas_sewa|safe }};
+    const dinas = {{ dinas|safe }};
+    const lainnya = {{ lainnya|safe }};
+
+
+
+    // ====================================
+    // CHART 1
+    // ====================================
+
+    new Chart(document.getElementById("totalChart"),{
+
+        type:"bar",
+
+        data:{
+
+            labels:labels,
+
+            datasets:[{
+
+                label:"Jumlah Kepemilikan Rumah",
+
+                data:total,
+
+                backgroundColor:"#1572E8"
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            plugins:{
+
+                legend:{
+                    display:true
+                }
+
+            },
+
+            scales:{
+
+                x:{
+
+                    ticks:{
+
+                        autoSkip:false,
+
+                        maxRotation:45,
+
+                        minRotation:45
+
+                    }
+
+                },
+
+                y:{
+
+                    beginAtZero:true
+
+                }
+
+            }
+
+        }
+
+    });
+
+
+
+    // ====================================
+    // CHART 2
+    // ====================================
+
+    new Chart(document.getElementById("jenisChart"),{
+
+        type:"bar",
+
+        data:{
+
+            labels:labels,
+
+            datasets:[
+
+                {
+
+                    label:"Milik Sendiri",
+
+                    data:milik_sendiri,
+
+                    backgroundColor:"#1572E8"
+
+                },
+
+                {
+
+                    label:"Kontrak/Sewa",
+
+                    data:kontrak,
+
+                    backgroundColor:"#31CE36"
+
+                },
+
+                {
+
+                    label:"Bebas Sewa",
+
+                    data:bebas_sewa,
+
+                    backgroundColor:"#FFAD46"
+
+                },
+
+                {
+
+                    label:"Dinas",
+
+                    data:dinas,
+
+                    backgroundColor:"#F25961"
+
+                },
+
+                {
+
+                    label:"Lainnya",
+
+                    data:lainnya,
+
+                    backgroundColor:"#716aca"
+
+                }
+
+            ]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            plugins:{
+
+                legend:{
+
+                    position:"top"
+
+                }
+
+            },
+
+            scales:{
+
+                x:{
+
+                    ticks:{
+
+                        autoSkip:false,
+
+                        maxRotation:45,
+
+                        minRotation:45
+
+                    }
+
+                },
+
+                y:{
+
+                    beginAtZero:true
+
+                }
+
+            }
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

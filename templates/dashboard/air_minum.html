@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Jenis Air Minum yang Dikonsumsi Rumah Tangga Menurut Kecamatan di Kota Tangerang Selatan Tahun 2020</h3>
+
+<div class="card">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h4 class="card-title mb-0">
+            Data Jenis Air Minum
+        </h4>
+
+        <a href="{% url 'download_air' %}" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            Download Excel
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped table-hover">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Kecamatan</th>
+                        <th>Air Isi Ulang</th>
+                        <th>Air Kemasan Bermerk</th>
+                        <th>Air Sungai/Danau/Waduk</th>
+                        <th>Lainnya</th>
+                        <th>Leding Eceran</th>
+                        <th>Leding Meteran</th>
+                        <th>Air Hujan</th>
+                        <th>Mata Air Tak Terlindung</th>
+                        <th>Mata Air Terlindung</th>
+                        <th>Sumur Bor/Pompa</th>
+                        <th>Sumur Tak Terlindung</th>
+                        <th>Sumur Terlindung</th>
+                        <th>Grand Total</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in data %}
+
+                    <tr>
+
+                        <td>{{ row.kecamatan }}</td>
+                        <td>{{ row.air_isi }}</td>
+                        <td>{{ row.air_kemasan }}</td>
+                        <td>{{ row.air_sungai }}</td>
+                        <td>{{ row.lainnya }}</td>
+                        <td>{{ row.leding_eceran }}</td>
+                        <td>{{ row.leding_meteran }}</td>
+                        <td>{{ row.air_hujan }}</td>
+                        <td>{{ row.mata_air_tak }}</td>
+                        <td>{{ row.mata_air_ter }}</td>
+                        <td>{{ row.sumur_bor }}</td>
+                        <td>{{ row.sumur_tak }}</td>
+                        <td>{{ row.sumur_ter }}</td>
+                        <td>{{ row.total }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+<div class="row mt-4">
+
+    <!-- Grafik 1 -->
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h4 class="card-title">
+                    Jumlah Pengguna Sumber Air Minum per Kecamatan
+                </h4>
+
+            </div>
+
+            <div class="card-body" style="height:420px;">
+
+                <canvas id="airChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Grafik 2 -->
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h4 class="card-title">
+                    Perbandingan Jenis Air Minum per Kecamatan
+                </h4>
+
+            </div>
+
+            <div class="card-body" style="height:550px;">
+
+                <canvas id="jenisAirChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const labels = {{ labels|safe }};
+    const total = {{ total|safe }};
+
+    const air_isi = {{ air_isi|safe }};
+    const air_kemasan = {{ air_kemasan|safe }};
+    const air_sungai = {{ air_sungai|safe }};
+    const lainnya = {{ lainnya|safe }};
+    const leding_eceran = {{ leding_eceran|safe }};
+    const leding_meteran = {{ leding_meteran|safe }};
+    const air_hujan = {{ air_hujan|safe }};
+    const mata_air_tak = {{ mata_air_tak|safe }};
+    const mata_air_ter = {{ mata_air_ter|safe }};
+    const sumur_bor = {{ sumur_bor|safe }};
+    const sumur_tak = {{ sumur_tak|safe }};
+    const sumur_ter = {{ sumur_ter|safe }};
+
+    // =====================================================
+    // CHART 1
+    // =====================================================
+
+    new Chart(document.getElementById("airChart"),{
+
+        type:"bar",
+
+        data:{
+
+            labels:labels,
+
+            datasets:[{
+
+                label:"Grand Total",
+
+                data:total,
+
+                backgroundColor:"#1572E8"
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            plugins:{
+                legend:{
+                    display:true
+                }
+            },
+
+            scales:{
+
+                x:{
+                    ticks:{
+                        autoSkip:false,
+                        maxRotation:45,
+                        minRotation:45
+                    }
+                },
+
+                y:{
+                    beginAtZero:true
+                }
+
+            }
+
+        }
+
+    });
+
+    // =====================================================
+    // CHART 2
+    // =====================================================
+
+    new Chart(document.getElementById("jenisAirChart"),{
+
+        type:"bar",
+
+        data:{
+
+            labels:labels,
+
+            datasets:[
+
+                {label:"Air Isi Ulang",data:air_isi,backgroundColor:"#1572E8"},
+                {label:"Air Kemasan",data:air_kemasan,backgroundColor:"#31CE36"},
+                {label:"Air Sungai",data:air_sungai,backgroundColor:"#FFAD46"},
+                {label:"Lainnya",data:lainnya,backgroundColor:"#F25961"},
+                {label:"Leding Eceran",data:leding_eceran,backgroundColor:"#716ACA"},
+                {label:"Leding Meteran",data:leding_meteran,backgroundColor:"#48ABF7"},
+                {label:"Air Hujan",data:air_hujan,backgroundColor:"#6D6875"},
+                {label:"Mata Air Tak Terlindung",data:mata_air_tak,backgroundColor:"#FF9F40"},
+                {label:"Mata Air Terlindung",data:mata_air_ter,backgroundColor:"#4BC0C0"},
+                {label:"Sumur Bor/Pompa",data:sumur_bor,backgroundColor:"#9966FF"},
+                {label:"Sumur Tak Terlindung",data:sumur_tak,backgroundColor:"#FF6384"},
+                {label:"Sumur Terlindung",data:sumur_ter,backgroundColor:"#36A2EB"}
+
+            ]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            plugins:{
+
+                legend:{
+                    position:"top"
+                }
+
+            },
+
+            scales:{
+
+                x:{
+                    stacked:true,
+                    ticks:{
+                        autoSkip:false,
+                        maxRotation:45,
+                        minRotation:45
+                    }
+                },
+
+                y:{
+                    stacked:true,
+                    beginAtZero:true
+                }
+
+            }
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

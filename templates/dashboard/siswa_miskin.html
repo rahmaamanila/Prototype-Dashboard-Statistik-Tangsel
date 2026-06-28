@@ -2,49 +2,7 @@
 
 {% block content %}
 
-<h3>Data Siswa Miskin</h3>
-
-<div class="row mt-4">
-
-    <div class="col-md-12">
-
-        <div class="card">
-
-            <div class="card-header">
-                <h4 class="card-title">
-                    Jumlah Siswa Miskin per Kecamatan
-                </h4>
-            </div>
-
-            <div class="card-body" style="height:400px;">
-                <canvas id="siswaChart"></canvas>
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="col-md-12">
-
-        <div class="card">
-
-            <div class="card-header">
-                <h4 class="card-title">
-                    Jenjang Pendidikan
-                </h4>
-            </div>
-
-            <div class="card-body" style="height:400px;">
-                <canvas id="pendidikanChart"></canvas>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<br>
+<h3>Jumlah Siswa Miskin Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun 2020</h3>
 
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
@@ -103,6 +61,48 @@
         </div>
 
     </div>
+</div>
+
+<br>
+
+<div class="row mt-4">
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">
+                    Jumlah Siswa Miskin per Kecamatan
+                </h4>
+            </div>
+
+            <div class="card-body" style="height:400px;">
+                <canvas id="siswaChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">
+                    Jenjang Pendidikan
+                </h4>
+            </div>
+
+            <div class="card-body" style="height:400px;">
+                <canvas id="pendidikanChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

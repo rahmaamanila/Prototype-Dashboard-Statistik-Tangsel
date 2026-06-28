@@ -258,3 +258,348 @@ def download_siswa(request):
     )
 
     return response
+
+# =====================================================
+# HALAMAN AIR MINUM
+# =====================================================
+
+def air_minum(request):
+
+    raw = get_air_minum()
+
+    data = []
+
+    for item in raw:
+
+        kecamatan = item.get("KECAMATAN")
+
+        if not kecamatan:
+            continue
+
+        row = {
+            "kecamatan": kecamatan.strip(),
+
+            "air_isi": int(item.get("Air isi ulang") or 0),
+            "air_kemasan": int(item.get("Air kemasan bermerk") or 0),
+            "air_sungai": int(item.get("Air sungai/danau/waduk") or 0),
+            "lainnya": int(item.get("Lainnya") or 0),
+            "leding_eceran": int(item.get("Leding eceran") or 0),
+            "leding_meteran": int(item.get("Leding meteran") or 0),
+            "air_hujan": int(item.get("Air hujan") or 0),
+            "mata_air_tak": int(item.get("Mata air tak terlindung") or 0),
+            "mata_air_ter": int(item.get("Mata air terlindung") or 0),
+            "sumur_bor": int(item.get("Sumur bor/pompa") or 0),
+            "sumur_tak": int(item.get("Sumur tak terlindung") or 0),
+            "sumur_ter": int(item.get("Sumur terlindung") or 0),
+
+            "total": int(item.get("Grand Total") or 0),
+        }
+
+        data.append(row)
+
+    context = {
+
+        "data": data,
+
+        "labels": json.dumps([x["kecamatan"] for x in data]),
+        "total": json.dumps([x["total"] for x in data]),
+
+        "air_isi": json.dumps([x["air_isi"] for x in data]),
+        "air_kemasan": json.dumps([x["air_kemasan"] for x in data]),
+        "air_sungai": json.dumps([x["air_sungai"] for x in data]),
+        "lainnya": json.dumps([x["lainnya"] for x in data]),
+        "leding_eceran": json.dumps([x["leding_eceran"] for x in data]),
+        "leding_meteran": json.dumps([x["leding_meteran"] for x in data]),
+        "air_hujan": json.dumps([x["air_hujan"] for x in data]),
+        "mata_air_tak": json.dumps([x["mata_air_tak"] for x in data]),
+        "mata_air_ter": json.dumps([x["mata_air_ter"] for x in data]),
+        "sumur_bor": json.dumps([x["sumur_bor"] for x in data]),
+        "sumur_tak": json.dumps([x["sumur_tak"] for x in data]),
+        "sumur_ter": json.dumps([x["sumur_ter"] for x in data]),
+
+    }
+
+    return render(
+        request,
+        "dashboard/air_minum.html",
+        context
+    )
+
+def download_air(request):
+
+    df = pd.DataFrame(get_air_minum())
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+    response["Content-Disposition"] = (
+        'attachment; filename="air_minum.xlsx"'
+    )
+
+    df.to_excel(
+        response,
+        index=False,
+        engine="openpyxl"
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN KEPEMILIKAN LAHAN
+# =====================================================
+
+def lahan(request):
+
+    raw = get_lahan()
+
+    data = []
+
+    for item in raw:
+
+        if not isinstance(item, dict):
+            continue
+
+        kecamatan = item.get("KECAMATAN")
+
+        if not kecamatan:
+            continue
+
+        data.append({
+
+            "kecamatan": kecamatan.strip(),
+
+            "milik_sendiri": int(item.get("Milik sendiri") or 0),
+            "milik_orang_lain": int(item.get("Milik orang lain") or 0),
+            "tanah_negara": int(item.get("Tanah negara") or 0),
+            "lainnya": int(item.get("Lainnya") or 0),
+
+            "total": int(item.get("Grand Total") or 0),
+
+        })
+
+    context = {
+
+        "data": data,
+
+        "labels": json.dumps([x["kecamatan"] for x in data]),
+        "total": json.dumps([x["total"] for x in data]),
+
+        "milik_sendiri": json.dumps(
+            [x["milik_sendiri"] for x in data]
+        ),
+
+        "milik_orang_lain": json.dumps(
+            [x["milik_orang_lain"] for x in data]
+        ),
+
+        "tanah_negara": json.dumps(
+            [x["tanah_negara"] for x in data]
+        ),
+
+        "lainnya": json.dumps(
+            [x["lainnya"] for x in data]
+        ),
+
+    }
+
+    return render(
+        request,
+        "dashboard/lahan.html",
+        context
+    )
+
+
+# =====================================================
+# DOWNLOAD EXCEL LAHAN
+# =====================================================
+
+def download_lahan(request):
+
+    df = pd.DataFrame(get_lahan())
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+    response["Content-Disposition"] = (
+        'attachment; filename="kepemilikan_lahan.xlsx"'
+    )
+
+    df.to_excel(
+        response,
+        index=False,
+        engine="openpyxl"
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN STATUS KESEJAHTERAAN
+# =====================================================
+
+def kesejahteraan(request):
+
+    raw = get_kesejahteraan()
+
+    data = []
+
+    for item in raw:
+
+        if not isinstance(item, dict):
+            continue
+
+        kecamatan = item.get("KECAMATAN")
+
+        if not kecamatan:
+            continue
+
+        data.append({
+
+            "kecamatan": kecamatan.strip(),
+
+            "laki": int(item.get("Laki-laki") or 0),
+
+            "perempuan": int(item.get("Perempuan") or 0),
+
+            "total": int(item.get("Grand Total") or 0),
+
+        })
+
+    context = {
+
+        "data": data,
+
+        "labels": json.dumps([x["kecamatan"] for x in data]),
+
+        "total": json.dumps([x["total"] for x in data]),
+
+        "laki": json.dumps([x["laki"] for x in data]),
+
+        "perempuan": json.dumps([x["perempuan"] for x in data]),
+
+    }
+
+    return render(
+        request,
+        "dashboard/kesejahteraan.html",
+        context
+    )
+
+# =====================================================
+# DOWNLOAD STATUS KESEJAHTERAAN
+# =====================================================
+
+def download_kesejahteraan(request):
+
+    df = pd.DataFrame(get_kesejahteraan())
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+    response["Content-Disposition"] = (
+        'attachment; filename="status_kesejahteraan.xlsx"'
+    )
+
+    df.to_excel(
+        response,
+        index=False,
+        engine="openpyxl"
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN KEPEMILIKAN RUMAH
+# =====================================================
+
+def rumah(request):
+
+    raw = get_rumah()
+
+    data = []
+
+    for item in raw:
+
+        if not isinstance(item, dict):
+            continue
+
+        kecamatan = item.get("KECAMATAN")
+
+        if not kecamatan:
+            continue
+
+        data.append({
+
+            "kecamatan": kecamatan.strip(),
+
+            "milik_sendiri": int(item.get("Milik sendiri") or 0),
+            "kontrak": int(item.get("Kontrak/sewa") or 0),
+            "bebas_sewa": int(item.get("Bebas sewa") or 0),
+            "dinas": int(item.get("Dinas") or 0),
+            "lainnya": int(item.get("Lainnya") or 0),
+
+            "total": int(item.get("Grand Total") or 0),
+
+        })
+
+    context = {
+
+        "data": data,
+
+        "labels": json.dumps([x["kecamatan"] for x in data]),
+
+        "total": json.dumps([x["total"] for x in data]),
+
+        "milik_sendiri": json.dumps(
+            [x["milik_sendiri"] for x in data]
+        ),
+
+        "kontrak": json.dumps(
+            [x["kontrak"] for x in data]
+        ),
+
+        "bebas_sewa": json.dumps(
+            [x["bebas_sewa"] for x in data]
+        ),
+
+        "dinas": json.dumps(
+            [x["dinas"] for x in data]
+        ),
+
+        "lainnya": json.dumps(
+            [x["lainnya"] for x in data]
+        ),
+
+    }
+
+    return render(
+        request,
+        "dashboard/rumah.html",
+        context
+    )
+
+# =====================================================
+# DOWNLOAD KEPEMILIKAN RUMAH
+# =====================================================
+
+def download_rumah(request):
+
+    df = pd.DataFrame(get_rumah())
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+    response["Content-Disposition"] = (
+        'attachment; filename="kepemilikan_rumah.xlsx"'
+    )
+
+    df.to_excel(
+        response,
+        index=False,
+        engine="openpyxl"
+    )
+
+    return response
