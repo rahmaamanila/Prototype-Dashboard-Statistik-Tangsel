@@ -1,0 +1,295 @@
+{% extends 'base.html' %} {% block content %}
+
+<h3 class="d-flex justify-content-center">Jumlah UMKM Menurut Kecamatan di Kota Tangerang Selatan</h3>
+
+<div class="row justify-content-center">
+  <!-- Jumlah Data -->
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-info bubble-shadow-small">
+              <i class="fas fa-store"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Jumlah Data</p>
+
+              <h4 class="card-title">{{ jumlah_data }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tahun -->
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-success bubble-shadow-small">
+              <i class="fas fa-calendar"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Tahun Data</p>
+
+              <h4 class="card-title">{{ tahun }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Jumlah Kecamatan -->
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-primary bubble-shadow-small">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Total Kecamatan</p>
+
+              <h4 class="card-title">{{ jumlah_kecamatan }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h4 class="card-title mb-0">Data UMKM</h4>
+
+    <a href="{% url 'download_umkm' %}" class="btn btn-label-success btn-round btn-sm">
+      <span class="btn-label">
+        <i class="fa fa-download"></i>
+      </span>
+
+      Excel
+    </a>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>No</th>
+
+            <th>Kecamatan</th>
+
+            <th>Jumlah UMKM</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for row in data %}
+
+          <tr>
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ row.kecamatan }}</td>
+
+            <td>{{ row.jumlah_umkm }}</td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<div class="row mt-4">
+  <!-- Grafik 1 -->
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Jumlah UMKM per Kecamatan</h4>
+      </div>
+
+      <div class="card-body" style="height: 420px">
+        <canvas id="umkmChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafik 2 -->
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Persentase Sebaran UMKM per Kecamatan</h4>
+      </div>
+
+      <div class="card-body" style="height: 500px">
+        <canvas id="pieUMKMChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", function(){
+
+      const labels = {{ labels|safe }};
+
+      const jumlah_umkm = {{ jumlah_umkm|safe }};
+
+      // =====================================================
+      // CHART 1
+      // =====================================================
+
+      new Chart(document.getElementById("umkmChart"),{
+
+          type:"bar",
+
+          data:{
+
+              labels:labels,
+
+              datasets:[{
+
+                  label:"Jumlah UMKM",
+
+                  data:jumlah_umkm,
+
+                  backgroundColor:"#1572E8"
+
+              }]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false,
+
+              plugins:{
+
+                  legend:{
+
+                      display:true
+
+                  }
+
+              },
+
+              scales:{
+
+                  x:{
+
+                      ticks:{
+
+                          autoSkip:false,
+
+                          maxRotation:45,
+
+                          minRotation:45
+
+                      }
+
+                  },
+
+                  y:{
+
+                      beginAtZero:true
+
+                  }
+
+              }
+
+          }
+
+      });
+
+      // =====================================================
+      // CHART 2
+      // =====================================================
+
+      new Chart(document.getElementById("pieUMKMChart"),{
+
+          type:"pie",
+
+          data:{
+
+              labels:labels,
+
+              datasets:[{
+
+                  data:jumlah_umkm,
+
+                  backgroundColor:[
+
+                      "#1572E8",
+
+                      "#31CE36",
+
+                      "#FFAD46",
+
+                      "#F25961",
+
+                      "#716ACA",
+
+                      "#48ABF7",
+
+                      "#FF9F40"
+
+                  ],
+
+                  borderWidth:1
+
+              }]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false,
+
+              plugins:{
+
+                  legend:{
+
+                      position:"right"
+
+                  }
+
+              }
+
+          }
+
+      });
+  })
+</script>
+
+{% endblock %}

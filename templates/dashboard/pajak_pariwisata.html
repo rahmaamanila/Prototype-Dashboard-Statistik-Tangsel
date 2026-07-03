@@ -1,0 +1,343 @@
+{% extends 'base.html' %} {% block content %}
+
+<h3 class="d-flex justify-content-center">Realisasi Pajak Pariwisata Kota Tangerang Selatan Tahun 2018-2021</h3>
+
+<div class="row justify-content-center">
+  <!-- Jumlah Data -->
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-info bubble-shadow-small">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Jumlah Data</p>
+
+              <h4 class="card-title">{{ jumlah_data }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tahun -->
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-success bubble-shadow-small">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Periode</p>
+
+              <h4 class="card-title">{{ tahun }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Jumlah Tahun -->
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-primary bubble-shadow-small">
+              <i class="fas fa-chart-line"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Jumlah Tahun</p>
+
+              <h4 class="card-title">{{ jumlah_tahun }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h4 class="card-title mb-0">Data Pajak Pariwisata</h4>
+
+    <a href="{% url 'download_pajak_pariwisata' %}" class="btn btn-label-success btn-round btn-sm">
+      <span class="btn-label">
+        <i class="fa fa-download"></i>
+      </span>
+
+      Excel
+    </a>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>No</th>
+
+            <th>Tahun</th>
+
+            <th>Jenis Pajak</th>
+
+            <th>Realisasi (Rp)</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for row in data %}
+
+          <tr>
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ row.tahun }}</td>
+
+            <td>{{ row.jenis_pajak }}</td>
+
+            <td>{{ row.realisasi }}</td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<div class="row mt-4">
+  <!-- Grafik 1 -->
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Realisasi Pajak Pariwisata Tahun 2018-2021</h4>
+      </div>
+
+      <div class="card-body" style="height: 450px">
+        <canvas id="pajakChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafik 2 -->
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Tren Realisasi Pajak Pariwisata per Jenis Pajak</h4>
+      </div>
+
+      <div class="card-body" style="height: 500px">
+        <canvas id="trenPajakChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", function(){
+
+      const labels = {{ labels|safe }};
+
+      const realisasi = {{ realisasi|safe }};
+
+      const tahunLabels = {{ tahun_labels|safe }};
+
+      const hotel = {{ hotel|safe }};
+
+      const restoran = {{ restoran|safe }};
+
+      const hiburan = {{ hiburan|safe }};
+
+      // =====================================================
+      // CHART 1
+      // =====================================================
+
+      new Chart(document.getElementById("pajakChart"),{
+
+          type:"bar",
+
+          data:{
+
+              labels:labels,
+
+              datasets:[{
+
+                  label:"Realisasi Pajak (Rp)",
+
+                  data:realisasi,
+
+                  backgroundColor:"#1572E8"
+
+              }]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false,
+
+              plugins:{
+
+                  legend:{
+
+                      display:true
+
+                  }
+
+              },
+
+              scales:{
+
+                  x:{
+
+                      ticks:{
+
+                          autoSkip:false,
+
+                          maxRotation:45,
+
+                          minRotation:45
+
+                      }
+
+                  },
+
+                  y:{
+
+                      beginAtZero:true
+
+                  }
+
+              }
+
+          }
+
+      });
+
+      // =====================================================
+      // CHART 2
+      // =====================================================
+
+      new Chart(document.getElementById("trenPajakChart"),{
+
+          type:"line",
+
+          data:{
+
+              labels:tahunLabels,
+
+              datasets:[
+
+                  {
+
+                      label:"Pajak Hotel",
+
+                      data:hotel,
+
+                      borderColor:"#1572E8",
+
+                      backgroundColor:"#1572E8",
+
+                      fill:false,
+
+                      tension:0.3
+
+                  },
+
+                  {
+
+                      label:"Pajak Restoran",
+
+                      data:restoran,
+
+                      borderColor:"#31CE36",
+
+                      backgroundColor:"#31CE36",
+
+                      fill:false,
+
+                      tension:0.3
+
+                  },
+
+                  {
+
+                      label:"Pajak Hiburan",
+
+                      data:hiburan,
+
+                      borderColor:"#F25961",
+
+                      backgroundColor:"#F25961",
+
+                      fill:false,
+
+                      tension:0.3
+
+                  }
+
+              ]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false,
+
+              plugins:{
+
+                  legend:{
+
+                      position:"top"
+
+                  }
+
+              },
+
+              scales:{
+
+                  y:{
+
+                      beginAtZero:true
+
+                  }
+
+              }
+
+          }
+
+      });
+  });
+</script>
+
+{% endblock %}

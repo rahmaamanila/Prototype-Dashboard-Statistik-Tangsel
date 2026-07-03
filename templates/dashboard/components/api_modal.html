@@ -1,0 +1,79 @@
+<div class="modal fade"
+     id="apiModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5>REST API</h5>
+
+                <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <h6>Endpoint</h6>
+
+                <pre>
+                    GET
+                    {{ request.scheme }}://{{ request.get_host }}/api/siswa-miskin/
+                </pre>
+
+                <hr>
+
+                <h6>Response</h6>
+
+                <pre>
+                    {
+                    "success": true,
+                    "status": 200,
+                    "jumlah_data": 7,
+                    "data":[...]
+                    }
+                </pre>
+
+                <hr>
+
+                <h6>Python</h6>
+
+                <pre>
+                    import requests
+
+                    url="http://127.0.0.1:8000/api/siswa-miskin/"
+
+                    print(requests.get(url).json())
+                </pre>
+
+                <hr>
+
+                <h6>JavaScript</h6>
+
+                <pre>
+                    fetch("/api/siswa-miskin/")
+                    .then(r=>r.json())
+                    .then(console.log)
+                </pre>
+
+                <hr>
+
+                <h6>cURL</h6>
+
+                <pre>
+                    curl http://127.0.0.1:8000/api/siswa-miskin/
+                </pre>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

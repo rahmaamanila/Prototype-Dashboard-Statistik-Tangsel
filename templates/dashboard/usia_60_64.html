@@ -1,0 +1,279 @@
+{% extends 'base.html' %} {% block content %}
+
+<h3 class="d-flex justify-content-center">Jumlah Penduduk Usia 60–64 Tahun Menurut Kecamatan di Kota Tangerang Selatan</h3>
+
+<div class="row justify-content-center">
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-info bubble-shadow-small">
+              <i class="fas fa-users"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Jumlah Data</p>
+              <h4 class="card-title">{{ jumlah_data }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-success bubble-shadow-small">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Tahun Data</p>
+              <h4 class="card-title">{{ tahun }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-primary bubble-shadow-small">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Total Wilayah</p>
+              <h4 class="card-title">{{ jumlah_kecamatan }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h4 class="card-title mb-0">Data Penduduk Usia 60–64 Tahun</h4>
+
+    <a href="{% url 'download_usia_60_64' %}" class="btn btn-label-success btn-round btn-sm">
+      <span class="btn-label">
+        <i class="fa fa-download"></i>
+      </span>
+
+      Excel
+    </a>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Kode Wilayah</th>
+            <th>Nama Wilayah</th>
+            <th>Usia</th>
+            <th>Jumlah</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for row in data %}
+
+          <tr>
+            <td>{{ row.kode }}</td>
+            <td>{{ row.wilayah }}</td>
+            <td>{{ row.usia }}</td>
+            <td>{{ row.jumlah }}</td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<div class="row mt-4">
+  <!-- =============================== -->
+  <!-- GRAFIK 1 -->
+  <!-- =============================== -->
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Jumlah Penduduk Usia 60–64 Tahun per Kecamatan</h4>
+      </div>
+
+      <div class="card-body" style="height: 420px">
+        <canvas id="usiaChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================== -->
+  <!-- GRAFIK 2 -->
+  <!-- =============================== -->
+
+  <div class="col-md-12 mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Persentase Penduduk Usia 60–64 Tahun per Kecamatan</h4>
+      </div>
+
+      <div class="card-body" style="height: 520px">
+        <canvas id="usiaPie"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", function(){
+
+      const labels = {{ labels|safe }};
+      const jumlah = {{ jumlah|safe }};
+
+      // =====================================================
+      // GRAFIK 1
+      // Jumlah Penduduk per Kecamatan
+      // =====================================================
+
+      new Chart(document.getElementById("usiaChart"),{
+
+          type:"bar",
+
+          data:{
+
+              labels:labels,
+
+              datasets:[{
+
+                  label:"Jumlah Penduduk",
+
+                  data:jumlah,
+
+                  backgroundColor:"#1572E8",
+
+                  borderColor:"#1572E8",
+
+                  borderWidth:1
+
+              }]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false,
+
+              plugins:{
+
+                  legend:{
+                      display:true
+                  }
+
+              },
+
+              scales:{
+
+                  x:{
+                      ticks:{
+                          autoSkip:false,
+                          maxRotation:45,
+                          minRotation:45
+                      }
+                  },
+
+                  y:{
+                      beginAtZero:true
+                  }
+
+              }
+
+          }
+
+      });
+
+      // =====================================================
+      // GRAFIK 2
+      // Persentase Penduduk
+      // =====================================================
+
+      new Chart(document.getElementById("usiaPie"),{
+
+          type:"pie",
+
+          data:{
+
+              labels:labels,
+
+              datasets:[{
+
+                  data:jumlah,
+
+                  backgroundColor:[
+                      "#1572E8",
+                      "#31CE36",
+                      "#FFAD46",
+                      "#F25961",
+                      "#716ACA",
+                      "#48ABF7",
+                      "#FF6384",
+                      "#36A2EB"
+                  ],
+
+                  borderWidth:1
+
+              }]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false,
+
+              plugins:{
+
+                  legend:{
+                      position:"right"
+                  },
+
+                  tooltip:{
+                      enabled:true
+                  }
+
+              }
+
+          }
+
+      });
+
+  });
+</script>
+
+{% endblock %}

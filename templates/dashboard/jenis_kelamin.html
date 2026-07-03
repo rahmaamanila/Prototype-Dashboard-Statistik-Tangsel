@@ -1,0 +1,326 @@
+{% extends 'base.html' %} {% block content %}
+
+<h3 class="d-flex justify-content-center">Jumlah Penduduk Berdasarkan Jenis Kelamin Menurut Kecamatan di Kota Tangerang Selatan</h3>
+
+<div class="row justify-content-center">
+  <!-- Jumlah Data -->
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-info bubble-shadow-small">
+              <i class="fas fa-users"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Jumlah Data</p>
+
+              <h4 class="card-title">{{ jumlah_data }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tahun -->
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-success bubble-shadow-small">
+              <i class="fas fa-calendar"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Tahun Data</p>
+
+              <h4 class="card-title">{{ tahun }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kecamatan -->
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-primary bubble-shadow-small">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Total Kecamatan</p>
+
+              <h4 class="card-title">{{ jumlah_kecamatan }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h4 class="card-title mb-0">Data Penduduk Berdasarkan Jenis Kelamin</h4>
+
+    <a href="{% url 'download_penduduk_jenis_kelamin' %}" class="btn btn-label-success btn-round btn-sm">
+      <span class="btn-label">
+        <i class="fa fa-download"></i>
+      </span>
+
+      Excel
+    </a>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Kecamatan</th>
+
+            <th>Laki-laki</th>
+
+            <th>Perempuan</th>
+
+            <th>Jumlah</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for row in data %}
+
+          <tr>
+            <td>{{ row.kecamatan }}</td>
+
+            <td>{{ row.laki_laki }}</td>
+
+            <td>{{ row.perempuan }}</td>
+
+            <td>{{ row.jumlah }}</td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<div class="row mt-4">
+  <!-- Grafik 1 -->
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Jumlah Penduduk per Kecamatan</h4>
+      </div>
+
+      <div class="card-body" style="height: 420px">
+        <canvas id="jumlahPendudukChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafik 2 -->
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Perbandingan Penduduk Laki-laki dan Perempuan</h4>
+      </div>
+
+      <div class="card-body" style="height: 500px">
+        <canvas id="jenisKelaminChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", function(){
+
+      const labels = {{ labels|safe }};
+
+      const laki_laki = {{ laki_laki|safe }};
+
+      const perempuan = {{ perempuan|safe }};
+
+      const jumlah = {{ jumlah|safe }};
+
+      // =====================================================
+      // CHART 1
+      // Jumlah Penduduk per Kecamatan
+      // =====================================================
+
+      new Chart(document.getElementById("jumlahPendudukChart"),{
+
+          type:"bar",
+
+          data:{
+
+              labels:labels,
+
+              datasets:[{
+
+                  label:"Jumlah Penduduk",
+
+                  data:jumlah,
+
+                  backgroundColor:"#1572E8"
+
+              }]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false,
+
+              plugins:{
+
+                  legend:{
+                      display:true
+                  }
+
+              },
+
+              scales:{
+
+                  x:{
+
+                      ticks:{
+
+                          autoSkip:false,
+
+                          maxRotation:45,
+
+                          minRotation:45
+
+                      }
+
+                  },
+
+                  y:{
+
+                      beginAtZero:true
+
+                  }
+
+              }
+
+          }
+
+      });
+
+      // =====================================================
+      // CHART 2
+      // Perbandingan Laki-laki dan Perempuan
+      // =====================================================
+
+      new Chart(document.getElementById("jenisKelaminChart"),{
+
+          type:"bar",
+
+          data:{
+
+              labels:labels,
+
+              datasets:[
+
+                  {
+
+                      label:"Laki-laki",
+
+                      data:laki_laki,
+
+                      backgroundColor:"#1572E8"
+
+                  },
+
+                  {
+
+                      label:"Perempuan",
+
+                      data:perempuan,
+
+                      backgroundColor:"#F25961"
+
+                  }
+
+              ]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false,
+
+              plugins:{
+
+                  legend:{
+
+                      position:"top"
+
+                  }
+
+              },
+
+              scales:{
+
+                  x:{
+
+                      ticks:{
+
+                          autoSkip:false,
+
+                          maxRotation:45,
+
+                          minRotation:45
+
+                      }
+
+                  },
+
+                  y:{
+
+                      beginAtZero:true
+
+                  }
+
+              }
+
+          }
+
+      });
+
+  });
+</script>
+
+{% endblock %}

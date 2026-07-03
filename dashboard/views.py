@@ -3,14 +3,23 @@ from django.http import HttpResponse
 import json
 import pandas as pd
 
-from .api import (
-    get_siswa_miskin,
-    get_air_minum,
-    get_lahan,
-    get_kesejahteraan,
-    get_rumah,
+from .models import (
+    Dataset,
+    SiswaMiskin,
+    AirMinum,
+    Lahan,
+    Rumah,
+    Kesejahteraan,
+    PendudukUsia6064,
+    PPKSDTKS,
+    PendudukJenisKelamin,
+    PenyandangDisabilitas,
+    KelompokPerikanan,
+    UMKM,
+    Koperasi,
+    PajakPariwisata,
+    RasioBelanja,
 )
-
 
 # =====================================================
 # DASHBOARD
@@ -18,32 +27,23 @@ from .api import (
 
 def home(request):
 
-    siswa = get_siswa_miskin()
-    rumah = get_rumah()
-    lahan = get_lahan()
-    sejahtera = get_kesejahteraan()
-    air = get_air_minum()
+    siswa = SiswaMiskin.objects.all()
+    rumah = Rumah.objects.all()
+    lahan = Lahan.objects.all()
+    sejahtera = Kesejahteraan.objects.all()
+    air = AirMinum.objects.all()
+
+    total_dataset = Dataset.objects.filter(status=True).count()
 
     # =====================================================
-    # CHART 1 - SISWA MISKIN
+    # CHART SISWA MISKIN
     # =====================================================
 
-    labels = []
-    values = []
-
-    for item in siswa:
-
-        kecamatan = item.get("KECAMATAN")
-        total = item.get("Grand Total")
-
-        if not kecamatan:
-            continue
-
-        labels.append(kecamatan.strip())
-        values.append(int(total or 0))
+    labels = [x.kecamatan for x in siswa]
+    values = [x.grand_total for x in siswa]
 
     # =====================================================
-    # CHART 2 - KEPEMILIKAN RUMAH
+    # CHART KEPEMILIKAN RUMAH
     # =====================================================
 
     rumah_labels = [
@@ -55,15 +55,15 @@ def home(request):
     ]
 
     rumah_values = [
-        sum(int(x.get("Milik sendiri") or 0) for x in rumah),
-        sum(int(x.get("Kontrak/sewa") or 0) for x in rumah),
-        sum(int(x.get("Lainnya") or 0) for x in rumah),
-        sum(int(x.get("Bebas sewa") or 0) for x in rumah),
-        sum(int(x.get("Dinas") or 0) for x in rumah),
+        sum(x.milik_sendiri for x in rumah),
+        sum(x.kontrak_sewa for x in rumah),
+        sum(x.lainnya for x in rumah),
+        sum(x.bebas_sewa for x in rumah),
+        sum(x.dinas for x in rumah),
     ]
 
     # =====================================================
-    # CHART 3 - KEPEMILIKAN LAHAN
+    # CHART KEPEMILIKAN LAHAN
     # =====================================================
 
     lahan_labels = [
@@ -74,33 +74,22 @@ def home(request):
     ]
 
     lahan_values = [
-        sum(int(x.get("Milik sendiri") or 0) for x in lahan),
-        sum(int(x.get("Milik orang lain") or 0) for x in lahan),
-        sum(int(x.get("Tanah negara") or 0) for x in lahan),
-        sum(int(x.get("Lainnya") or 0) for x in lahan),
+        sum(x.milik_sendiri for x in lahan),
+        sum(x.milik_orang_lain for x in lahan),
+        sum(x.tanah_negara for x in lahan),
+        sum(x.lainnya for x in lahan),
     ]
 
     # =====================================================
-    # CHART 4 - STATUS KESEJAHTERAAN
+    # CHART STATUS KESEJAHTERAAN
     # =====================================================
 
-    sejahtera_labels = []
-    laki_values = []
-    perempuan_values = []
-
-    for item in sejahtera:
-
-        kecamatan = item.get("KECAMATAN")
-
-        if not kecamatan:
-            continue
-
-        sejahtera_labels.append(kecamatan.strip())
-        laki_values.append(int(item.get("Laki-laki") or 0))
-        perempuan_values.append(int(item.get("Perempuan") or 0))
+    sejahtera_labels = [x.kecamatan for x in sejahtera]
+    laki_values = [x.laki_laki for x in sejahtera]
+    perempuan_values = [x.perempuan for x in sejahtera]
 
     # =====================================================
-    # CHART 5 - AIR MINUM
+    # CHART AIR MINUM
     # =====================================================
 
     air_labels = [
@@ -118,41 +107,40 @@ def home(request):
         "Sumur Terlindung",
     ]
 
-    air_keys = [
-        "Air isi ulang",
-        "Air kemasan bermerk",
-        "Air sungai/danau/waduk",
-        "Lainnya",
-        "Leding eceran",
-        "Leding meteran",
-        "Air hujan",
-        "Mata air tak terlindung",
-        "Mata air terlindung",
-        "Sumur bor/pompa",
-        "Sumur tak terlindung",
-        "Sumur terlindung",
+    air_values = [
+        sum(x.air_isi_ulang for x in air),
+        sum(x.air_kemasan_bermerk for x in air),
+        sum(x.air_sungai_danau_waduk for x in air),
+        sum(x.lainnya for x in air),
+        sum(x.leding_eceran for x in air),
+        sum(x.leding_meteran for x in air),
+        sum(x.air_hujan for x in air),
+        sum(x.mata_air_tak_terlindung for x in air),
+        sum(x.mata_air_terlindung for x in air),
+        sum(x.sumur_bor_pompa for x in air),
+        sum(x.sumur_tak_terlindung for x in air),
+        sum(x.sumur_terlindung for x in air),
     ]
-
-    air_values = []
-
-    for key in air_keys:
-        air_values.append(
-            sum(int(x.get(key) or 0) for x in air)
-        )
-
-    # =====================================================
-    # CONTEXT
-    # =====================================================
 
     context = {
 
-        "total_dataset": 5,
+        "api_status": "Database",
 
-        "jumlah_siswa": len(siswa),
-        "jumlah_rumah": len(rumah),
-        "jumlah_lahan": len(lahan),
-        "jumlah_sejahtera": len(sejahtera),
-        "jumlah_air": len(air),
+        "api_badge": "success",
+
+        "api_icon": "fas fa-database",
+
+        "total_dataset": total_dataset,
+
+        "jumlah_siswa": siswa.count(),
+
+        "jumlah_rumah": rumah.count(),
+
+        "jumlah_lahan": lahan.count(),
+
+        "jumlah_sejahtera": sejahtera.count(),
+
+        "jumlah_air": air.count(),
 
         "labels": json.dumps(labels),
         "values": json.dumps(values),
@@ -175,89 +163,149 @@ def home(request):
 
 
 # =====================================================
+# HELPER EXPORT EXCEL
+# =====================================================
+
+def queryset_to_excel(queryset, fields=None):
+
+    if fields:
+        return pd.DataFrame(
+            list(queryset.values(*fields))
+        )
+
+    return pd.DataFrame(
+        list(queryset.values())
+    )
+
+# =====================================================
 # HALAMAN SISWA MISKIN
 # =====================================================
 
 def siswa(request):
 
-    raw = get_siswa_miskin()
+    queryset = SiswaMiskin.objects.all()
 
     data = []
 
-    for item in raw:
-
-        if not isinstance(item, dict):
-            continue
-
-        kecamatan = item.get("KECAMATAN")
-
-        if not kecamatan:
-            continue
+    for item in queryset:
 
         data.append({
-
-            "kecamatan": kecamatan.strip(),
-
-            "sd": int(item.get("SD/SDLB") or 0),
-            "smp": int(item.get("SMP/ SMPLB") or 0),
-            "sma": int(item.get("SMA/SMK /SMALB") or 0),
-            "aliyah": int(item.get("M Aliyah") or 0),
-            "ibtidaiyah": int(item.get("M Ibtidaiyah") or 0),
-            "tsanawiyah": int(item.get("M Tsanawiyah") or 0),
-            "paket_a": int(item.get("Paket A") or 0),
-            "paket_b": int(item.get("Paket B") or 0),
-            "paket_c": int(item.get("Paket C") or 0),
-            "pt": int(item.get("Perguruan Tinggi") or 0),
-            "lainnya": int(item.get("LAINNYA") or 0),
-            "total": int(item.get("Grand Total") or 0),
-
+            "kecamatan": item.kecamatan,
+            "sd": item.sd_sdlb,
+            "smp": item.smp_smplb,
+            "sma": item.sma_smk_smalb,
+            "aliyah": item.m_aliyah,
+            "ibtidaiyah": item.m_ibtidaiyah,
+            "tsanawiyah": item.m_tsanawiyah,
+            "paket_a": item.paket_a,
+            "paket_b": item.paket_b,
+            "paket_c": item.paket_c,
+            "pt": item.perguruan_tinggi,
+            "lainnya": item.lainnya,
+            "total": item.grand_total,
         })
 
     context = {
 
+        "jumlah_siswa": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2020",
+
         "data": data,
 
         "labels": json.dumps([x["kecamatan"] for x in data]),
+
         "total": json.dumps([x["total"] for x in data]),
 
         "sd": json.dumps([x["sd"] for x in data]),
-        "smp": json.dumps([x["smp"] for x in data]),
-        "sma": json.dumps([x["sma"] for x in data]),
-        "aliyah": json.dumps([x["aliyah"] for x in data]),
-        "ibtidaiyah": json.dumps([x["ibtidaiyah"] for x in data]),
-        "tsanawiyah": json.dumps([x["tsanawiyah"] for x in data]),
-        "paket_a": json.dumps([x["paket_a"] for x in data]),
-        "paket_b": json.dumps([x["paket_b"] for x in data]),
-        "paket_c": json.dumps([x["paket_c"] for x in data]),
-        "pt": json.dumps([x["pt"] for x in data]),
-        "lainnya": json.dumps([x["lainnya"] for x in data]),
 
+        "smp": json.dumps([x["smp"] for x in data]),
+
+        "sma": json.dumps([x["sma"] for x in data]),
+
+        "aliyah": json.dumps([x["aliyah"] for x in data]),
+
+        "ibtidaiyah": json.dumps([x["ibtidaiyah"] for x in data]),
+
+        "tsanawiyah": json.dumps([x["tsanawiyah"] for x in data]),
+
+        "paket_a": json.dumps([x["paket_a"] for x in data]),
+
+        "paket_b": json.dumps([x["paket_b"] for x in data]),
+
+        "paket_c": json.dumps([x["paket_c"] for x in data]),
+
+        "pt": json.dumps([x["pt"] for x in data]),
+
+        "lainnya": json.dumps([x["lainnya"] for x in data]),
     }
 
-    return render(request, "dashboard/siswa_miskin.html", context)
+    return render(
+        request,
+        "dashboard/siswa_miskin.html",
+        context,
+    )
 
 
 # =====================================================
-# DOWNLOAD EXCEL
+# DOWNLOAD SISWA MISKIN
 # =====================================================
 
 def download_siswa(request):
 
-    df = pd.DataFrame(get_siswa_miskin())
+    df = queryset_to_excel(
+        SiswaMiskin.objects.all(),
+        fields=[
+            "kecamatan",
+            "m_aliyah",
+            "m_ibtidaiyah",
+            "m_tsanawiyah",
+            "paket_a",
+            "paket_b",
+            "paket_c",
+            "perguruan_tinggi",
+            "sd_sdlb",
+            "sma_smk_smalb",
+            "smp_smplb",
+            "lainnya",
+            "grand_total",
+        ]
+    )
+
+    df.columns = [
+        "KECAMATAN",
+        "M Aliyah",
+        "M Ibtidaiyah",
+        "M Tsanawiyah",
+        "Paket A",
+        "Paket B",
+        "Paket C",
+        "Perguruan Tinggi",
+        "SD/SDLB",
+        "SMA/SMK /SMALB",
+        "SMP/ SMPLB",
+        "LAINNYA",
+        "Grand Total",
+    ]
 
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
-    response["Content-Disposition"] = 'attachment; filename="siswa_miskin.xlsx"'
+    response["Content-Disposition"] = (
+        'attachment; filename="siswa_miskin.xlsx"'
+    )
 
     df.to_excel(
         response,
         index=False,
-        engine="openpyxl"
+        engine="openpyxl",
     )
 
     return response
+
 
 # =====================================================
 # HALAMAN AIR MINUM
@@ -265,69 +313,114 @@ def download_siswa(request):
 
 def air_minum(request):
 
-    raw = get_air_minum()
+    queryset = AirMinum.objects.all()
 
     data = []
 
-    for item in raw:
+    for item in queryset:
 
-        kecamatan = item.get("KECAMATAN")
+        data.append({
 
-        if not kecamatan:
-            continue
+            "kecamatan": item.kecamatan,
 
-        row = {
-            "kecamatan": kecamatan.strip(),
+            "air_isi": item.air_isi_ulang,
 
-            "air_isi": int(item.get("Air isi ulang") or 0),
-            "air_kemasan": int(item.get("Air kemasan bermerk") or 0),
-            "air_sungai": int(item.get("Air sungai/danau/waduk") or 0),
-            "lainnya": int(item.get("Lainnya") or 0),
-            "leding_eceran": int(item.get("Leding eceran") or 0),
-            "leding_meteran": int(item.get("Leding meteran") or 0),
-            "air_hujan": int(item.get("Air hujan") or 0),
-            "mata_air_tak": int(item.get("Mata air tak terlindung") or 0),
-            "mata_air_ter": int(item.get("Mata air terlindung") or 0),
-            "sumur_bor": int(item.get("Sumur bor/pompa") or 0),
-            "sumur_tak": int(item.get("Sumur tak terlindung") or 0),
-            "sumur_ter": int(item.get("Sumur terlindung") or 0),
+            "air_kemasan": item.air_kemasan_bermerk,
 
-            "total": int(item.get("Grand Total") or 0),
-        }
+            "air_sungai": item.air_sungai_danau_waduk,
 
-        data.append(row)
+            "lainnya": item.lainnya,
+
+            "leding_eceran": item.leding_eceran,
+
+            "leding_meteran": item.leding_meteran,
+
+            "air_hujan": item.air_hujan,
+
+            "mata_air_tak": item.mata_air_tak_terlindung,
+
+            "mata_air_ter": item.mata_air_terlindung,
+
+            "sumur_bor": item.sumur_bor_pompa,
+
+            "sumur_tak": item.sumur_tak_terlindung,
+
+            "sumur_ter": item.sumur_terlindung,
+
+            "total": item.grand_total,
+        })
 
     context = {
+
+        "jumlah_air_minum": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2020",
 
         "data": data,
 
         "labels": json.dumps([x["kecamatan"] for x in data]),
+
         "total": json.dumps([x["total"] for x in data]),
 
         "air_isi": json.dumps([x["air_isi"] for x in data]),
-        "air_kemasan": json.dumps([x["air_kemasan"] for x in data]),
-        "air_sungai": json.dumps([x["air_sungai"] for x in data]),
-        "lainnya": json.dumps([x["lainnya"] for x in data]),
-        "leding_eceran": json.dumps([x["leding_eceran"] for x in data]),
-        "leding_meteran": json.dumps([x["leding_meteran"] for x in data]),
-        "air_hujan": json.dumps([x["air_hujan"] for x in data]),
-        "mata_air_tak": json.dumps([x["mata_air_tak"] for x in data]),
-        "mata_air_ter": json.dumps([x["mata_air_ter"] for x in data]),
-        "sumur_bor": json.dumps([x["sumur_bor"] for x in data]),
-        "sumur_tak": json.dumps([x["sumur_tak"] for x in data]),
-        "sumur_ter": json.dumps([x["sumur_ter"] for x in data]),
 
+        "air_kemasan": json.dumps([x["air_kemasan"] for x in data]),
+
+        "air_sungai": json.dumps([x["air_sungai"] for x in data]),
+
+        "lainnya": json.dumps([x["lainnya"] for x in data]),
+
+        "leding_eceran": json.dumps([x["leding_eceran"] for x in data]),
+
+        "leding_meteran": json.dumps([x["leding_meteran"] for x in data]),
+
+        "air_hujan": json.dumps([x["air_hujan"] for x in data]),
+
+        "mata_air_tak": json.dumps([x["mata_air_tak"] for x in data]),
+
+        "mata_air_ter": json.dumps([x["mata_air_ter"] for x in data]),
+
+        "sumur_bor": json.dumps([x["sumur_bor"] for x in data]),
+
+        "sumur_tak": json.dumps([x["sumur_tak"] for x in data]),
+
+        "sumur_ter": json.dumps([x["sumur_ter"] for x in data]),
     }
 
     return render(
         request,
         "dashboard/air_minum.html",
-        context
+        context,
     )
+
+
+# =====================================================
+# DOWNLOAD AIR MINUM
+# =====================================================
 
 def download_air(request):
 
-    df = pd.DataFrame(get_air_minum())
+    df = queryset_to_excel(
+        AirMinum.objects.all(),
+        fields=[
+            "kecamatan",
+            "air_isi_ulang",
+            "air_kemasan_bermerk",
+            "air_sungai_danau_waduk",
+            "lainnya",
+            "leding_eceran",
+            "leding_meteran",
+            "air_hujan",
+            "mata_air_tak_terlindung",
+            "mata_air_terlindung",
+            "sumur_bor_pompa",
+            "sumur_tak_terlindung",
+            "sumur_terlindung",
+            "grand_total",
+        ]
+    )
 
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -340,7 +433,7 @@ def download_air(request):
     df.to_excel(
         response,
         index=False,
-        engine="openpyxl"
+        engine="openpyxl",
     )
 
     return response
@@ -351,72 +444,68 @@ def download_air(request):
 
 def lahan(request):
 
-    raw = get_lahan()
+    queryset = Lahan.objects.all()
 
     data = []
 
-    for item in raw:
-
-        if not isinstance(item, dict):
-            continue
-
-        kecamatan = item.get("KECAMATAN")
-
-        if not kecamatan:
-            continue
+    for item in queryset:
 
         data.append({
-
-            "kecamatan": kecamatan.strip(),
-
-            "milik_sendiri": int(item.get("Milik sendiri") or 0),
-            "milik_orang_lain": int(item.get("Milik orang lain") or 0),
-            "tanah_negara": int(item.get("Tanah negara") or 0),
-            "lainnya": int(item.get("Lainnya") or 0),
-
-            "total": int(item.get("Grand Total") or 0),
-
+            "kecamatan": item.kecamatan,
+            "milik_sendiri": item.milik_sendiri,
+            "milik_orang_lain": item.milik_orang_lain,
+            "tanah_negara": item.tanah_negara,
+            "lainnya": item.lainnya,
+            "total": item.grand_total,
         })
 
     context = {
 
+        "jumlah_lahan": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2020",
+
         "data": data,
 
         "labels": json.dumps([x["kecamatan"] for x in data]),
+
         "total": json.dumps([x["total"] for x in data]),
 
-        "milik_sendiri": json.dumps(
-            [x["milik_sendiri"] for x in data]
-        ),
+        "milik_sendiri": json.dumps([x["milik_sendiri"] for x in data]),
 
-        "milik_orang_lain": json.dumps(
-            [x["milik_orang_lain"] for x in data]
-        ),
+        "milik_orang_lain": json.dumps([x["milik_orang_lain"] for x in data]),
 
-        "tanah_negara": json.dumps(
-            [x["tanah_negara"] for x in data]
-        ),
+        "tanah_negara": json.dumps([x["tanah_negara"] for x in data]),
 
-        "lainnya": json.dumps(
-            [x["lainnya"] for x in data]
-        ),
-
+        "lainnya": json.dumps([x["lainnya"] for x in data]),
     }
 
     return render(
         request,
         "dashboard/lahan.html",
-        context
+        context,
     )
 
 
 # =====================================================
-# DOWNLOAD EXCEL LAHAN
+# DOWNLOAD LAHAN
 # =====================================================
 
 def download_lahan(request):
 
-    df = pd.DataFrame(get_lahan())
+    df = queryset_to_excel(
+        Lahan.objects.all(),
+        fields=[
+            "kecamatan",
+            "milik_sendiri",
+            "milik_orang_lain",
+            "tanah_negara",
+            "lainnya",
+            "grand_total",
+        ]
+    )
 
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -429,10 +518,11 @@ def download_lahan(request):
     df.to_excel(
         response,
         index=False,
-        engine="openpyxl"
+        engine="openpyxl",
     )
 
     return response
+
 
 # =====================================================
 # HALAMAN STATUS KESEJAHTERAAN
@@ -440,33 +530,30 @@ def download_lahan(request):
 
 def kesejahteraan(request):
 
-    raw = get_kesejahteraan()
+    queryset = Kesejahteraan.objects.all()
 
     data = []
 
-    for item in raw:
-
-        if not isinstance(item, dict):
-            continue
-
-        kecamatan = item.get("KECAMATAN")
-
-        if not kecamatan:
-            continue
+    for item in queryset:
 
         data.append({
 
-            "kecamatan": kecamatan.strip(),
+            "kecamatan": item.kecamatan,
 
-            "laki": int(item.get("Laki-laki") or 0),
+            "laki": item.laki_laki,
 
-            "perempuan": int(item.get("Perempuan") or 0),
+            "perempuan": item.perempuan,
 
-            "total": int(item.get("Grand Total") or 0),
-
+            "total": item.grand_total,
         })
 
     context = {
+
+        "jumlah_kesejahteraan": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2020",
 
         "data": data,
 
@@ -477,14 +564,14 @@ def kesejahteraan(request):
         "laki": json.dumps([x["laki"] for x in data]),
 
         "perempuan": json.dumps([x["perempuan"] for x in data]),
-
     }
 
     return render(
         request,
         "dashboard/kesejahteraan.html",
-        context
+        context,
     )
+
 
 # =====================================================
 # DOWNLOAD STATUS KESEJAHTERAAN
@@ -492,7 +579,15 @@ def kesejahteraan(request):
 
 def download_kesejahteraan(request):
 
-    df = pd.DataFrame(get_kesejahteraan())
+    df = queryset_to_excel(
+        Kesejahteraan.objects.all(),
+        fields=[
+            "kecamatan",
+            "laki_laki",
+            "perempuan",
+            "grand_total",
+        ]
+    )
 
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -505,10 +600,11 @@ def download_kesejahteraan(request):
     df.to_excel(
         response,
         index=False,
-        engine="openpyxl"
+        engine="openpyxl",
     )
 
     return response
+
 
 # =====================================================
 # HALAMAN KEPEMILIKAN RUMAH
@@ -516,35 +612,36 @@ def download_kesejahteraan(request):
 
 def rumah(request):
 
-    raw = get_rumah()
+    queryset = Rumah.objects.all()
 
     data = []
 
-    for item in raw:
-
-        if not isinstance(item, dict):
-            continue
-
-        kecamatan = item.get("KECAMATAN")
-
-        if not kecamatan:
-            continue
+    for item in queryset:
 
         data.append({
 
-            "kecamatan": kecamatan.strip(),
+            "kecamatan": item.kecamatan,
 
-            "milik_sendiri": int(item.get("Milik sendiri") or 0),
-            "kontrak": int(item.get("Kontrak/sewa") or 0),
-            "bebas_sewa": int(item.get("Bebas sewa") or 0),
-            "dinas": int(item.get("Dinas") or 0),
-            "lainnya": int(item.get("Lainnya") or 0),
+            "milik_sendiri": item.milik_sendiri,
 
-            "total": int(item.get("Grand Total") or 0),
+            "kontrak": item.kontrak_sewa,
 
+            "bebas_sewa": item.bebas_sewa,
+
+            "dinas": item.dinas,
+
+            "lainnya": item.lainnya,
+
+            "total": item.grand_total,
         })
 
     context = {
+
+        "jumlah_rumah": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2020",
 
         "data": data,
 
@@ -552,41 +649,42 @@ def rumah(request):
 
         "total": json.dumps([x["total"] for x in data]),
 
-        "milik_sendiri": json.dumps(
-            [x["milik_sendiri"] for x in data]
-        ),
+        "milik_sendiri": json.dumps([x["milik_sendiri"] for x in data]),
 
-        "kontrak": json.dumps(
-            [x["kontrak"] for x in data]
-        ),
+        "kontrak": json.dumps([x["kontrak"] for x in data]),
 
-        "bebas_sewa": json.dumps(
-            [x["bebas_sewa"] for x in data]
-        ),
+        "bebas_sewa": json.dumps([x["bebas_sewa"] for x in data]),
 
-        "dinas": json.dumps(
-            [x["dinas"] for x in data]
-        ),
+        "dinas": json.dumps([x["dinas"] for x in data]),
 
-        "lainnya": json.dumps(
-            [x["lainnya"] for x in data]
-        ),
-
+        "lainnya": json.dumps([x["lainnya"] for x in data]),
     }
 
     return render(
         request,
         "dashboard/rumah.html",
-        context
+        context,
     )
 
+
 # =====================================================
-# DOWNLOAD KEPEMILIKAN RUMAH
+# DOWNLOAD RUMAH
 # =====================================================
 
 def download_rumah(request):
 
-    df = pd.DataFrame(get_rumah())
+    df = queryset_to_excel(
+        Rumah.objects.all(),
+        fields=[
+            "kecamatan",
+            "milik_sendiri",
+            "kontrak_sewa",
+            "bebas_sewa",
+            "dinas",
+            "lainnya",
+            "grand_total",
+        ]
+    )
 
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -599,7 +697,981 @@ def download_rumah(request):
     df.to_excel(
         response,
         index=False,
-        engine="openpyxl"
+        engine="openpyxl",
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN USIA 60-64 TAHUN
+# =====================================================
+
+def usia_60_64(request):
+
+    queryset = PendudukUsia6064.objects.all()
+
+    data = []
+
+    for item in queryset:
+
+        data.append({
+
+            "kode": item.kode_wilayah,
+
+            "wilayah": item.nama_wilayah,
+
+            "usia": item.usia,
+
+            "jumlah": item.jumlah,
+
+        })
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2024",
+
+        "data": data,
+
+        "labels": json.dumps([x["wilayah"] for x in data]),
+
+        "jumlah": json.dumps([x["jumlah"] for x in data]),
+
+    }
+
+    return render(
+        request,
+        "dashboard/usia_60_64.html",
+        context,
+    )
+
+# =====================================================
+# DOWNLOAD USIA 60-64
+# =====================================================
+
+def download_usia_60_64(request):
+
+    df = queryset_to_excel(
+        PendudukUsia6064.objects.all(),
+        fields=[
+            "kode_wilayah",
+            "nama_wilayah",
+            "usia",
+            "jumlah",
+        ]
+    )
+
+    df.columns = [
+        "Kode Wilayah",
+        "Nama Wilayah",
+        "Usia",
+        "Jumlah",
+    ]
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+    response["Content-Disposition"] = (
+        'attachment; filename="usia_60_64.xlsx"'
+    )
+
+    df.to_excel(
+        response,
+        index=False,
+        engine="openpyxl",
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN PPKS & DTKS
+# =====================================================
+
+def ppks_dtks(request):
+
+    queryset = PPKSDTKS.objects.all()
+
+    data = []
+
+    for item in queryset:
+
+        data.append({
+
+            "kecamatan": item.kecamatan,
+
+            "ppks": item.jumlah_ppks_mandiri,
+
+            "dtks": item.persentase_dtks,
+
+        })
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2020",
+
+        "data": data,
+
+        "labels": json.dumps(
+            [x["kecamatan"] for x in data]
+        ),
+
+        "dtks": json.dumps(
+            [x["dtks"] for x in data]
+        ),
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/ppks_dtks.html",
+
+        context,
+
+    )
+
+# =====================================================
+# DOWNLOAD PPKS & DTKS
+# =====================================================
+
+def download_ppks_dtks(request):
+
+    df = queryset_to_excel(
+
+        PPKSDTKS.objects.all(),
+
+        fields=[
+
+            "kecamatan",
+
+            "jumlah_ppks_mandiri",
+
+            "persentase_dtks",
+
+        ]
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="ppks_dtks.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN PENDUDUK BERDASARKAN JENIS KELAMIN
+# =====================================================
+
+def penduduk_jenis_kelamin(request):
+
+    queryset = PendudukJenisKelamin.objects.all()
+
+    data = []
+
+    for item in queryset:
+
+        data.append({
+
+            "kecamatan": item.kecamatan,
+
+            "laki_laki": item.laki_laki,
+
+            "perempuan": item.perempuan,
+
+            "jumlah": item.jumlah,
+
+        })
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2024",
+
+        "data": data,
+
+        "labels": json.dumps([x["kecamatan"] for x in data]),
+
+        "laki_laki": json.dumps([x["laki_laki"] for x in data]),
+
+        "perempuan": json.dumps([x["perempuan"] for x in data]),
+
+        "jumlah": json.dumps([x["jumlah"] for x in data]),
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/jenis_kelamin.html",
+
+        context,
+
+    )
+
+# =====================================================
+# DOWNLOAD PENDUDUK BERDASARKAN JENIS KELAMIN
+# =====================================================
+
+def download_penduduk_jenis_kelamin(request):
+
+    df = queryset_to_excel(
+
+        PendudukJenisKelamin.objects.all(),
+
+        fields=[
+
+            "kecamatan",
+
+            "laki_laki",
+
+            "perempuan",
+
+            "jumlah",
+
+        ]
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="penduduk_jenis_kelamin.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN PENYANDANG DISABILITAS
+# =====================================================
+
+def disabilitas(request):
+
+    queryset = PenyandangDisabilitas.objects.all()
+
+    data = []
+
+    for item in queryset:
+
+        total = (
+            item.tuna_fisik
+            + item.tuna_netra
+            + item.tuna_rungu_wicara
+            + item.tuna_mental_jiwa
+            + item.tuna_fisik_dan_mental
+            + item.lainnya
+        )
+
+        data.append({
+
+            "kecamatan": item.kecamatan,
+
+            "tuna_fisik": item.tuna_fisik,
+
+            "tuna_netra": item.tuna_netra,
+
+            "tuna_rungu_wicara": item.tuna_rungu_wicara,
+
+            "tuna_mental_jiwa": item.tuna_mental_jiwa,
+
+            "tuna_fisik_dan_mental": item.tuna_fisik_dan_mental,
+
+            "lainnya": item.lainnya,
+
+            "total": total,
+
+        })
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2024",
+
+        "data": data,
+
+        "labels": json.dumps([x["kecamatan"] for x in data]),
+
+        "total": json.dumps([x["total"] for x in data]),
+
+        "tuna_fisik": json.dumps([x["tuna_fisik"] for x in data]),
+
+        "tuna_netra": json.dumps([x["tuna_netra"] for x in data]),
+
+        "tuna_rungu_wicara": json.dumps([x["tuna_rungu_wicara"] for x in data]),
+
+        "tuna_mental_jiwa": json.dumps([x["tuna_mental_jiwa"] for x in data]),
+
+        "tuna_fisik_dan_mental": json.dumps([x["tuna_fisik_dan_mental"] for x in data]),
+
+        "lainnya": json.dumps([x["lainnya"] for x in data]),
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/disabilitas.html",
+
+        context,
+
+    )
+
+# =====================================================
+# DOWNLOAD PENYANDANG DISABILITAS
+# =====================================================
+
+def download_disabilitas(request):
+
+    df = queryset_to_excel(
+
+        PenyandangDisabilitas.objects.all(),
+
+        fields=[
+
+            "kecamatan",
+
+            "tuna_fisik",
+
+            "tuna_netra",
+
+            "tuna_rungu_wicara",
+
+            "tuna_mental_jiwa",
+
+            "tuna_fisik_dan_mental",
+
+            "lainnya",
+
+        ]
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="penyandang_disabilitas.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN KELOMPOK PERIKANAN
+# =====================================================
+
+def kelompok_perikanan(request):
+
+    queryset = KelompokPerikanan.objects.all()
+
+    data = []
+
+    for item in queryset:
+
+        total = item.pengolah + item.pemasaran
+
+        data.append({
+
+            "kecamatan": item.kecamatan,
+
+            "pengolah": item.pengolah,
+
+            "pemasaran": item.pemasaran,
+
+            "total": total,
+
+        })
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2024",
+
+        "data": data,
+
+        "labels": json.dumps([x["kecamatan"] for x in data]),
+
+        "total": json.dumps([x["total"] for x in data]),
+
+        "pengolah": json.dumps([x["pengolah"] for x in data]),
+
+        "pemasaran": json.dumps([x["pemasaran"] for x in data]),
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/kelompok_perikanan.html",
+
+        context,
+
+    )
+
+# =====================================================
+# DOWNLOAD KELOMPOK PERIKANAN
+# =====================================================
+
+def download_kelompok_perikanan(request):
+
+    df = queryset_to_excel(
+
+        KelompokPerikanan.objects.all(),
+
+        fields=[
+
+            "kecamatan",
+
+            "pengolah",
+
+            "pemasaran",
+
+        ]
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="kelompok_perikanan.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN UMKM
+# =====================================================
+
+def umkm(request):
+
+    queryset = UMKM.objects.all()
+
+    data = []
+
+    for item in queryset:
+
+        data.append({
+
+            "kecamatan": item.kecamatan,
+
+            "jumlah_umkm": item.jumlah_umkm,
+
+        })
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_kecamatan": queryset.count(),
+
+        "tahun": "2024",
+
+        "data": data,
+
+        "labels": json.dumps([x["kecamatan"] for x in data]),
+
+        "jumlah_umkm": json.dumps(
+            [x["jumlah_umkm"] for x in data]
+        ),
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/umkm.html",
+
+        context,
+
+    )
+
+# =====================================================
+# DOWNLOAD UMKM
+# =====================================================
+
+def download_umkm(request):
+
+    df = queryset_to_excel(
+
+        UMKM.objects.all(),
+
+        fields=[
+
+            "kecamatan",
+
+            "jumlah_umkm",
+
+        ]
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="umkm.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN KOPERASI
+# =====================================================
+
+def koperasi(request):
+
+    queryset = Koperasi.objects.all()
+
+    data = []
+
+    for item in queryset:
+
+        data.append({
+
+            "jumlah_aset": item.jumlah_aset,
+
+            "jumlah": item.jumlah,
+
+        })
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_kategori": queryset.count(),
+
+        "tahun": "2024",
+
+        "data": data,
+
+        "labels": json.dumps(
+            [x["jumlah_aset"] for x in data]
+        ),
+
+        "jumlah": json.dumps(
+            [x["jumlah"] for x in data]
+        ),
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/koperasi.html",
+
+        context,
+
+    )
+
+# =====================================================
+# DOWNLOAD KOPERASI
+# =====================================================
+
+def download_koperasi(request):
+
+    df = pd.DataFrame(
+
+        list(
+
+            Koperasi.objects.all().values(
+
+                "jumlah_aset",
+
+                "jumlah",
+
+            )
+
+        )
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="koperasi.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN PAJAK PARIWISATA
+# =====================================================
+
+def pajak_pariwisata(request):
+
+    queryset = PajakPariwisata.objects.all().order_by(
+        "tahun",
+        "jenis_pajak"
+    )
+
+    data = []
+
+    labels = []
+
+    realisasi = []
+
+    hotel = []
+
+    restoran = []
+
+    hiburan = []
+
+    tahun_list = []
+
+    for item in queryset:
+
+        data.append({
+
+            "tahun": item.tahun,
+
+            "jenis_pajak": item.jenis_pajak,
+
+            "realisasi": item.realisasi,
+
+        })
+
+        labels.append(
+            f"{item.tahun}\n{item.jenis_pajak}"
+        )
+
+        realisasi.append(item.realisasi)
+
+    for tahun in [2018, 2019, 2020, 2021]:
+
+        tahun_list.append(str(tahun))
+
+        hotel_data = queryset.filter(
+            tahun=tahun,
+            jenis_pajak="Pajak Hotel"
+        ).first()
+
+        restoran_data = queryset.filter(
+            tahun=tahun,
+            jenis_pajak="Pajak Restoran"
+        ).first()
+
+        hiburan_data = queryset.filter(
+            tahun=tahun,
+            jenis_pajak="Pajak Hiburan"
+        ).first()
+
+        hotel.append(
+            hotel_data.realisasi if hotel_data else 0
+        )
+
+        restoran.append(
+            restoran_data.realisasi if restoran_data else 0
+        )
+
+        hiburan.append(
+            hiburan_data.realisasi if hiburan_data else 0
+        )
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_tahun": 4,
+
+        "tahun": "2018-2021",
+
+        "data": data,
+
+        "labels": json.dumps(labels),
+
+        "realisasi": json.dumps(realisasi),
+
+        "tahun_labels": json.dumps(tahun_list),
+
+        "hotel": json.dumps(hotel),
+
+        "restoran": json.dumps(restoran),
+
+        "hiburan": json.dumps(hiburan),
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/pajak_pariwisata.html",
+
+        context,
+
+    )
+
+# =====================================================
+# DOWNLOAD PAJAK PARIWISATA
+# =====================================================
+
+def download_pajak_pariwisata(request):
+
+    df = pd.DataFrame(
+
+        list(
+
+            PajakPariwisata.objects.all().values(
+
+                "tahun",
+
+                "jenis_pajak",
+
+                "realisasi",
+
+            )
+
+        )
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="pajak_pariwisata.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN RASIO BELANJA
+# =====================================================
+
+def rasio_belanja(request):
+
+    queryset = RasioBelanja.objects.all()
+
+    data = []
+
+    labels = []
+
+    pagu = []
+
+    rasio = []
+
+    for item in queryset:
+
+        data.append({
+
+            "uraian": item.uraian,
+
+            "pagu": item.pagu,
+
+            "rasio": item.rasio,
+
+        })
+
+        labels.append(item.uraian)
+
+        pagu.append(item.pagu)
+
+        rasio.append(item.rasio)
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "tahun": "2024",
+
+        "jumlah_kategori": queryset.count(),
+
+        "data": data,
+
+        "labels": json.dumps(labels),
+
+        "pagu": json.dumps(pagu),
+
+        "rasio": json.dumps(rasio),
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/rasio_belanja.html",
+
+        context,
+
+    )
+
+# =====================================================
+# DOWNLOAD RASIO BELANJA
+# =====================================================
+
+def download_rasio_belanja(request):
+
+    df = pd.DataFrame(
+
+        list(
+
+            RasioBelanja.objects.all().values(
+
+                "uraian",
+
+                "pagu",
+
+                "rasio",
+
+            )
+
+        )
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="rasio_belanja.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
     )
 
     return response

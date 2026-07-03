@@ -10,34 +10,115 @@
 
 <div class="row">
 
-    <div class="col-md-4">
+    <div class="col-sm-6 col-md-3">
         <div class="card card-stats card-round">
             <div class="card-body">
-                <div class="numbers">
-                    <p class="card-category">Total Dataset</p>
-                    <h4 class="card-title">{{ total_dataset }}</h4>
+                <div class="row align-items-center">
+
+                    <div class="col-icon">
+                        <div class="icon-big text-center bubble-shadow-small
+                            {% if api_status == 'Online' %}
+                                icon-success
+                            {% else %}
+                                icon-danger
+                            {% endif %}">
+
+                            {% if api_status == "Online" %}
+                                <i class="fas fa-wifi"></i>
+                            {% else %}
+                                <i class="fas fa-exclamation-triangle"></i>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+
+                            <p class="card-category">
+                                Status API
+                            </p>
+
+                            <h4 class="card-title
+                                {% if api_status == 'Online' %}
+                                    text-success
+                                {% else %}
+                                    text-danger
+                                {% endif %}">
+
+                                {{ api_status }}
+
+                            </h4>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
-    <div class="col-md-4">
+    <div class="col-sm-6 col-md-3">
         <div class="card card-stats card-round">
             <div class="card-body">
-                <div class="numbers">
-                    <p class="card-category">Data Siswa Miskin</p>
-                    <h4 class="card-title">{{ jumlah_siswa }}</h4>
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div
+                            class="icon-big text-center icon-info bubble-shadow-small"
+                        >
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Tahun Data</p>
+                            <h4 class="card-title">2020</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
-    <div class="col-md-4">
+    <div class="col-sm-6 col-md-3">
         <div class="card card-stats card-round">
             <div class="card-body">
-                <div class="numbers">
-                    <p class="card-category">Data Air Minum</p>
-                    <h4 class="card-title">{{ jumlah_air }}</h4>
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div
+                            class="icon-big text-center icon-info bubble-shadow-small"
+                        >
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Total Dataset</p>
+                            <h4 class="card-title">{{ total_dataset }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>          
+
+    <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div
+                            class="icon-big text-center icon-info bubble-shadow-small"
+                        >
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Data Siswa Miskin</p>
+                            <h4 class="card-title">{{ jumlah_siswa }}</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,38 +128,93 @@
 
 <div class="row mt-3">
 
-    <div class="col-md-4">
+        <div class="col-sm-6 col-md-3">
         <div class="card card-stats card-round">
             <div class="card-body">
-                <div class="numbers">
-                    <p class="card-category">Data Kepemilikan Lahan</p>
-                    <h4 class="card-title">{{ jumlah_lahan }}</h4>
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div
+                            class="icon-big text-center icon-info bubble-shadow-small"
+                        >
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Data Air Minum</p>
+                            <h4 class="card-title">{{ jumlah_air }}</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-sm-6 col-md-3">
         <div class="card card-stats card-round">
             <div class="card-body">
-                <div class="numbers">
-                    <p class="card-category">Status Kesejahteraan</p>
-                    <h4 class="card-title">{{ jumlah_sejahtera }}</h4>
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div
+                            class="icon-big text-center icon-info bubble-shadow-small"
+                        >
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Data Kepemilikan Lahan</p>
+                            <h4 class="card-title">{{ jumlah_lahan }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="col-sm-6 col-md-3">
+        <div class="card card-stats card-round">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div
+                            class="icon-big text-center icon-info bubble-shadow-small"
+                        >
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Status Kesejahteraan</p>
+                            <h4 class="card-title">{{ jumlah_sejahtera }}</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-sm-6 col-md-3">
         <div class="card card-stats card-round">
             <div class="card-body">
-                <div class="numbers">
-                    <p class="card-category">Kepemilikan Rumah</p>
-                    <h4 class="card-title">{{ jumlah_rumah }}</h4>
+                <div class="row align-items-center">
+                    <div class="col-icon">
+                        <div
+                            class="icon-big text-center icon-info bubble-shadow-small"
+                        >
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                            <p class="card-category">Kepemilikan Rumah</p>
+                            <h4 class="card-title">{{ jumlah_rumah }}</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
 </div>
 
@@ -169,211 +305,373 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-    // =====================================
-    // CHART 1 - SISWA MISKIN
-    // =====================================
+        // =====================================
+        // WARNA GRAFIK
+        // =====================================
 
-    const siswaCtx = document.getElementById("siswaChart");
+        const colors = [
+            "#4e73df",
+            "#1cc88a",
+            "#36b9cc",
+            "#f6c23e",
+            "#e74a3b",
+            "#6f42c1",
+            "#fd7e14",
+            "#20c997",
+            "#0dcaf0",
+            "#198754",
+            "#ffc107",
+            "#6610f2"
+        ];
 
-    if (siswaCtx) {
+        // =====================================
+        // CHART 1 - SISWA MISKIN
+        // =====================================
 
-        const siswaLabels = {{ labels|safe }};
-        const siswaValues = {{ values|safe }};
+        const siswaCtx = document.getElementById("siswaChart");
 
-        new Chart(siswaCtx, {
-            type: "bar",
-            data: {
-                labels: siswaLabels,
-                datasets: [{
-                    label: "Jumlah Siswa Miskin",
-                    data: siswaValues,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
+        if (siswaCtx) {
 
+            const siswaLabels = {{ labels|safe }};
+            const siswaValues = {{ values|safe }};
 
-    // =====================================
-    // CHART 2 - KEPEMILIKAN RUMAH
-    // =====================================
+            new Chart(siswaCtx, {
+                type: "bar",
 
-    const rumahCtx = document.getElementById("rumahChart");
+                data: {
+                    labels: siswaLabels,
 
-    if (rumahCtx) {
+                    datasets: [{
+                        label: "Jumlah Siswa Miskin",
 
-        const rumahLabels = {{ rumah_labels|safe }};
-        const rumahValues = {{ rumah_values|safe }};
+                        data: siswaValues,
 
-        new Chart(rumahCtx, {
-            type: "pie",
-            data: {
-                labels: rumahLabels,
-                datasets: [{
-                    data: rumahValues
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-    }
+                        backgroundColor: colors.slice(0, siswaLabels.length),
 
+                        borderColor: colors.slice(0, siswaLabels.length),
 
-    // =====================================
-    // CHART 3 - KEPEMILIKAN LAHAN
-    // =====================================
-
-    const lahanCtx = document.getElementById("lahanChart");
-
-    if (lahanCtx) {
-
-        const lahanLabels = {{ lahan_labels|safe }};
-        const lahanValues = {{ lahan_values|safe }};
-
-        new Chart(lahanCtx, {
-            type: "doughnut",
-            data: {
-                labels: lahanLabels,
-                datasets: [{
-                    data: lahanValues
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-    }
-
-
-    // =====================================
-    // CHART 4 - STATUS KESEJAHTERAAN
-    // =====================================
-
-    const sejahteraCtx =
-        document.getElementById("sejahteraChart");
-
-    if (sejahteraCtx) {
-
-        const sejahteraLabels = {{ sejahtera_labels|safe }};
-        const lakiValues = {{ laki_values|safe }};
-        const perempuanValues = {{ perempuan_values|safe }};
-
-        new Chart(sejahteraCtx, {
-
-            type: "bar",
-
-            data: {
-                labels: sejahteraLabels,
-
-                datasets: [
-                    {
-                        label: "Laki-laki",
-                        data: lakiValues,
                         borderWidth: 1
-                    },
-                    {
-                        label: "Perempuan",
-                        data: perempuanValues,
-                        borderWidth: 1
-                    }
-                ]
-            },
-
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-
-                plugins: {
-                    legend: {
-                        position: "top"
-                    }
+                    }]
                 },
 
-                scales: {
-                    x: {
-                        ticks: {
-                            maxRotation: 45,
-                            minRotation: 45
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+                            display: true
                         }
+
                     },
 
-                    y: {
-                        beginAtZero: true
+                    scales: {
+
+                        y: {
+                            beginAtZero: true
+                        }
+
                     }
+
                 }
-            }
-        });
-    }
 
-    // =====================================
-    // CHART 5 - JENIS AIR MINUM
-    // =====================================
+            });
 
-    const airCtx =
-        document.getElementById("airChart");
+        }
 
-    if (airCtx) {
+        // =====================================
+        // CHART 2 - KEPEMILIKAN RUMAH
+        // =====================================
 
-        const airLabels = {{ air_labels|safe }};
-        const airValues = {{ air_values|safe }};
+        const rumahCtx = document.getElementById("rumahChart");
 
-        new Chart(airCtx, {
+        if (rumahCtx) {
 
-            type: "bar",
+            const rumahLabels = {{ rumah_labels|safe }};
+            const rumahValues = {{ rumah_values|safe }};
 
-            data: {
+            new Chart(rumahCtx, {
 
-                labels: airLabels,
+                type: "pie",
 
-                datasets: [{
-                    label: "Jumlah Pengguna",
-                    data: airValues,
-                    borderWidth: 1
-                }]
-            },
+                data: {
 
-            options: {
+                    labels: rumahLabels,
 
-                indexAxis: 'y',
+                    datasets: [{
 
-                responsive: true,
-                maintainAspectRatio: false,
+                        data: rumahValues,
 
-                plugins: {
+                        backgroundColor: [
+                            "#4e73df",
+                            "#1cc88a",
+                            "#36b9cc",
+                            "#f6c23e",
+                            "#e74a3b"
+                        ],
 
-                    legend: {
-                        display: false
-                    }
+                        borderColor: "#ffffff",
+
+                        borderWidth: 2
+
+                    }]
 
                 },
 
-                scales: {
+                options: {
 
-                    x: {
-                        beginAtZero: true
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            position: "top"
+
+                        }
+
                     }
 
                 }
 
-            }
+            });
 
-        });
-    }
+        }
 
-});
+        // =====================================
+        // CHART 3 - KEPEMILIKAN LAHAN
+        // =====================================
+
+        const lahanCtx = document.getElementById("lahanChart");
+
+        if (lahanCtx) {
+
+            const lahanLabels = {{ lahan_labels|safe }};
+            const lahanValues = {{ lahan_values|safe }};
+
+            new Chart(lahanCtx, {
+
+                type: "doughnut",
+
+                data: {
+
+                    labels: lahanLabels,
+
+                    datasets: [{
+
+                        data: lahanValues,
+
+                        backgroundColor: [
+                            "#4e73df",
+                            "#1cc88a",
+                            "#f6c23e",
+                            "#e74a3b"
+                        ],
+
+                        borderColor: "#ffffff",
+
+                        borderWidth: 2
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            position: "top"
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+        // =====================================
+        // CHART 4 - STATUS KESEJAHTERAAN
+        // =====================================
+
+        const sejahteraCtx = document.getElementById("sejahteraChart");
+
+        if (sejahteraCtx) {
+
+            const sejahteraLabels = {{ sejahtera_labels|safe }};
+            const lakiValues = {{ laki_values|safe }};
+            const perempuanValues = {{ perempuan_values|safe }};
+
+            new Chart(sejahteraCtx, {
+
+                type: "bar",
+
+                data: {
+
+                    labels: sejahteraLabels,
+
+                    datasets: [
+
+                        {
+
+                            label: "Laki-laki",
+
+                            data: lakiValues,
+
+                            backgroundColor: "#4e73df",
+
+                            borderColor: "#4e73df",
+
+                            borderWidth: 1
+
+                        },
+
+                        {
+
+                            label: "Perempuan",
+
+                            data: perempuanValues,
+
+                            backgroundColor: "#e74a3b",
+
+                            borderColor: "#e74a3b",
+
+                            borderWidth: 1
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            position: "top"
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        x: {
+
+                            ticks: {
+
+                                maxRotation: 45,
+
+                                minRotation: 45
+
+                            }
+
+                        },
+
+                        y: {
+
+                            beginAtZero: true
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+        // =====================================
+        // CHART 5 - AIR MINUM
+        // =====================================
+
+        const airCtx = document.getElementById("airChart");
+
+        if (airCtx) {
+
+            const airLabels = {{ air_labels|safe }};
+            const airValues = {{ air_values|safe }};
+
+            new Chart(airCtx, {
+
+                type: "bar",
+
+                data: {
+
+                    labels: airLabels,
+
+                    datasets: [{
+
+                        label: "Jumlah Pengguna",
+
+                        data: airValues,
+
+                        backgroundColor: colors,
+
+                        borderColor: colors,
+
+                        borderWidth: 1
+
+                    }]
+
+                },
+
+                options: {
+
+                    indexAxis: "y",
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        x: {
+
+                            beginAtZero: true
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+    });
 </script>
 {% endblock %}

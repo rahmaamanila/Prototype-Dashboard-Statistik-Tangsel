@@ -1,0 +1,227 @@
+{% extends 'base.html' %} {% block content %}
+
+<h3 class="d-flex justify-content-center">Data PPKS Mandiri dan Persentase DTKS Menurut Kecamatan di Kota Tangerang Selatan</h3>
+
+<div class="row justify-content-center">
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-info bubble-shadow-small">
+              <i class="fas fa-users"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Jumlah Data</p>
+
+              <h4 class="card-title">{{ jumlah_data }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-success bubble-shadow-small">
+              <i class="fas fa-calendar"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Tahun Data</p>
+
+              <h4 class="card-title">{{ tahun }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-3">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-primary bubble-shadow-small">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+          </div>
+
+          <div class="col col-stats ms-3 ms-sm-0">
+            <div class="numbers">
+              <p class="card-category">Total Kecamatan</p>
+
+              <h4 class="card-title">{{ jumlah_kecamatan }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h4 class="card-title mb-0">Data PPKS & DTKS</h4>
+
+    <a href="{% url 'download_ppks_dtks' %}" class="btn btn-label-success btn-round btn-sm me-2">
+      <span class="btn-label">
+        <i class="fa fa-download"></i>
+      </span>
+
+      Excel
+    </a>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Kecamatan</th>
+
+            <th>Jumlah PPKS Mandiri</th>
+
+            <th>Persentase PPKS Anak Terlantar yang Tertangani dan DTKS yang Terverifikasi dan Tervalidasi</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for row in data %}
+
+          <tr>
+            <td>{{ row.kecamatan }}</td>
+
+            <td>{{ row.ppks }}</td>
+
+            <td>{{ row.dtks }}</td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Persentase PPKS dan DTKS per Kecamatan</h4>
+      </div>
+
+      <div class="card-body" style="height: 450px">
+        <canvas id="dtksChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", function(){
+
+      const labels = {{ labels|safe }};
+      const dtks = {{ dtks|safe }};
+
+      // =====================================================
+      // CHART DTKS
+      // =====================================================
+
+      new Chart(document.getElementById("dtksChart"),{
+
+          type:"bar",
+
+          data:{
+
+              labels:labels,
+
+              datasets:[{
+
+                  label:"Persentase PPKS dan DTKS",
+
+                  data:dtks,
+
+                  backgroundColor:"#1572E8",
+
+                  borderColor:"#1572E8",
+
+                  borderWidth:1
+
+              }]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false,
+
+              plugins:{
+
+                  legend:{
+
+                      display:true,
+
+                      position:"top"
+
+                  }
+
+              },
+
+              scales:{
+
+                  x:{
+
+                      ticks:{
+
+                          autoSkip:false,
+
+                          maxRotation:45,
+
+                          minRotation:45
+
+                      }
+
+                  },
+
+                  y:{
+
+                      beginAtZero:true,
+
+                      title:{
+
+                          display:true,
+
+                          text:"Persentase PPKS dan DTKS"
+
+                      }
+
+                  }
+
+              }
+
+          }
+
+      });
+
+  });
+</script>
+
+{% endblock %}
