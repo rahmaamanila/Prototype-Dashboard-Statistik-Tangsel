@@ -188,13 +188,17 @@ class ProyekInvestasiAdmin(admin.ModelAdmin):
 @admin.register(PendudukJenisKelamin)
 class PendudukJenisKelaminAdmin(admin.ModelAdmin):
     list_display = (
+        "kode_wilayah",
         "kecamatan",
         "laki_laki",
         "perempuan",
         "jumlah",
     )
 
-    search_fields = ("kecamatan",)
+    search_fields = (
+        "kode_wilayah",
+        "kecamatan",
+    )
 
 
 @admin.register(PendudukUsia6064)

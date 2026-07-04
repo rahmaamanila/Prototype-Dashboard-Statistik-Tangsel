@@ -422,6 +422,12 @@ class PendudukJenisKelamin(BaseModel):
         related_name="penduduk_jenis_kelamin"
     )
 
+    kode_wilayah = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+    )
+        
     kecamatan = models.CharField(max_length=100)
 
     laki_laki = models.PositiveIntegerField(default=0)

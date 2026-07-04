@@ -126,11 +126,11 @@ def home(request):
 
     context = {
 
-        "api_status": "Database",
+        # "api_status": "Database",
 
-        "api_badge": "success",
+        # "api_badge": "success",
 
-        "api_icon": "fas fa-database",
+        # "api_icon": "fas fa-database",
 
         "total_dataset": total_dataset,
 
@@ -921,6 +921,7 @@ def penduduk_jenis_kelamin(request):
     for item in queryset:
 
         data.append({
+            "kode": item.kode_wilayah,
 
             "kecamatan": item.kecamatan,
 
@@ -976,6 +977,7 @@ def download_penduduk_jenis_kelamin(request):
         PendudukJenisKelamin.objects.all(),
 
         fields=[
+            "kode_wilayah",
 
             "kecamatan",
 

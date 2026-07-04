@@ -1,67 +1,162 @@
 <div class="modal fade" id="apiModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Dokumentasi REST API</h4>
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content shadow">
+      <div class="modal-header bg-primary text-white">
+        <div>
+          <h4 class="modal-title mb-1">
+            <i class="fas fa-code me-2"></i>
+            Dokumentasi REST API
+          </h4>
 
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          <small> Endpoint data Dashboard Statistik Kota Tangerang Selatan </small>
+        </div>
+
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
-        <h5>Endpoint</h5>
+        <!-- INFORMASI -->
+        <div class="alert alert-primary mb-4">
+          <h5 class="mb-2">
+            <i class="fas fa-circle-info me-2"></i>
+            Informasi API
+          </h5>
 
-        <pre>
-            GET
-            {{ request.scheme }}://{{ request.get_host }}{{ api_endpoint }}
-        </pre>
+          <table class="table table-borderless mb-0">
+            <tr>
+              <td width="180"><strong>Dataset</strong></td>
+              <td>{{ api_dataset }}</td>
+            </tr>
 
-        <hr />
+            <tr>
+              <td><strong>Method</strong></td>
+              <td>
+                <span class="badge bg-success">GET</span>
+              </td>
+            </tr>
 
-        <h5>Response</h5>
+            <tr>
+              <td><strong>Format Response</strong></td>
+              <td>JSON</td>
+            </tr>
 
-        <pre>
-            {
+            <tr>
+              <td><strong>Status</strong></td>
+              <td>
+                <span class="badge bg-success"> Aktif </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- ENDPOINT -->
+
+        <div class="card mb-4">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">Endpoint</h5>
+          </div>
+
+          <div class="card-body">
+            <pre class="mb-0"><code>GET {{ request.scheme }}://{{ request.get_host }}{{ api_endpoint }}</code></pre>
+          </div>
+        </div>
+
+        <!-- RESPONSE -->
+
+        <div class="card mb-4">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">Contoh Response</h5>
+          </div>
+
+          <div class="card-body">
+            <pre class="mb-0">
+              <code>{
                 "success": true,
                 "status": 200,
                 "dataset": "{{ api_dataset }}",
                 "source": "Database Dashboard Statistik Tangsel",
-                "timestamp": "...",
+                "timestamp": "2026-07-04T10:30:00Z",
                 "jumlah_data": ...,
                 "data": [
                     ...
                 ]
-            }</pre
-        >
+              }
+              </code>
+          </pre>
+          </div>
+        </div>
 
-        <hr />
+        <!-- CONTOH PENGGUNAAN -->
 
-        <h5>Python</h5>
+        <div class="row">
+          <!-- PYTHON -->
 
-        <pre>
-            import requests
+          <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+              <div class="card-header bg-light">
+                <h5 class="mb-0">
+                  <i class="fab fa-python text-warning me-2"></i>
+                  Python
+                </h5>
+              </div>
 
-            url = "{{ request.scheme }}://{{ request.get_host }}{{ api_endpoint }}"
+              <div class="card-body">
+                <pre class="mb-0">
+                  <code>import requests
 
-            response = requests.get(url)
+                    url = "{{ request.scheme }}://{{ request.get_host }}{{ api_endpoint }}"
 
-            print(response.json())
-        </pre>
+                    response = requests.get(url)
 
-        <hr />
+                    print(response.json())
+                  </code>
+                </pre>
+              </div>
+            </div>
+          </div>
 
-        <h5>JavaScript</h5>
+          <!-- JAVASCRIPT -->
 
-        <pre>
-            fetch("{{ api_endpoint }}")
-                .then(response => response.json())
-                .then(data => console.log(data));
-        </pre>
+          <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+              <div class="card-header bg-light">
+                <h5 class="mb-0">
+                  <i class="fab fa-js-square text-warning me-2"></i>
+                  JavaScript
+                </h5>
+              </div>
 
-        <hr />
+              <div class="card-body">
+                <pre class="mb-0">
+                  <code>fetch("{{ api_endpoint }}")
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    });
+                  </code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h5>cURL</h5>
+        <!-- CURL -->
 
-        <pre>curl {{ request.scheme }}://{{ request.get_host }}{{ api_endpoint }}</pre>
+        <div class="card">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">cURL</h5>
+          </div>
+
+          <div class="card-body">
+            <pre class="mb-0"><code>curl {{ request.scheme }}://{{ request.get_host }}{{ api_endpoint }}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <small class="text-muted me-auto"> REST API ini dapat digunakan oleh aplikasi lain untuk kebutuhan integrasi data dan interoperabilitas. </small>
+
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
       </div>
     </div>
   </div>
