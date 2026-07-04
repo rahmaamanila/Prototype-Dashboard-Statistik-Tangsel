@@ -19,6 +19,8 @@ from .models import (
     Koperasi,
     PajakPariwisata,
     RasioBelanja,
+    RealisasiPerizinan,
+    ProyekInvestasi,
 )
 
 # =====================================================
@@ -240,6 +242,9 @@ def siswa(request):
         "pt": json.dumps([x["pt"] for x in data]),
 
         "lainnya": json.dumps([x["lainnya"] for x in data]),
+
+        "api_endpoint": "/api/siswa-miskin/",
+        "api_dataset": "Jumlah Siswa Miskin",
     }
 
     return render(
@@ -387,6 +392,9 @@ def air_minum(request):
         "sumur_tak": json.dumps([x["sumur_tak"] for x in data]),
 
         "sumur_ter": json.dumps([x["sumur_ter"] for x in data]),
+
+        "api_endpoint": "/api/air-minum/",
+        "api_dataset": "Jenis Air Minum",
     }
 
     return render(
@@ -480,6 +488,9 @@ def lahan(request):
         "tanah_negara": json.dumps([x["tanah_negara"] for x in data]),
 
         "lainnya": json.dumps([x["lainnya"] for x in data]),
+
+        "api_endpoint": "/api/kepemilikan-lahan/",
+        "api_dataset": "Kepemilikan Lahan",
     }
 
     return render(
@@ -564,6 +575,9 @@ def kesejahteraan(request):
         "laki": json.dumps([x["laki"] for x in data]),
 
         "perempuan": json.dumps([x["perempuan"] for x in data]),
+        
+        "api_endpoint": "/api/status_kesejahteraan/",
+        "api_dataset": "Status Kesejahteraan",
     }
 
     return render(
@@ -658,6 +672,9 @@ def rumah(request):
         "dinas": json.dumps([x["dinas"] for x in data]),
 
         "lainnya": json.dumps([x["lainnya"] for x in data]),
+
+        "api_endpoint": "/api/kepemilikan-rumah/",
+        "api_dataset": "Kepemilikan Rumah",
     }
 
     return render(
@@ -739,6 +756,9 @@ def usia_60_64(request):
         "labels": json.dumps([x["wilayah"] for x in data]),
 
         "jumlah": json.dumps([x["jumlah"] for x in data]),
+
+        "api_endpoint": "/api/penduduk-usia/",
+        "api_dataset": "Penduduk Usia",
 
     }
 
@@ -826,6 +846,9 @@ def ppks_dtks(request):
         "dtks": json.dumps(
             [x["dtks"] for x in data]
         ),
+
+        "api_endpoint": "/api/ppks-dtks/",
+        "api_dataset": "PPKS DTKS",
 
     }
 
@@ -926,6 +949,9 @@ def penduduk_jenis_kelamin(request):
         "perempuan": json.dumps([x["perempuan"] for x in data]),
 
         "jumlah": json.dumps([x["jumlah"] for x in data]),
+
+        "api_endpoint": "/api/penduduk-jenis-kelamin/",
+        "api_dataset": "Penduduk Jenis Kelamin",
 
     }
 
@@ -1054,6 +1080,9 @@ def disabilitas(request):
 
         "lainnya": json.dumps([x["lainnya"] for x in data]),
 
+        "api_endpoint": "/api/penyandang-disabilitas/",
+        "api_dataset": "Penyandang Disabilitas",
+
     }
 
     return render(
@@ -1164,6 +1193,9 @@ def kelompok_perikanan(request):
 
         "pemasaran": json.dumps([x["pemasaran"] for x in data]),
 
+        "api_endpoint": "/api/kelompok-perikanan/",
+        "api_dataset": "Kelompok Perikanan",
+
     }
 
     return render(
@@ -1258,6 +1290,9 @@ def umkm(request):
             [x["jumlah_umkm"] for x in data]
         ),
 
+        "api_endpoint": "/api/umkm/",
+        "api_dataset": "UMKM",
+
     }
 
     return render(
@@ -1351,6 +1386,9 @@ def koperasi(request):
         "jumlah": json.dumps(
             [x["jumlah"] for x in data]
         ),
+
+        "api_endpoint": "/api/koperasi/",
+        "api_dataset": "Koperasi",
 
     }
 
@@ -1506,6 +1544,9 @@ def pajak_pariwisata(request):
 
         "hiburan": json.dumps(hiburan),
 
+        "api_endpoint": "/api/pajak-pariwisata/",
+        "api_dataset": "Pajak Pariwisata",
+
     }
 
     return render(
@@ -1616,6 +1657,9 @@ def rasio_belanja(request):
 
         "rasio": json.dumps(rasio),
 
+        "api_endpoint": "/api/rasio-belanja/",
+        "api_dataset": "Rasio Belanja",
+
     }
 
     return render(
@@ -1661,6 +1705,286 @@ def download_rasio_belanja(request):
     response["Content-Disposition"] = (
 
         'attachment; filename="rasio_belanja.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN REALISASI PERIZINAN
+# =====================================================
+
+def realisasi_perizinan(request):
+
+    queryset = RealisasiPerizinan.objects.all()
+
+    data = []
+
+    labels = []
+
+    izin_masuk = []
+    izin_terbit = []
+    izin_ditolak = []
+    dalam_proses = []
+
+    total_masuk = 0
+    total_terbit = 0
+    total_ditolak = 0
+    total_proses = 0
+
+    for item in queryset:
+
+        data.append({
+
+            "nama_izin": item.nama_izin,
+
+            "izin_masuk": item.izin_masuk,
+
+            "izin_terbit": item.izin_terbit,
+
+            "izin_ditolak": item.izin_ditolak,
+
+            "dalam_proses": item.dalam_proses,
+
+        })
+
+        labels.append(item.nama_izin)
+
+        izin_masuk.append(item.izin_masuk)
+        izin_terbit.append(item.izin_terbit)
+        izin_ditolak.append(item.izin_ditolak)
+        dalam_proses.append(item.dalam_proses)
+
+        total_masuk += item.izin_masuk
+        total_terbit += item.izin_terbit
+        total_ditolak += item.izin_ditolak
+        total_proses += item.dalam_proses
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_jenis": queryset.count(),
+
+        "tahun": "2021",
+
+        "data": data,
+
+        "labels": json.dumps(labels),
+
+        "izin_masuk": json.dumps(izin_masuk),
+
+        "izin_terbit": json.dumps(izin_terbit),
+
+        "izin_ditolak": json.dumps(izin_ditolak),
+
+        "dalam_proses": json.dumps(dalam_proses),
+
+        "status_labels": json.dumps([
+            "Izin Masuk",
+            "Izin Terbit",
+            "Izin Ditolak",
+            "Dalam Proses",
+        ]),
+
+        "status_total": json.dumps([
+            total_masuk,
+            total_terbit,
+            total_ditolak,
+            total_proses,
+        ]),
+
+        "api_endpoint": "/api/realisasi-perizinan/",
+        "api_dataset": "Realisasi Perizinan",
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/realisasi_perizinan.html",
+
+        context,
+
+    )
+
+
+# =====================================================
+# DOWNLOAD REALISASI PERIZINAN
+# =====================================================
+
+def download_realisasi_perizinan(request):
+
+    df = pd.DataFrame(
+
+        list(
+
+            RealisasiPerizinan.objects.all().values(
+
+                "nama_izin",
+
+                "izin_masuk",
+
+                "izin_terbit",
+
+                "izin_ditolak",
+
+                "dalam_proses",
+
+            )
+
+        )
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="realisasi_perizinan.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN PROYEK INVESTASI
+# =====================================================
+
+def proyek_investasi(request):
+
+    queryset = ProyekInvestasi.objects.all()
+
+    data = []
+
+    labels = []
+
+    pma = []
+    pmdn = []
+
+    total_pma = 0
+    total_pmdn = 0
+
+    for item in queryset:
+
+        data.append({
+
+            "sektor": item.sektor,
+
+            "pma": item.pma,
+
+            "pmdn": item.pmdn,
+
+        })
+
+        labels.append(item.sektor)
+
+        pma.append(item.pma)
+        pmdn.append(item.pmdn)
+
+        total_pma += item.pma
+        total_pmdn += item.pmdn
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_sektor": queryset.count(),
+
+        "tahun": "2021",
+
+        "data": data,
+
+        "labels": json.dumps(labels),
+
+        "pma": json.dumps(pma),
+
+        "pmdn": json.dumps(pmdn),
+
+        "investasi_labels": json.dumps([
+            "PMA",
+            "PMDN",
+        ]),
+
+        "investasi_total": json.dumps([
+            total_pma,
+            total_pmdn,
+        ]),
+
+        "api_endpoint": "/api/proyek-investasi/",
+        "api_dataset": "Proyek Investasi",
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/proyek_investasi.html",
+
+        context,
+
+    )
+
+
+# =====================================================
+# DOWNLOAD PROYEK INVESTASI
+# =====================================================
+
+def download_proyek_investasi(request):
+
+    df = pd.DataFrame(
+
+        list(
+
+            ProyekInvestasi.objects.all().values(
+
+                "sektor",
+
+                "pma",
+
+                "pmdn",
+
+            )
+
+        )
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="proyek_investasi.xlsx"'
 
     )
 

@@ -1,0 +1,244 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<div class="page-inner">
+  <div class="page-header">
+    <h3 class="fw-bold mb-3">Realisasi Perizinan</h3>
+
+    <ul class="breadcrumbs mb-3">
+      <li class="nav-home">
+        <a href="/">
+          <i class="icon-home"></i>
+        </a>
+      </li>
+
+      <li class="separator">
+        <i class="icon-arrow-right"></i>
+      </li>
+
+      <li class="nav-item">
+        <a href="#"> Ekonomi </a>
+      </li>
+
+      <li class="separator">
+        <i class="icon-arrow-right"></i>
+      </li>
+
+      <li class="nav-item">
+        <a href="#"> Realisasi Perizinan </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CARD -->
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card card-stats card-primary">
+        <div class="card-body">
+          <div class="numbers">
+            <p class="card-category">Jumlah Data</p>
+
+            <h4 class="card-title">{{ jumlah_data }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card card-stats card-success">
+        <div class="card-body">
+          <div class="numbers">
+            <p class="card-category">Jenis Perizinan</p>
+
+            <h4 class="card-title">{{ jumlah_jenis }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card card-stats card-warning">
+        <div class="card-body">
+          <div class="numbers">
+            <p class="card-category">Tahun</p>
+
+            <h4 class="card-title">{{ tahun }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABEL -->
+
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="card-title">Tabel Realisasi Perizinan</h4>
+
+        <a href="{% url 'download_realisasi_perizinan' %}" class="btn btn-success"> Download Excel </a>
+      </div>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#apiModal">REST API</button>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Izin</th>
+              <th>Izin Masuk</th>
+              <th>Izin Terbit</th>
+              <th>Izin Ditolak</th>
+              <th>Dalam Proses</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for item in data %}
+
+            <tr>
+              <td>{{ forloop.counter }}</td>
+
+              <td>{{ item.nama_izin }}</td>
+
+              <td>{{ item.izin_masuk }}</td>
+
+              <td>{{ item.izin_terbit }}</td>
+
+              <td>{{ item.izin_ditolak }}</td>
+
+              <td>{{ item.dalam_proses }}</td>
+            </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRAFIK -->
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Perbandingan Realisasi Perizinan</h4>
+        </div>
+
+        <div style="height:420px">
+            <canvas id="barChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Total Status Perizinan</h4>
+        </div>
+
+        <div style="height:420px">
+            <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+  const labels = {{ labels|safe }};
+
+  const izinMasuk = {{ izin_masuk|safe }};
+  const izinTerbit = {{ izin_terbit|safe }};
+  const izinDitolak = {{ izin_ditolak|safe }};
+  const dalamProses = {{ dalam_proses|safe }};
+
+  new Chart(document.getElementById("barChart"),{
+
+      type:"bar",
+
+      data:{
+
+          labels:labels,
+
+          datasets:[
+
+              {
+
+                  label:"Izin Masuk",
+
+                  data:izinMasuk
+
+              },
+
+              {
+
+                  label:"Izin Terbit",
+
+                  data:izinTerbit
+
+              },
+
+              {
+
+                  label:"Izin Ditolak",
+
+                  data:izinDitolak
+
+              },
+
+              {
+
+                  label:"Dalam Proses",
+
+                  data:dalamProses
+
+              }
+
+          ]
+
+      },
+
+      options:{
+
+          responsive:true,
+
+          maintainAspectRatio:false
+
+      }
+
+  });
+
+  new Chart(document.getElementById("pieChart"),{
+
+      type:"doughnut",
+
+      data:{
+
+          labels:{{ status_labels|safe }},
+
+          datasets:[{
+
+              data:{{ status_total|safe }}
+
+          }]
+
+      },
+
+      options:{
+
+          responsive:true,
+
+          maintainAspectRatio:false
+
+      }
+
+  });
+</script>
+
+{% include "dashboard/components/api_modal.html" %}
+{% endblock %}

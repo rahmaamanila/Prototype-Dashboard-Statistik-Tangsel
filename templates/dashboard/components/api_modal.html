@@ -1,79 +1,68 @@
-<div class="modal fade"
-     id="apiModal"
-     tabindex="-1">
+<div class="modal fade" id="apiModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Dokumentasi REST API</h4>
 
-    <div class="modal-dialog modal-lg">
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
 
-        <div class="modal-content">
+      <div class="modal-body">
+        <h5>Endpoint</h5>
 
-            <div class="modal-header">
+        <pre>
+            GET
+            {{ request.scheme }}://{{ request.get_host }}{{ api_endpoint }}
+        </pre>
 
-                <h5>REST API</h5>
+        <hr />
 
-                <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal">
-                </button>
+        <h5>Response</h5>
 
-            </div>
+        <pre>
+            {
+                "success": true,
+                "status": 200,
+                "dataset": "{{ api_dataset }}",
+                "source": "Database Dashboard Statistik Tangsel",
+                "timestamp": "...",
+                "jumlah_data": ...,
+                "data": [
+                    ...
+                ]
+            }</pre
+        >
 
-            <div class="modal-body">
+        <hr />
 
-                <h6>Endpoint</h6>
+        <h5>Python</h5>
 
-                <pre>
-                    GET
-                    {{ request.scheme }}://{{ request.get_host }}/api/siswa-miskin/
-                </pre>
+        <pre>
+            import requests
 
-                <hr>
+            url = "{{ request.scheme }}://{{ request.get_host }}{{ api_endpoint }}"
 
-                <h6>Response</h6>
+            response = requests.get(url)
 
-                <pre>
-                    {
-                    "success": true,
-                    "status": 200,
-                    "jumlah_data": 7,
-                    "data":[...]
-                    }
-                </pre>
+            print(response.json())
+        </pre>
 
-                <hr>
+        <hr />
 
-                <h6>Python</h6>
+        <h5>JavaScript</h5>
 
-                <pre>
-                    import requests
+        <pre>
+            fetch("{{ api_endpoint }}")
+                .then(response => response.json())
+                .then(data => console.log(data));
+        </pre>
 
-                    url="http://127.0.0.1:8000/api/siswa-miskin/"
+        <hr />
 
-                    print(requests.get(url).json())
-                </pre>
+        <h5>cURL</h5>
 
-                <hr>
-
-                <h6>JavaScript</h6>
-
-                <pre>
-                    fetch("/api/siswa-miskin/")
-                    .then(r=>r.json())
-                    .then(console.log)
-                </pre>
-
-                <hr>
-
-                <h6>cURL</h6>
-
-                <pre>
-                    curl http://127.0.0.1:8000/api/siswa-miskin/
-                </pre>
-
-            </div>
-
-        </div>
-
+        <pre>curl {{ request.scheme }}://{{ request.get_host }}{{ api_endpoint }}</pre>
+      </div>
     </div>
-
+  </div>
 </div>

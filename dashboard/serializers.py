@@ -15,6 +15,9 @@ from .models import (
     PendudukUsia6064,
     PenyandangDisabilitas,
     PPKSDTKS,
+    RealisasiAPBD,
+    RealisasiPerizinan,
+    ProyekInvestasi,
 )
 
 
@@ -100,3 +103,19 @@ class PPKSDTKSSerializer(serializers.ModelSerializer):
     class Meta:
         model = PPKSDTKS
         fields = "__all__"
+
+class RealisasiAPBDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RealisasiAPBD
+        fields = "__all__"
+
+class RealisasiPerizinanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RealisasiPerizinan
+        fields = "__all__"
+
+class ProyekInvestasiSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProyekInvestasi
+        fields = "__all__"
+        

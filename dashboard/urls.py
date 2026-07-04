@@ -103,6 +103,18 @@ urlpatterns = [
         name="rasio_belanja"
     ),
 
+    path(
+        "realisasi-perizinan/",
+        views.realisasi_perizinan,
+        name="realisasi_perizinan",
+    ),
+
+    path(
+        "proyek-investasi/",
+        views.proyek_investasi,
+        name="proyek_investasi",
+    ),
+
     # =====================================================
     # DOWNLOAD EXCEL
     # =====================================================
@@ -191,6 +203,18 @@ urlpatterns = [
         name="download_rasio_belanja"
     ),
 
+    path(
+        "download/realisasi-perizinan/",
+        views.download_realisasi_perizinan,
+        name="download_realisasi_perizinan",
+    ),
+
+    path(
+        "download/proyek-investasi/",
+        views.download_proyek_investasi,
+        name="download_proyek_investasi",
+    ),
+
     # =====================================================
     # REST API DASHBOARD
     # =====================================================
@@ -223,6 +247,78 @@ urlpatterns = [
         "api/kepemilikan-rumah/",
         api_views.api_rumah,
         name="api_rumah"
+    ),
+
+    path(
+        "api/kelompok-perikanan/",
+        api_views.api_kelompok_perikanan,
+        name="api_kelompok_perikanan",
+    ),
+
+    path(
+        "api/umkm/",
+        api_views.api_umkm,
+        name="api_umkm",
+    ),
+
+    path(
+        "api/koperasi/",
+        api_views.api_koperasi,
+        name="api_koperasi",
+    ),
+
+    path(
+        "api/pajak-pariwisata/",
+        api_views.api_pajak_pariwisata,
+        name="api_pajak_pariwisata",
+    ),
+
+    path(
+        "api/rasio-belanja/",
+        api_views.api_rasio_belanja,
+        name="api_rasio_belanja",
+    ),
+
+    path(
+        "api/realisasi-apbd/",
+        api_views.api_realisasi_apbd,
+        name="api_realisasi_apbd",
+    ),
+
+    path(
+        "api/penduduk-jenis-kelamin/",
+        api_views.api_penduduk_jenis_kelamin,
+        name="api_penduduk_jenis_kelamin",
+    ),
+
+    path(
+        "api/penduduk-usia/",
+        api_views.api_penduduk_usia,
+        name="api_penduduk_usia",
+    ),
+
+    path(
+        "api/penyandang-disabilitas/",
+        api_views.api_penyandang_disabilitas,
+        name="api_penyandang_disabilitas",
+    ),
+
+    path(
+        "api/ppks-dtks/",
+        api_views.api_ppks_dtks,
+        name="api_ppks_dtks",
+    ),
+
+    path(
+        "api/realisasi-perizinan/",
+        api_views.api_realisasi_perizinan,
+        name="api_realisasi_perizinan",
+    ),
+
+    path(
+        "api/proyek-investasi/",
+        api_views.api_proyek_investasi,
+        name="api_proyek_investasi",
     ),
 
 ]
