@@ -2,15 +2,99 @@
 
 {% block content %}
 
-<div class="page-header">
+<div class="row">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <h2 class="fw-bold">
+                    Dashboard Statistik Sosial Ekonomi
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Kota Tangerang Selatan
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="card card-stats card-round">
+
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <div class="col-icon">
+
+                        <div class="icon-big text-center icon-primary bubble-shadow-small">
+
+                            <i class="fas fa-database"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col">
+
+                        <div class="numbers">
+
+                            <p class="card-category">
+                                Total Dataset
+                            </p>
+
+                            <h3 class="card-title">
+                                {{ total_dataset }}
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- dropdown -->
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <label class="fw-bold">Pilih Kategori</label>
+            </div>
+            <div class="col-md-9">
+                <select class="form-select" id="kategori">
+                    <option value="semua">Semua</option>
+                    <option value="sosial">Sosial</option>
+                    <option value="ekonomi">Ekonomi</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="page-header">
     <h3 class="fw-bold mb-3">
         Dashboard Statistik Sosial Ekonomi Kota Tangerang Selatan
     </h3>
-</div>
+</div> -->
 
-<div class="row">
+<!-- <div class="row">
 
-    <!-- <div class="col-sm-6 col-md-3">
+    <div class="col-sm-6 col-md-3">
         <div class="card card-stats card-round">
             <div class="card-body">
                 <div class="row align-items-center">
@@ -56,7 +140,7 @@
                 </div>
             </div>
         </div>
-    </div>  -->
+    </div> 
 
     <div class="col-sm-6 col-md-3">
         <div class="card card-stats card-round">
@@ -124,11 +208,11 @@
         </div>
     </div>
 
-</div>
+</div> -->
 
-<div class="row mt-3">
+<!-- <div class="row mt-3">
 
-        <div class="col-sm-6 col-md-3">
+    <div class="col-sm-6 col-md-3">
         <div class="card card-stats card-round">
             <div class="card-body">
                 <div class="row align-items-center">
@@ -216,7 +300,9 @@
         </div>
     </div> 
 
-</div>
+</div> -->
+
+<!-- grafik -->
 
 <div class="row mt-4">
 
