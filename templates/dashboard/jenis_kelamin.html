@@ -1,164 +1,262 @@
 {% extends 'base.html' %} {% block content %}
 
-<h3 class="d-flex justify-content-center">Jumlah Penduduk Berdasarkan Jenis Kelamin Menurut Kecamatan di Kota Tangerang Selatan</h3>
+<div class="page-inner">
 
-<div class="row justify-content-center">
-  <!-- Jumlah Data -->
+    <div class="page-header">
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-info bubble-shadow-small">
-              <i class="fas fa-users"></i>
-            </div>
-          </div>
+        <h3 class="fw-bold mb-3">
+            Penduduk Berdasarkan Jenis Kelamin
+        </h3>
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Jumlah Data</p>
+        <ul class="breadcrumbs mb-3">
 
-              <h4 class="card-title">{{ jumlah_data }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
+            <li class="nav-home">
+                <a href="/">
+                    <i class="icon-home"></i>
+                </a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+             <li class="nav-item">
+                <a href="#">Sosial</a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Dinas Kependudukan</a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Jenis Kelamin</a>
+            </li>
+
+        </ul>
+
     </div>
-  </div>
 
-  <!-- Tahun -->
+<!-- card -->
+ <div class="row">
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-success bubble-shadow-small">
-              <i class="fas fa-calendar"></i>
+    <div class="col-md-4">
+
+        <div class="card card-stats card-primary">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Jumlah Data
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_data }}
+                    </h4>
+
+                </div>
+
             </div>
-          </div>
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Tahun Data</p>
-
-              <h4 class="card-title">{{ tahun }}</h4>
-            </div>
-          </div>
         </div>
-      </div>
+
     </div>
-  </div>
 
-  <!-- Kecamatan -->
+    <div class="col-md-4">
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-primary bubble-shadow-small">
-              <i class="fas fa-map-marker-alt"></i>
+        <div class="card card-stats card-success">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Total Kecamatan
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_kecamatan }}
+                    </h4>
+
+                </div>
+
             </div>
-          </div>
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Total Kecamatan</p>
-
-              <h4 class="card-title">{{ jumlah_kecamatan }}</h4>
-            </div>
-          </div>
         </div>
-      </div>
+
     </div>
-  </div>
+
+    <div class="col-md-4">
+
+        <div class="card card-stats card-warning">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Tahun
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ tahun }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
+<!-- Tabel -->
 <div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h4 class="card-title mb-0">Data Penduduk Berdasarkan Jenis Kelamin</h4>
 
-    <a href="{% url 'download_penduduk_jenis_kelamin' %}" class="btn btn-label-success btn-round btn-sm">
-      <span class="btn-label">
-        <i class="fa fa-download"></i>
-      </span>
+    <div class="card-header">
 
-      Excel
-    </a>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#apiModal">REST API</button>
-  </div>
+        <div class="d-flex justify-content-between align-items-center">
 
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Kode Wilayah</th>
-            
-            <th>Kecamatan</th>
+            <h4 class="card-title">
+                Data Penduduk Berdasarkan Jenis Kelamin
+            </h4>
 
-            <th>Laki-laki</th>
+            <div>
 
-            <th>Perempuan</th>
+                <a href="{% url 'download_penduduk_jenis_kelamin' %}" class="btn btn-success">
 
-            <th>Jumlah</th>
-          </tr>
-        </thead>
+                    Download Excel
 
-        <tbody>
-          {% for row in data %}
+                </a>
 
-          <tr>
-            <td>{{ row.kode }}</td>
+                <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#apiModal">
 
-            <td>{{ row.kecamatan }}</td>
+                    REST API
 
-            <td>{{ row.laki_laki }}</td>
+                </button>
 
-            <td>{{ row.perempuan }}</td>
+            </div>
 
-            <td>{{ row.jumlah }}</td>
-          </tr>
+        </div>
 
-          {% endfor %}
-        </tbody>
-      </table>
     </div>
-  </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped">
+
+                <thead>
+
+                    <tr>
+
+                        <th>No</th>
+                        <th>Kode Wilayah</th>
+                        <th>Kecamatan</th>
+                        <th>Laki-laki</th>
+                        <th>Perempuan</th>
+                        <th>Jumlah</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in data %}
+
+                    <tr>
+
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ row.kode }}</td>
+                        <td>{{ row.kecamatan }}</td>
+                        <td>{{ row.laki_laki }}</td>
+                        <td>{{ row.perempuan }}</td>
+                        <td>{{ row.jumlah }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </div>
 
 <br />
 
-<div class="row mt-4">
-  <!-- Grafik 1 -->
+<!-- GRAFIK -->
 
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Jumlah Penduduk per Kecamatan</h4>
-      </div>
+<div class="row">
 
-      <div class="card-body" style="height: 420px">
-        <canvas id="jumlahPendudukChart"></canvas>
-      </div>
+    <div class="col-md-6">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h4 class="card-title">
+
+                    Jumlah Penduduk per Kecamatan
+
+                </h4>
+
+            </div>
+
+            <div style="height:420px">
+
+                <canvas id="jumlahPendudukChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
 
-  <!-- Grafik 2 -->
+    <div class="col-md-6">
 
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Perbandingan Penduduk Laki-laki dan Perempuan</h4>
-      </div>
+        <div class="card">
 
-      <div class="card-body" style="height: 500px">
-        <canvas id="jenisKelaminChart"></canvas>
-      </div>
+            <div class="card-header">
+
+                <h4 class="card-title">
+
+                    Perbandingan Laki-laki dan Perempuan
+
+                </h4>
+
+            </div>
+
+            <div style="height:420px">
+
+                <canvas id="jenisKelaminChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

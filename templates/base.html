@@ -52,7 +52,7 @@
           <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
               <img
-                src="{% static 'assets/img/kaiadmin/logo_dash.png' %}"
+                src="{% static 'assets/img/kaiadmin/logo_dashboard.png' %}"
                 alt="navbar brand"
                 class="navbar-brand"
                 height="110"
@@ -352,7 +352,7 @@
 
                                   <a href="{% url 'pajak_pariwisata' %}">
 
-                                      <span class="sub-item">Realisasi Pajak Pariwisata Kota Tangerang Selatan Tahun 2018-2021</span>
+                                      <span class="sub-item">Realisasi Pajak Pariwisata </span>
 
                                   </a>
 
@@ -385,7 +385,7 @@
 
                                   <a href="{% url 'rasio_belanja' %}">
 
-                                      <span class="sub-item">Rasio Belanja Pemerintah Kota Tangerang Selatan</span>
+                                      <span class="sub-item">Rasio Belanja</span>
 
                                   </a>
 
@@ -410,7 +410,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="index.html" class="logo">
                 <img
-                  src="{% static 'assets/img/kaiadmin/logo_light.svg' %}"
+                  src="{% static 'assets/img/kaiadmin/logo_dash.png' %}"
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"
@@ -434,66 +434,25 @@
           <nav
             class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
           >
+             <button class="btn btn-toggle me-3" id="toggleSidebar">
+                <i class="fas fa-bars"></i>
+              </button>
+
             <div class="container-fluid">
-              
 
-              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+              <!-- Judul Dashboard -->
+              <div class="d-flex align-items-center">
 
-                <li class="nav-item topbar-user dropdown hidden-caret">
-                  <a
-                    class="dropdown-toggle profile-pic"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    aria-expanded="false"
-                  >
-                    <div class="avatar-sm">
-                      <img
-                        src="{% static 'assets/img/profile.jpg' %}"
-                        alt="..."
-                        class="avatar-img rounded-circle"
-                      />
-                    </div>
-                    <span class="profile-username">
-                      <span class="op-7">Hi,</span>
-                      <span class="fw-bold">Admin</span>
-                    </span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-user animated fadeIn">
-                    <div class="dropdown-user-scroll scrollbar-outer">
-                      <li>
-                        <div class="user-box">
-                          <div class="avatar-lg">
-                            <img
-                              src="{% static 'assets/img/profile.jpg' %}"
-                              alt="image profile"
-                              class="avatar-img rounded"
-                            />
-                          </div>
-                          <div class="u-text">
-                            <h4>Hizrian</h4>
-                            <p class="text-muted">hello@example.com</p>
-                            <a
-                              href="profile.html"
-                              class="btn btn-xs btn-secondary btn-sm"
-                              >View Profile</a
-                            >
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">My Profile</a>
-                        <a class="dropdown-item" href="#">My Balance</a>
-                        <a class="dropdown-item" href="#">Inbox</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Account Setting</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Logout</a>
-                      </li>
-                    </div>
-                  </ul>
-                </li>
-              </ul>
+                <div class="ms-2">
+
+                  <h5 class="mb-0 fw-bold">
+                    Dashboard Statistik Sosial Ekonomi Kota Tangerang Selatan
+                  </h5>
+
+                </div>
+
+              </div>
+
             </div>
           </nav>
           <!-- End Navbar -->
@@ -516,200 +475,6 @@
         </footer>
       </div>
 
-      <!-- Custom template | don't include it in your project! -->
-      <div class="custom-template">
-        <div class="title">Settings</div>
-        <div class="custom-content">
-          <div class="switcher">
-            <div class="switch-block">
-              <h4>Logo Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Navbar Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeTopBarColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Sidebar</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="white"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeSideBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark2"
-                ></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="custom-toggle">
-          <i class="icon-settings"></i>
-        </div>
-      </div>
-      <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
     <script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>

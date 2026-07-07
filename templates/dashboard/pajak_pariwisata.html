@@ -1,160 +1,258 @@
 {% extends 'base.html' %} {% block content %}
 
-<h3 class="d-flex justify-content-center">Realisasi Pajak Pariwisata Kota Tangerang Selatan Tahun 2018-2021</h3>
+<div class="page-inner">
 
-<div class="row justify-content-center">
-  <!-- Jumlah Data -->
+    <div class="page-header">
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-info bubble-shadow-small">
-              <i class="fas fa-money-bill-wave"></i>
-            </div>
-          </div>
+        <h3 class="fw-bold mb-3">
+            Realisasi Pajak Pariwisata
+        </h3>
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Jumlah Data</p>
+        <ul class="breadcrumbs mb-3">
 
-              <h4 class="card-title">{{ jumlah_data }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
+            <li class="nav-home">
+                <a href="/">
+                    <i class="icon-home"></i>
+                </a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Ekonomi</a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Bapenda</a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Pajak Pariwisata</a>
+            </li>
+
+        </ul>
+
     </div>
-  </div>
 
-  <!-- Tahun -->
+<!-- card -->
+ <div class="row">
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-success bubble-shadow-small">
-              <i class="fas fa-calendar-alt"></i>
+    <div class="col-md-4">
+
+        <div class="card card-stats card-primary">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Jumlah Data
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_data }}
+                    </h4>
+
+                </div>
+
             </div>
-          </div>
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Periode</p>
-
-              <h4 class="card-title">{{ tahun }}</h4>
-            </div>
-          </div>
         </div>
-      </div>
+
     </div>
-  </div>
 
-  <!-- Jumlah Tahun -->
+    <div class="col-md-4">
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-primary bubble-shadow-small">
-              <i class="fas fa-chart-line"></i>
+        <div class="card card-stats card-success">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Jumlah Tahun
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_tahun }}
+                    </h4>
+
+                </div>
+
             </div>
-          </div>
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Jumlah Tahun</p>
-
-              <h4 class="card-title">{{ jumlah_tahun }}</h4>
-            </div>
-          </div>
         </div>
-      </div>
+
     </div>
-  </div>
+
+    <div class="col-md-4">
+
+        <div class="card card-stats card-warning">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Periode
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ tahun }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
+<!-- table -->
 <div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h4 class="card-title mb-0">Data Pajak Pariwisata</h4>
 
-    <a href="{% url 'download_pajak_pariwisata' %}" class="btn btn-label-success btn-round btn-sm">
-      <span class="btn-label">
-        <i class="fa fa-download"></i>
-      </span>
+    <div class="card-header">
 
-      Excel
-    </a>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#apiModal">REST API</button>
-  </div>
+        <div class="d-flex justify-content-between align-items-center">
 
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th>No</th>
+            <h4 class="card-title">
+                Data Pajak Pariwisata
+            </h4>
 
-            <th>Tahun</th>
+            <div>
 
-            <th>Jenis Pajak</th>
+                <a href="{% url 'download_pajak_pariwisata' %}" class="btn btn-success">
 
-            <th>Realisasi (Rp)</th>
-          </tr>
-        </thead>
+                    Download Excel
 
-        <tbody>
-          {% for row in data %}
+                </a>
 
-          <tr>
-            <td>{{ forloop.counter }}</td>
+                <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#apiModal">
 
-            <td>{{ row.tahun }}</td>
+                    REST API
 
-            <td>{{ row.jenis_pajak }}</td>
+                </button>
 
-            <td>{{ row.realisasi }}</td>
-          </tr>
+            </div>
 
-          {% endfor %}
-        </tbody>
-      </table>
+        </div>
+
     </div>
-  </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped">
+
+                <thead>
+
+                    <tr>
+
+                        <th>No</th>
+                        <th>Tahun</th>
+                        <th>Jenis Pajak</th>
+                        <th>Realisasi (Rp)</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in data %}
+
+                    <tr>
+
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ row.tahun }}</td>
+                        <td>{{ row.jenis_pajak }}</td>
+                        <td>{{ row.realisasi }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </div>
 
 <br />
 
-<div class="row mt-4">
-  <!-- Grafik 1 -->
+<!-- Grafik -->
 
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Realisasi Pajak Pariwisata Tahun 2018-2021</h4>
-      </div>
+<div class="row">
 
-      <div class="card-body" style="height: 450px">
-        <canvas id="pajakChart"></canvas>
-      </div>
+    <div class="col-md-6">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h4 class="card-title">
+
+                    Realisasi Pajak Pariwisata
+
+                </h4>
+
+            </div>
+
+            <div style="height:420px">
+
+                <canvas id="pajakChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
 
-  <!-- Grafik 2 -->
+    <div class="col-md-6">
 
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Tren Realisasi Pajak Pariwisata per Jenis Pajak</h4>
-      </div>
+        <div class="card">
 
-      <div class="card-body" style="height: 500px">
-        <canvas id="trenPajakChart"></canvas>
-      </div>
+            <div class="card-header">
+
+                <h4 class="card-title">
+
+                    Tren Pajak per Jenis
+
+                </h4>
+
+            </div>
+
+            <div style="height:420px">
+
+                <canvas id="trenPajakChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

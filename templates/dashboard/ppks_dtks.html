@@ -1,122 +1,212 @@
 {% extends 'base.html' %} {% block content %}
 
-<h3 class="d-flex justify-content-center">Data PPKS Mandiri dan Persentase DTKS Menurut Kecamatan di Kota Tangerang Selatan</h3>
+<div class="page-header">
 
-<div class="row justify-content-center">
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-info bubble-shadow-small">
-              <i class="fas fa-users"></i>
-            </div>
-          </div>
+    <h3 class="fw-bold mb-3">
+        Data PPKS Mandiri dan Persentase DTKS 
+    </h3>
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Jumlah Data</p>
+    <ul class="breadcrumbs mb-3">
 
-              <h4 class="card-title">{{ jumlah_data }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <li class="nav-home">
+            <a href="/">
+                <i class="icon-home"></i>
+            </a>
+        </li>
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-success bubble-shadow-small">
-              <i class="fas fa-calendar"></i>
-            </div>
-          </div>
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Tahun Data</p>
+        <li class="nav-item">
+                <a href="#">Sosial</a>
+            </li>
 
-              <h4 class="card-title">{{ tahun }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-primary bubble-shadow-small">
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-          </div>
+            <li class="nav-item">
+                <a href="#">Dinas Sosial</a>
+            </li>
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Total Kecamatan</p>
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
 
-              <h4 class="card-title">{{ jumlah_kecamatan }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+        <li class="nav-item">
+            <a href="#">PPKS & DTKS</a>
+        </li>
+
+    </ul>
+
 </div>
 
-<div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h4 class="card-title mb-0">Data PPKS & DTKS</h4>
+<!-- card -->
+ <div class="row">
 
-    <a href="{% url 'download_ppks_dtks' %}" class="btn btn-label-success btn-round btn-sm me-2">
-      <span class="btn-label">
-        <i class="fa fa-download"></i>
-      </span>
+    <div class="col-md-4">
 
-      Excel
-    </a>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#apiModal">REST API</button>
-  </div>
+        <div class="card card-stats card-primary">
 
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Kecamatan</th>
+            <div class="card-body">
 
-            <th>Jumlah PPKS Mandiri</th>
+                <div class="numbers">
 
-            <th>Persentase PPKS Anak Terlantar yang Tertangani dan DTKS yang Terverifikasi dan Tervalidasi</th>
-          </tr>
-        </thead>
+                    <p class="card-category">
+                        Jumlah Data
+                    </p>
 
-        <tbody>
-          {% for row in data %}
+                    <h4 class="card-title">
+                        {{ jumlah_data }}
+                    </h4>
 
-          <tr>
-            <td>{{ row.kecamatan }}</td>
+                </div>
 
-            <td>{{ row.ppks }}</td>
+            </div>
 
-            <td>{{ row.dtks }}</td>
-          </tr>
+        </div>
 
-          {% endfor %}
-        </tbody>
-      </table>
     </div>
-  </div>
+
+    <div class="col-md-4">
+
+        <div class="card card-stats card-warning">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Total Kecamatan
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_kecamatan }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <div class="col-md-4">
+
+        <div class="card card-stats card-success">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Tahun Data
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ tahun }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TABEL -->
+ <div class="card">
+
+    <div class="card-header">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h4 class="card-title">
+                Tabel Data PPKS & DTKS
+            </h4>
+
+            <div>
+
+                <a href="{% url 'download_ppks_dtks' %}" class="btn btn-success">
+
+                    Download Excel
+
+                </a>
+
+                <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#apiModal">
+
+                    REST API
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped">
+
+                <thead>
+
+                    <tr>
+
+                        <th>No</th>
+
+                        <th>Kecamatan</th>
+
+                        <th>Jumlah PPKS Mandiri</th>
+
+                        <th>Persentase PPKS Anak Terlantar yang Tertangani dan DTKS yang Terverifikasi dan Tervalidasi</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in data %}
+
+                    <tr>
+
+                        <td>{{ forloop.counter }}</td>
+
+                        <td>{{ row.kecamatan }}</td>
+
+                        <td>{{ row.ppks }}</td>
+
+                        <td>{{ row.dtks }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </div>
 
 <br />
-
+<!-- GRAFIK -->
+ 
 <div class="row mt-4">
   <div class="col-md-12">
     <div class="card">

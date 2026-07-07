@@ -1,162 +1,283 @@
 {% extends 'base.html' %} {% block content %}
 
-<h3 class="d-flex justify-content-center">Jenis Air Minum yang Dikonsumsi Rumah Tangga Menurut Kecamatan di Kota Tangerang Selatan</h3>
+<div class="page-inner">
 
-<div class="row justify-content-center">
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-info bubble-shadow-small">
-              <i class="fas fa-user-check"></i>
-            </div>
-          </div>
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Jumlah Data</p>
-              <h4 class="card-title">{{ jumlah_air_minum }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <div class="page-header">
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-info bubble-shadow-small">
-              <i class="fas fa-user-check"></i>
-            </div>
-          </div>
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Tahun Data</p>
-              <h4 class="card-title">{{ tahun }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <h3 class="fw-bold mb-3">
+            Jenis Air Minum yang Dikonsumsi Rumah Tangga
+        </h3>
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-info bubble-shadow-small">
-              <i class="fas fa-user-check"></i>
-            </div>
-          </div>
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Total Kecamatan</p>
-              <h4 class="card-title">{{ jumlah_kecamatan }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <ul class="breadcrumbs mb-3">
+
+            <li class="nav-home">
+                <a href="/">
+                    <i class="icon-home"></i>
+                </a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Sosial</a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Dinas Sosial</a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Air Minum</a>
+            </li>
+
+        </ul>
+
 </div>
+
+<!-- CARD -->
+<div class="row">
+
+    <div class="col-md-4">
+
+        <div class="card card-stats card-primary">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Jumlah Data
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_air_minum }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card card-stats card-success">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Jumlah Kecamatan
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_kecamatan }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card card-stats card-warning">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Tahun Data
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ tahun }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TABEL -->
+<!-- TABEL -->
 
 <div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h4 class="card-title mb-0">Data Jenis Air Minum</h4>
 
-    <a href="{% url 'download_air' %}" class="btn btn-label-success btn-round btn-sm me-2">
-      <span class="btn-label">
-        <i class="fa fa-download"></i>
-      </span>
-      Excel
-    </a>
+    <div class="card-header">
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#apiModal">REST API</button>
-  </div>
+        <div class="d-flex justify-content-between align-items-center">
 
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Kecamatan</th>
-            <th>Air Isi Ulang</th>
-            <th>Air Kemasan Bermerk</th>
-            <th>Air Sungai/Danau/Waduk</th>
-            <th>Lainnya</th>
-            <th>Leding Eceran</th>
-            <th>Leding Meteran</th>
-            <th>Air Hujan</th>
-            <th>Mata Air Tak Terlindung</th>
-            <th>Mata Air Terlindung</th>
-            <th>Sumur Bor/Pompa</th>
-            <th>Sumur Tak Terlindung</th>
-            <th>Sumur Terlindung</th>
-            <th>Grand Total</th>
-          </tr>
-        </thead>
+            <h4 class="card-title">
+                Tabel Jenis Air Minum
+            </h4>
 
-        <tbody>
-          {% for row in data %}
+            <div>
 
-          <tr>
-            <td>{{ row.kecamatan }}</td>
-            <td>{{ row.air_isi }}</td>
-            <td>{{ row.air_kemasan }}</td>
-            <td>{{ row.air_sungai }}</td>
-            <td>{{ row.lainnya }}</td>
-            <td>{{ row.leding_eceran }}</td>
-            <td>{{ row.leding_meteran }}</td>
-            <td>{{ row.air_hujan }}</td>
-            <td>{{ row.mata_air_tak }}</td>
-            <td>{{ row.mata_air_ter }}</td>
-            <td>{{ row.sumur_bor }}</td>
-            <td>{{ row.sumur_tak }}</td>
-            <td>{{ row.sumur_ter }}</td>
-            <td>{{ row.total }}</td>
-          </tr>
+                <a href="{% url 'download_air' %}" class="btn btn-success">
 
-          {% endfor %}
-        </tbody>
-      </table>
+                    Download Excel
+
+                </a>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#apiModal">
+
+                    REST API
+
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped">
+
+                <thead>
+
+                    <tr>
+
+                        <th>No</th>
+                        <th>Kecamatan</th>
+                        <th>Air Isi Ulang</th>
+                        <th>Air Kemasan Bermerk</th>
+                        <th>Air Sungai / Danau / Waduk</th>
+                        <th>Lainnya</th>
+                        <th>Leding Eceran</th>
+                        <th>Leding Meteran</th>
+                        <th>Air Hujan</th>
+                        <th>Mata Air Tak Terlindung</th>
+                        <th>Mata Air Terlindung</th>
+                        <th>Sumur Bor / Pompa</th>
+                        <th>Sumur Tak Terlindung</th>
+                        <th>Sumur Terlindung</th>
+                        <th>Grand Total</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in data %}
+
+                    <tr>
+
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ row.kecamatan }}</td>
+                        <td>{{ row.air_isi }}</td>
+                        <td>{{ row.air_kemasan }}</td>
+                        <td>{{ row.air_sungai }}</td>
+                        <td>{{ row.lainnya }}</td>
+                        <td>{{ row.leding_eceran }}</td>
+                        <td>{{ row.leding_meteran }}</td>
+                        <td>{{ row.air_hujan }}</td>
+                        <td>{{ row.mata_air_tak }}</td>
+                        <td>{{ row.mata_air_ter }}</td>
+                        <td>{{ row.sumur_bor }}</td>
+                        <td>{{ row.sumur_tak }}</td>
+                        <td>{{ row.sumur_ter }}</td>
+                        <td>{{ row.total }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </div>
+
+
 
 <br />
 
-<div class="row mt-4">
-  <!-- Grafik 1 -->
+<!-- GRAFIK -->
 
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Jumlah Pengguna Sumber Air Minum per Kecamatan</h4>
-      </div>
+<div class="row">
 
-      <div class="card-body" style="height: 420px">
-        <canvas id="airChart"></canvas>
-      </div>
+    <!-- Grafik 1 -->
+    <div class="col-md-6">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h4 class="card-title">
+                    Jumlah Pengguna Sumber Air Minum per Kecamatan
+                </h4>
+
+            </div>
+
+            <div style="height:420px">
+
+                <canvas id="airChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
 
-  <!-- Grafik 2 -->
+    <!-- Grafik 2 -->
+    <div class="col-md-6">
 
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Perbandingan Jenis Air Minum per Kecamatan</h4>
-      </div>
+        <div class="card">
 
-      <div class="card-body" style="height: 550px">
-        <canvas id="jenisAirChart"></canvas>
-      </div>
+            <div class="card-header">
+
+                <h4 class="card-title">
+                    Distribusi Jenis Air Minum
+                </h4>
+
+            </div>
+
+            <div style="height:420px">
+
+                <canvas id="jenisAirChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

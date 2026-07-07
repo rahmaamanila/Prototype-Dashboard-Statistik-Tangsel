@@ -2,92 +2,156 @@
 
 {% block content %}
 
-<h3 class="d-flex justify-content-center">Jumlah Kepemilikan Rumah Keluarga Menurut Status dan Kecamatan di Kota Tangerang Selatan</h3>
+<div class="page-header">
 
-<div class="row justify-content-center">
-    <div class="col-sm-6 col-md-3">
-        <div class="card card-stats card-round">
+    <h3 class="fw-bold mb-3">
+        Jumlah Kepemilikan Rumah Keluarga Menurut Status dan Kecamatan
+    </h3>
+
+    <ul class="breadcrumbs mb-3">
+
+        <li class="nav-home">
+            <a href="/">
+                <i class="icon-home"></i>
+            </a>
+        </li>
+
+        <li class="separator">
+            <i class="icon-arrow-right"></i>
+        </li>
+
+         <li class="nav-item">
+                <a href="#">Sosial</a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Dinas Sosial</a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+        <li class="nav-item">
+            <a href="#">Kepemilikan Rumah</a>
+        </li>
+
+    </ul>
+
+</div>
+
+<!-- CARD -->
+ <div class="row">
+
+    <div class="col-md-4">
+
+        <div class="card card-stats card-primary">
+
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-icon">
-                        <div
-                            class="icon-big text-center icon-info bubble-shadow-small"
-                        >
-                            <i class="fas fa-user-check"></i>
-                        </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                            <p class="card-category">Jumlah Data</p>
-                            <h4 class="card-title">{{ jumlah_rumah }}</h4>
-                        </div>
-                    </div>
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Jumlah Data
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_rumah }}
+                    </h4>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
 
-    <div class="col-sm-6 col-md-3">
-        <div class="card card-stats card-round">
+    <div class="col-md-4">
+
+        <div class="card card-stats card-warning">
+
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-icon">
-                        <div
-                            class="icon-big text-center icon-info bubble-shadow-small"
-                        >
-                            <i class="fas fa-user-check"></i>
-                        </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                            <p class="card-category">Tahun Data</p>
-                            <h4 class="card-title">{{ tahun }}</h4>
-                        </div>
-                    </div>
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Total Kecamatan
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_kecamatan }}
+                    </h4>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
 
-    <div class="col-sm-6 col-md-3">
-        <div class="card card-stats card-round">
+    <div class="col-md-4">
+
+        <div class="card card-stats card-success">
+
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-icon">
-                        <div
-                            class="icon-big text-center icon-info bubble-shadow-small"
-                        >
-                            <i class="fas fa-user-check"></i>
-                        </div>
-                    </div>
-                    <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                            <p class="card-category">Total Kecamatan</p>
-                            <h4 class="card-title">{{ jumlah_kecamatan }}</h4>
-                        </div>
-                    </div>
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Tahun Data
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ tahun }}
+                    </h4>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
 
 </div>
 
-<div class="card">
+<!-- TABEL -->
+ <div class="card">
 
-    <div class="card-header d-flex justify-content-between align-items-center">
+    <div class="card-header">
 
-        <h4 class="card-title mb-0">
-            Data Kepemilikan Rumah
-        </h4>
+        <div class="d-flex justify-content-between align-items-center">
 
-        <a href="{% url 'download_rumah' %}" class="btn btn-label-success btn-round btn-sm me-2">
-            <span class="btn-label">
-                <i class="fa fa-download"></i>
-            </span>
-            Excel
-        </a>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#apiModal">REST API</button>
+            <h4 class="card-title">
+                Tabel Kepemilikan Rumah
+            </h4>
+
+            <div>
+
+                <a href="{% url 'download_rumah' %}" class="btn btn-success">
+
+                    Download Excel
+
+                </a>
+
+                <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#apiModal">
+
+                    REST API
+
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -95,12 +159,13 @@
 
         <div class="table-responsive">
 
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-striped">
 
                 <thead>
 
                     <tr>
 
+                        <th>No</th>
                         <th>Kecamatan</th>
                         <th>Bebas Sewa</th>
                         <th>Dinas</th>
@@ -108,7 +173,7 @@
                         <th>Lainnya</th>
                         <th>Milik Sendiri</th>
                         <th>Grand Total</th>
-                        
+
                     </tr>
 
                 </thead>
@@ -119,6 +184,7 @@
 
                     <tr>
 
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ row.kecamatan }}</td>
                         <td>{{ row.bebas_sewa }}</td>
                         <td>{{ row.dinas }}</td>
@@ -143,11 +209,10 @@
 
 <br>
 
-<div class="row mt-4">
+<!-- GRAFIK -->
+ <div class="row mt-4">
 
-    <!-- Grafik 1 -->
-
-    <div class="col-md-12">
+    <div class="col-md-6">
 
         <div class="card">
 
@@ -159,7 +224,7 @@
 
             </div>
 
-            <div class="card-body" style="height:400px;">
+            <div style="height:420px">
 
                 <canvas id="totalChart"></canvas>
 
@@ -169,9 +234,7 @@
 
     </div>
 
-    <!-- Grafik 2 -->
-
-    <div class="col-md-12">
+    <div class="col-md-6">
 
         <div class="card">
 
@@ -183,7 +246,7 @@
 
             </div>
 
-            <div class="card-body" style="height:450px;">
+            <div style="height:420px">
 
                 <canvas id="jenisChart"></canvas>
 

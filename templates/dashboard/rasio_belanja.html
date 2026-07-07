@@ -1,145 +1,258 @@
 {% extends 'base.html' %} {% block content %}
 
-<h3 class="d-flex justify-content-center">Rasio Belanja Pemerintah Kota Tangerang Selatan</h3>
+<div class="page-inner">
 
-<div class="row justify-content-center">
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-info bubble-shadow-small">
-              <i class="fas fa-wallet"></i>
-            </div>
-          </div>
+    <div class="page-header">
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Jumlah Data</p>
-              <h4 class="card-title">{{ jumlah_data }}</h4>
-            </div>
-          </div>
-        </div>
-      </div>
+        <h3 class="fw-bold mb-3">
+            Rasio Belanja Pemerintah
+        </h3>
+
+        <ul class="breadcrumbs mb-3">
+
+            <li class="nav-home">
+                <a href="/">
+                    <i class="icon-home"></i>
+                </a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Ekonomi</a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">BKAD</a>
+            </li>
+
+            <li class="separator">
+                <i class="icon-arrow-right"></i>
+            </li>
+
+            <li class="nav-item">
+                <a href="#">Rasio Belanja</a>
+            </li>
+
+        </ul>
+
     </div>
-  </div>
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-success bubble-shadow-small">
-              <i class="fas fa-calendar-alt"></i>
-            </div>
-          </div>
+<!-- card -->
+ <div class="row">
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Tahun Data</p>
-              <h4 class="card-title">{{ tahun }}</h4>
+    <div class="col-md-4">
+
+        <div class="card card-stats card-primary">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Jumlah Data
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_data }}
+                    </h4>
+
+                </div>
+
             </div>
-          </div>
+
         </div>
-      </div>
+
     </div>
-  </div>
 
-  <div class="col-sm-6 col-md-3">
-    <div class="card card-stats card-round">
-      <div class="card-body">
-        <div class="row align-items-center">
-          <div class="col-icon">
-            <div class="icon-big text-center icon-primary bubble-shadow-small">
-              <i class="fas fa-list"></i>
-            </div>
-          </div>
+    <div class="col-md-4">
 
-          <div class="col col-stats ms-3 ms-sm-0">
-            <div class="numbers">
-              <p class="card-category">Jumlah Kategori</p>
-              <h4 class="card-title">{{ jumlah_kategori }}</h4>
+        <div class="card card-stats card-success">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Jumlah Kategori
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ jumlah_kategori }}
+                    </h4>
+
+                </div>
+
             </div>
-          </div>
+
         </div>
-      </div>
+
     </div>
-  </div>
+
+    <div class="col-md-4">
+
+        <div class="card card-stats card-warning">
+
+            <div class="card-body">
+
+                <div class="numbers">
+
+                    <p class="card-category">
+                        Tahun
+                    </p>
+
+                    <h4 class="card-title">
+                        {{ tahun }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h4 class="card-title mb-0">Data Rasio Belanja</h4>
+<!-- Tabel -->
+ <div class="card">
 
-    <a href="{% url 'download_rasio_belanja' %}" class="btn btn-label-success btn-round btn-sm me-2">
-      <span class="btn-label">
-        <i class="fa fa-download"></i>
-      </span>
+    <div class="card-header">
 
-      Excel
-    </a>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#apiModal">REST API</button>
-  </div>
+        <div class="d-flex justify-content-between align-items-center">
 
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Uraian</th>
-            <th>Pagu (Rp)</th>
-            <th>Rasio (%)</th>
-          </tr>
-        </thead>
+            <h4 class="card-title">
+                Data Rasio Belanja Pemerintah
+            </h4>
 
-        <tbody>
-          {% for row in data %}
+            <div>
 
-          <tr>
-            <td>{{ row.uraian }}</td>
+                <a href="{% url 'download_rasio_belanja' %}" class="btn btn-success">
 
-            <td>{{ row.pagu }}</td>
+                    Download Excel
 
-            <td>{{ row.rasio }}</td>
-          </tr>
+                </a>
 
-          {% endfor %}
-        </tbody>
-      </table>
+                <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#apiModal">
+
+                    REST API
+
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-striped">
+
+                <thead>
+
+                    <tr>
+
+                        <th>No</th>
+                        <th>Uraian</th>
+                        <th>Pagu (Rp)</th>
+                        <th>Rasio (%)</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for row in data %}
+
+                    <tr>
+
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ row.uraian }}</td>
+                        <td>{{ row.pagu }}</td>
+                        <td>{{ row.rasio }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </div>
 
 <br />
 
-<div class="row mt-4">
-  <!-- Grafik 1 -->
+<!-- Grafik -->
 
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Pagu Belanja Berdasarkan Uraian</h4>
-      </div>
+<div class="row">
 
-      <div class="card-body" style="height: 420px">
-        <canvas id="paguChart"></canvas>
-      </div>
+    <div class="col-md-6">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h4 class="card-title">
+
+                    Pagu Belanja Berdasarkan Uraian
+
+                </h4>
+
+            </div>
+
+            <div style="height:420px">
+
+                <canvas id="paguChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
 
-  <!-- Grafik 2 -->
+    <div class="col-md-6">
 
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Persentase Rasio Belanja</h4>
-      </div>
+        <div class="card">
 
-      <div class="card-body" style="height: 500px">
-        <canvas id="rasioChart"></canvas>
-      </div>
+            <div class="card-header">
+
+                <h4 class="card-title">
+
+                    Persentase Rasio Belanja
+
+                </h4>
+
+            </div>
+
+            <div style="height:420px">
+
+                <canvas id="rasioChart"></canvas>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
