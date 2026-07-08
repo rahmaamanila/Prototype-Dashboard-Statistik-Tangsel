@@ -3,6 +3,9 @@ from django.http import HttpResponse
 import json
 import pandas as pd
 from django.urls import reverse
+import csv
+from django.http import HttpResponse
+from django.db.models import ForeignKey
 
 from .models import (
     Dataset,
@@ -2504,3 +2507,56 @@ def kategori_ekonomi(request):
             "total_dinas": 5,
         }
     )
+
+# =====================================================
+# DOWNLOAD CSV
+# =====================================================
+
+def download_csv(request, dataset):
+
+    model_mapping = {
+        "siswamiskin": SiswaMiskin,
+        "air": AirMinum,
+        "kepemilikanlahan": Lahan,
+        "kepemilikanrumah": Rumah,
+        "statuskesejahteraan": Kesejahteraan,
+        "usia6064": PendudukUsia6064,
+        "jeniskelamin": PendudukJenisKelamin,
+        "penyandangdisabilitas": PenyandangDisabilitas,
+        "ppksdtks": PPKSDTKS,
+
+        "perikanan": KelompokPerikanan,
+        "jmlhumkm": UMKM,
+        "jmlhkoperasi": Koperasi,
+        "pajak": PajakPariwisata,
+        "rasio": RasioBelanja,
+        "perizinan": RealisasiPerizinan,
+        "investasi": ProyekInvestasi,
+        "apbd": RealisasiAPBD,
+    }
+
+    if dataset not in model_mapping:
+        return HttpResponse("Dataset tidak ditemukan")
+
+    model = model_mapping[dataset]
+
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = f'attachment; filename="{dataset}.csv"'
+
+    writer = csv.writer(response)
+
+    fields = [
+        field.name
+        for field in model._meta.fields
+        if (
+            field.name not in ["id", "created_at", "updated_at"]
+            and not isinstance(field, ForeignKey)
+        )
+    ]
+
+    writer.writerow(fields)
+
+    for obj in model.objects.all():
+        writer.writerow([getattr(obj, field) for field in fields])
+
+    return response

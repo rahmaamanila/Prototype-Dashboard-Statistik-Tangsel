@@ -76,6 +76,9 @@
         <h4 class="card-title">Tabel Realisasi Perizinan</h4>
 
         <a href="{% url 'download_realisasi_perizinan' %}" class="btn btn-success"> Download Excel </a>
+        <a href="{% url 'download_csv' 'perizinan' %}" class="btn btn-success"> 
+          Download CSV 
+        </a>
       </div>
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#apiModal">REST API</button>
     </div>

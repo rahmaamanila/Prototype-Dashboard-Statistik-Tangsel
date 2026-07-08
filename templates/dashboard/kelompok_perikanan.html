@@ -139,6 +139,11 @@
                     Download Excel
 
                 </a>
+                <a href="{% url 'download_csv' 'perikanan' %}" class="btn btn-success">
+
+                    Download CSV
+
+                </a>
 
                 <button
                     class="btn btn-primary"
@@ -169,7 +174,7 @@
                         <th>Kecamatan</th>
                         <th>Kelompok Pengolah</th>
                         <th>Kelompok Pemasaran</th>
-                        <th>Total</th>
+                        <!-- <th>Total</th> -->
 
                     </tr>
 
@@ -185,7 +190,7 @@
                         <td>{{ row.kecamatan }}</td>
                         <td>{{ row.pengolah }}</td>
                         <td>{{ row.pemasaran }}</td>
-                        <td>{{ row.total }}</td>
+                        <!-- <td>{{ row.total }}</td> -->
 
                     </tr>
 
