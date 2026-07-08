@@ -1,111 +1,65 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
 <div class="row">
+  <div class="col-lg-8">
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <!-- Bagian Kiri -->
+          <div class="col-md-7">
+            <h2 class="fw-bold">Dashboard Statistik Sosial Ekonomi</h2>
 
-    <div class="col-lg-8">
+            <p class="text-muted">Kota Tangerang Selatan</p>
+          </div>
 
-        <div class="card shadow-sm border-0">
-
-            <div class="card-body">
-
-                <div class="row align-items-center">
-
-                <!-- Bagian Kiri -->
-                <div class="col-md-7">
-
-                    <h2 class="fw-bold">
-                        Dashboard Statistik Sosial Ekonomi
-                    </h2>
-
-                    <p class="text-muted">
-                        Kota Tangerang Selatan
-                    </p>
-
-                </div>
-
-                <!-- Bagian Kanan -->
-                <div class="col-md-5 text-end">
-
-                    <img
-                        src="{% static 'assets/img/city.png' %}"
-                        class="img-fluid"
-                        style="max-height:180px;"
-                    >
-
-                </div>
-
-            </div>
-
-
-            </div>
-
+          <!-- Bagian Kanan -->
+          <div class="col-md-5 text-end">
+            <img src="{% static 'assets/img/city.png' %}" class="img-fluid" style="max-height: 180px" />
+          </div>
         </div>
-
+      </div>
     </div>
+  </div>
 
-    <div class="col-lg-4">
-
-        <div class="card card-stats card-round">
-
-            <div class="card-body">
-
-                <div class="row align-items-center">
-
-                    <div class="col-icon">
-
-                        <div class="icon-big text-center icon-primary bubble-shadow-small">
-
-                            <i class="fas fa-database"></i>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col">
-
-                        <div class="numbers">
-
-                            <p class="card-category">
-                                Total Dataset
-                            </p>
-
-                            <h3 class="card-title">
-                                {{ total_dataset }}
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+  <div class="col-lg-4">
+    <div class="card card-stats card-round">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-icon">
+            <div class="icon-big text-center icon-primary bubble-shadow-small">
+              <i class="fas fa-database"></i>
             </div>
+          </div>
 
+          <div class="col">
+            <div class="numbers">
+              <p class="card-category">Total Dataset</p>
+
+              <h3 class="card-title">{{ total_dataset }}</h3>
+            </div>
+          </div>
         </div>
-
+      </div>
     </div>
-
+  </div>
 </div>
 
 <!-- dropdown -->
 <div class="card mb-4">
-    <div class="card-body">
-        <div class="row align-items-center">
-            <div class="col-md-3">
-                <label class="fw-bold">Pilih Kategori</label>
-            </div>
-            <div class="col-md-9">
-                <select class="form-select" id="kategori">
-                    <option value="semua">Semua</option>
-                    <option value="sosial">Sosial</option>
-                    <option value="ekonomi">Ekonomi</option>
-                </select>
-            </div>
-        </div>
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-md-3">
+        <label class="fw-bold">Pilih Kategori</label>
+      </div>
+      <div class="col-md-9">
+        <select class="form-select" id="kategori">
+          <option value="semua">Semua</option>
+          <option value="sosial">Sosial</option>
+          <option value="ekonomi">Ekonomi</option>
+        </select>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- <div class="page-header">
@@ -327,459 +281,581 @@
 <!-- grafik -->
 
 <div class="row mt-4">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Jumlah Siswa Miskin per Kecamatan</h4>
+      </div>
 
-    <div class="col-md-6">
-
-        <div class="card">
-
-            <div class="card-header">
-                <h4 class="card-title">
-                    Jumlah Siswa Miskin per Kecamatan
-                </h4>
-            </div>
-
-            <div class="card-body" style="height:400px;">
-                <canvas id="siswaChart"></canvas>
-            </div>
-        </div>
+      <div class="card-body" style="height: 400px">
+        <canvas id="siswaChart"></canvas>
+      </div>
     </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">
-                    Kepemilikan Rumah
-                </h4>
-            </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Kepemilikan Rumah</h4>
+      </div>
 
-            <div class="card-body" style="height:400px;">
-                <canvas id="rumahChart"></canvas>
-            </div>
-        </div>
+      <div class="card-body" style="height: 400px">
+        <canvas id="rumahChart"></canvas>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="row mt-4">
-    <div class="col-md-6">
-        <div class="card">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Status Kepemilikan Lahan</h4>
+      </div>
 
-            <div class="card-header">
-                <h4 class="card-title">
-                    Status Kepemilikan Lahan
-                </h4>
-            </div>
-
-            <div class="card-body">
-                <div style="height:350px;">
-                    <canvas id="lahanChart"></canvas>
-                </div>
-            </div>
-
+      <div class="card-body">
+        <div style="height: 350px">
+          <canvas id="lahanChart"></canvas>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">
-                    Status Kesejahteraan
-                </h4>
-            </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Status Kesejahteraan</h4>
+      </div>
 
-            <div class="card-body">
-                <div style="height:350px;">
-                    <canvas id="sejahteraChart"></canvas>
-                </div>
-            </div>
+      <div class="card-body">
+        <div style="height: 350px">
+          <canvas id="sejahteraChart"></canvas>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="row mt-4">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">
-                    Jenis Air Minum
-                </h4>
-            </div>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Jenis Air Minum</h4>
+      </div>
 
-            <div class="card-body">
-                <div style="height:450px;">
-                    <canvas id="airChart"></canvas>
-                </div>
-            </div>
+      <div class="card-body">
+        <div style="height: 450px">
+          <canvas id="airChart"></canvas>
         </div>
+      </div>
     </div>
+  </div>
 </div>
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Penduduk Usia 60–64 Tahun</h4>
+      </div>
+
+      <div class="card-body" style="height: 400px">
+        <canvas id="usiaChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Penduduk Berdasarkan Jenis Kelamin</h4>
+      </div>
+
+      <div class="card-body" style="height: 400px">
+        <canvas id="jkChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Jenis Penyandang Disabilitas</h4>
+      </div>
+
+      <div class="card-body" style="height: 500px">
+        <canvas id="disChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Persentase DTKS per Kecamatan</h4>
+      </div>
+
+      <div class="card-body" style="height: 420px">
+        <canvas id="ppksChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-        // =====================================
-        // WARNA GRAFIK
-        // =====================================
+    // =====================================================
+    // WARNA GRAFIK
+    // =====================================================
 
-        const colors = [
-            "#4e73df",
-            "#1cc88a",
-            "#36b9cc",
-            "#f6c23e",
-            "#e74a3b",
-            "#6f42c1",
-            "#fd7e14",
-            "#20c997",
-            "#0dcaf0",
-            "#198754",
-            "#ffc107",
-            "#6610f2"
-        ];
+    const colors = [
+        "#4e73df",
+        "#1cc88a",
+        "#36b9cc",
+        "#f6c23e",
+        "#e74a3b",
+        "#6f42c1",
+        "#fd7e14",
+        "#20c997",
+        "#0dcaf0",
+        "#198754",
+        "#ffc107",
+        "#6610f2"
+    ];
 
-        // =====================================
-        // CHART 1 - SISWA MISKIN
-        // =====================================
+    // =====================================================
+    // CHART 1 - SISWA MISKIN
+    // =====================================================
 
-        const siswaCtx = document.getElementById("siswaChart");
+    const siswaCtx = document.getElementById("siswaChart");
 
-        if (siswaCtx) {
+    if (siswaCtx) {
 
-            const siswaLabels = {{ labels|safe }};
-            const siswaValues = {{ values|safe }};
+        const siswaLabels = {{ labels|safe }};
+        const siswaValues = {{ values|safe }};
 
-            new Chart(siswaCtx, {
-                type: "bar",
+        new Chart(siswaCtx, {
+            type: "bar",
 
-                data: {
-                    labels: siswaLabels,
+            data: {
+                labels: siswaLabels,
+                datasets: [{
+                    label: "Jumlah Siswa Miskin",
+                    data: siswaValues,
+                    backgroundColor: colors.slice(0, siswaLabels.length),
+                    borderColor: colors.slice(0, siswaLabels.length),
+                    borderWidth: 1
+                }]
+            },
 
-                    datasets: [{
-                        label: "Jumlah Siswa Miskin",
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
 
-                        data: siswaValues,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
 
-                        backgroundColor: colors.slice(0, siswaLabels.length),
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 
-                        borderColor: colors.slice(0, siswaLabels.length),
+    }
 
+    // =====================================================
+    // CHART 2 - KEPEMILIKAN RUMAH
+    // =====================================================
+
+    const rumahCtx = document.getElementById("rumahChart");
+
+    if (rumahCtx) {
+
+        const rumahLabels = {{ rumah_labels|safe }};
+        const rumahValues = {{ rumah_values|safe }};
+
+        new Chart(rumahCtx, {
+            type: "pie",
+
+            data: {
+                labels: rumahLabels,
+
+                datasets: [{
+                    data: rumahValues,
+                    backgroundColor: [
+                        "#4e73df",
+                        "#1cc88a",
+                        "#36b9cc",
+                        "#f6c23e",
+                        "#e74a3b"
+                    ],
+                    borderColor: "#ffffff",
+                    borderWidth: 2
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        position: "top"
+                    }
+                }
+            }
+        });
+
+    }
+
+    // =====================================================
+    // CHART 3 - KEPEMILIKAN LAHAN
+    // =====================================================
+
+    const lahanCtx = document.getElementById("lahanChart");
+
+    if (lahanCtx) {
+
+        const lahanLabels = {{ lahan_labels|safe }};
+        const lahanValues = {{ lahan_values|safe }};
+
+        new Chart(lahanCtx, {
+            type: "doughnut",
+
+            data: {
+                labels: lahanLabels,
+
+                datasets: [{
+                    data: lahanValues,
+                    backgroundColor: [
+                        "#4e73df",
+                        "#1cc88a",
+                        "#f6c23e",
+                        "#e74a3b"
+                    ],
+                    borderColor: "#ffffff",
+                    borderWidth: 2
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        position: "top"
+                    }
+                }
+            }
+        });
+
+    }
+
+    // =====================================================
+    // CHART 4 - STATUS KESEJAHTERAAN
+    // =====================================================
+
+    const sejahteraCtx = document.getElementById("sejahteraChart");
+
+    if (sejahteraCtx) {
+
+        const sejahteraLabels = {{ sejahtera_labels|safe }};
+        const lakiValues = {{ laki_values|safe }};
+        const perempuanValues = {{ perempuan_values|safe }};
+
+        new Chart(sejahteraCtx, {
+            type: "bar",
+
+            data: {
+                labels: sejahteraLabels,
+
+                datasets: [
+                    {
+                        label: "Laki-laki",
+                        data: lakiValues,
+                        backgroundColor: "#4e73df",
+                        borderColor: "#4e73df",
                         borderWidth: 1
-                    }]
-                },
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-                    plugins: {
-
-                        legend: {
-                            display: true
-                        }
-
                     },
-
-                    scales: {
-
-                        y: {
-                            beginAtZero: true
-                        }
-
-                    }
-
-                }
-
-            });
-
-        }
-
-        // =====================================
-        // CHART 2 - KEPEMILIKAN RUMAH
-        // =====================================
-
-        const rumahCtx = document.getElementById("rumahChart");
-
-        if (rumahCtx) {
-
-            const rumahLabels = {{ rumah_labels|safe }};
-            const rumahValues = {{ rumah_values|safe }};
-
-            new Chart(rumahCtx, {
-
-                type: "pie",
-
-                data: {
-
-                    labels: rumahLabels,
-
-                    datasets: [{
-
-                        data: rumahValues,
-
-                        backgroundColor: [
-                            "#4e73df",
-                            "#1cc88a",
-                            "#36b9cc",
-                            "#f6c23e",
-                            "#e74a3b"
-                        ],
-
-                        borderColor: "#ffffff",
-
-                        borderWidth: 2
-
-                    }]
-
-                },
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-                    plugins: {
-
-                        legend: {
-
-                            position: "top"
-
-                        }
-
-                    }
-
-                }
-
-            });
-
-        }
-
-        // =====================================
-        // CHART 3 - KEPEMILIKAN LAHAN
-        // =====================================
-
-        const lahanCtx = document.getElementById("lahanChart");
-
-        if (lahanCtx) {
-
-            const lahanLabels = {{ lahan_labels|safe }};
-            const lahanValues = {{ lahan_values|safe }};
-
-            new Chart(lahanCtx, {
-
-                type: "doughnut",
-
-                data: {
-
-                    labels: lahanLabels,
-
-                    datasets: [{
-
-                        data: lahanValues,
-
-                        backgroundColor: [
-                            "#4e73df",
-                            "#1cc88a",
-                            "#f6c23e",
-                            "#e74a3b"
-                        ],
-
-                        borderColor: "#ffffff",
-
-                        borderWidth: 2
-
-                    }]
-
-                },
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-                    plugins: {
-
-                        legend: {
-
-                            position: "top"
-
-                        }
-
-                    }
-
-                }
-
-            });
-
-        }
-
-        // =====================================
-        // CHART 4 - STATUS KESEJAHTERAAN
-        // =====================================
-
-        const sejahteraCtx = document.getElementById("sejahteraChart");
-
-        if (sejahteraCtx) {
-
-            const sejahteraLabels = {{ sejahtera_labels|safe }};
-            const lakiValues = {{ laki_values|safe }};
-            const perempuanValues = {{ perempuan_values|safe }};
-
-            new Chart(sejahteraCtx, {
-
-                type: "bar",
-
-                data: {
-
-                    labels: sejahteraLabels,
-
-                    datasets: [
-
-                        {
-
-                            label: "Laki-laki",
-
-                            data: lakiValues,
-
-                            backgroundColor: "#4e73df",
-
-                            borderColor: "#4e73df",
-
-                            borderWidth: 1
-
-                        },
-
-                        {
-
-                            label: "Perempuan",
-
-                            data: perempuanValues,
-
-                            backgroundColor: "#e74a3b",
-
-                            borderColor: "#e74a3b",
-
-                            borderWidth: 1
-
-                        }
-
-                    ]
-
-                },
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-                    plugins: {
-
-                        legend: {
-
-                            position: "top"
-
-                        }
-
-                    },
-
-                    scales: {
-
-                        x: {
-
-                            ticks: {
-
-                                maxRotation: 45,
-
-                                minRotation: 45
-
-                            }
-
-                        },
-
-                        y: {
-
-                            beginAtZero: true
-
-                        }
-
-                    }
-
-                }
-
-            });
-
-        }
-
-        // =====================================
-        // CHART 5 - AIR MINUM
-        // =====================================
-
-        const airCtx = document.getElementById("airChart");
-
-        if (airCtx) {
-
-            const airLabels = {{ air_labels|safe }};
-            const airValues = {{ air_values|safe }};
-
-            new Chart(airCtx, {
-
-                type: "bar",
-
-                data: {
-
-                    labels: airLabels,
-
-                    datasets: [{
-
-                        label: "Jumlah Pengguna",
-
-                        data: airValues,
-
-                        backgroundColor: colors,
-
-                        borderColor: colors,
-
+                    {
+                        label: "Perempuan",
+                        data: perempuanValues,
+                        backgroundColor: "#e74a3b",
+                        borderColor: "#e74a3b",
                         borderWidth: 1
+                    }
+                ]
+            },
 
-                    }]
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
 
+                plugins: {
+                    legend: {
+                        position: "top"
+                    }
                 },
 
-                options: {
-
-                    indexAxis: "y",
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-                    plugins: {
-
-                        legend: {
-
-                            display: false
-
+                scales: {
+                    x: {
+                        ticks: {
+                            maxRotation: 45,
+                            minRotation: 45
                         }
-
                     },
 
-                    scales: {
-
-                        x: {
-
-                            beginAtZero: true
-
-                        }
-
+                    y: {
+                        beginAtZero: true
                     }
-
                 }
+            }
+        });
 
-            });
+    }
 
-        }
+    // =====================================================
+    // CHART 5 - AIR MINUM
+    // =====================================================
 
-    });
+    const airCtx = document.getElementById("airChart");
+
+    if (airCtx) {
+
+        const airLabels = {{ air_labels|safe }};
+        const airValues = {{ air_values|safe }};
+
+        new Chart(airCtx, {
+            type: "bar",
+
+            data: {
+                labels: airLabels,
+
+                datasets: [{
+                    label: "Jumlah Pengguna",
+                    data: airValues,
+                    backgroundColor: colors,
+                    borderColor: colors,
+                    borderWidth: 1
+                }]
+            },
+
+            options: {
+                indexAxis: "y",
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+    }
+
+    // =====================================================
+    // CHART 6 - USIA
+    // =====================================================
+
+    const usiaCtx = document.getElementById("usiaChart");
+
+    if (usiaCtx) {
+
+        new Chart(usiaCtx, {
+            type: "bar",
+
+            data: {
+                labels: {{ usia_labels|safe }},
+
+                datasets: [{
+                    label: "Penduduk",
+                    data: {{ usia_values|safe }},
+                    backgroundColor: colors.slice(0, {{ usia_labels|safe }}.length),
+                    borderColor: colors.slice(0, {{ usia_labels|safe }}.length),
+                    borderWidth: 1
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+    }
+
+    // =====================================================
+    // CHART 7 - JENIS KELAMIN
+    // =====================================================
+
+    const jkCtx = document.getElementById("jkChart");
+
+    if (jkCtx) {
+
+        new Chart(jkCtx, {
+            type: "bar",
+
+            data: {
+                labels: {{ jk_labels|safe }},
+
+                datasets: [
+                    {
+                        label: "Laki-laki",
+                        data: {{ jk_laki|safe }},
+                        backgroundColor: "#4e73df",
+                        borderColor: "#4e73df",
+                        borderWidth: 1
+                    },
+                    {
+                        label: "Perempuan",
+                        data: {{ jk_perempuan|safe }},
+                        backgroundColor: "#e74a3b",
+                        borderColor: "#e74a3b",
+                        borderWidth: 1
+                    }
+                ]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+    }
+
+    // =====================================================
+    // CHART 8 - PENYANDANG DISABILITAS
+    // =====================================================
+
+    const disCtx = document.getElementById("disChart");
+
+    if (disCtx) {
+
+        new Chart(disCtx, {
+            type: "bar",
+
+            data: {
+                labels: {{ dis_labels|safe }},
+
+                datasets: [
+                    {
+                        label: "Tuna Fisik",
+                        data: {{ tuna_fisik|safe }},
+                        backgroundColor: "#4e73df",
+                        borderColor: "#4e73df"
+                    },
+                    {
+                        label: "Tuna Netra",
+                        data: {{ tuna_netra|safe }},
+                        backgroundColor: "#1cc88a",
+                        borderColor: "#1cc88a"
+                    },
+                    {
+                        label: "Tuna Rungu",
+                        data: {{ tuna_rungu|safe }},
+                        backgroundColor: "#36b9cc",
+                        borderColor: "#36b9cc"
+                    },
+                    {
+                        label: "Tuna Mental",
+                        data: {{ tuna_mental|safe }},
+                        backgroundColor: "#f6c23e",
+                        borderColor: "#f6c23e"
+                    },
+                    {
+                        label: "Fisik & Mental",
+                        data: {{ tuna_ganda|safe }},
+                        backgroundColor: "#e74a3b",
+                        borderColor: "#e74a3b"
+                    },
+                    {
+                        label: "Lainnya",
+                        data: {{ tuna_lain|safe }},
+                        backgroundColor: "#6f42c1",
+                        borderColor: "#6f42c1"
+                    }
+                ].map(item => ({
+                    ...item,
+                    borderWidth: 1
+                }))
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+
+                    y: {
+                        stacked: true
+                    }
+                }
+            }
+        });
+
+    }
+
+    // =====================================================
+    // CHART 9 - PPKS DAN DTKS
+    // =====================================================
+
+    const ppksCtx = document.getElementById("ppksChart");
+
+    if (ppksCtx) {
+
+        new Chart(ppksCtx, {
+            type: "line",
+
+            data: {
+                labels: {{ ppks_labels|safe }},
+
+                datasets: [{
+                    label: "Persentase DTKS",
+                    data: {{ ppks_values|safe }},
+                    backgroundColor: "rgba(78, 115, 223, 0.2)",
+                    borderColor: "#4e73df",
+                    borderWidth: 3,
+                    pointBackgroundColor: "#4e73df",
+                    pointBorderColor: "#ffffff",
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+    }
+
+});
 </script>
 {% endblock %}

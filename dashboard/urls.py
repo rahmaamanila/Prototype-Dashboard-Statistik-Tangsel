@@ -115,6 +115,24 @@ urlpatterns = [
         name="proyek_investasi",
     ),
 
+    path(
+        "realisasi-apbd/",
+        views.realisasi_apbd,
+        name="realisasi_apbd",
+    ),
+
+    path(
+        "kategori-sosial/",
+        views.kategori_sosial,
+        name="kategori_sosial",
+    ),
+
+    path(
+        "kategori-ekonomi/",
+        views.kategori_ekonomi,
+        name="kategori_ekonomi",
+    ),
+
     # =====================================================
     # DOWNLOAD EXCEL
     # =====================================================
@@ -213,6 +231,12 @@ urlpatterns = [
         "download/proyek-investasi/",
         views.download_proyek_investasi,
         name="download_proyek_investasi",
+    ),
+
+    path(
+        "download/realisasi-apbd/",
+        views.download_realisasi_apbd,
+        name="download_realisasi_apbd",
     ),
 
     # =====================================================

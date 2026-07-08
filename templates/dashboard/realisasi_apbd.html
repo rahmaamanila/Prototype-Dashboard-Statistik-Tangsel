@@ -1,0 +1,243 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<div class="page-inner">
+  <!-- Header -->
+
+  <div class="page-header">
+    <h3 class="fw-bold mb-3">Realisasi APBD</h3>
+
+    <ul class="breadcrumbs mb-3">
+      <li class="nav-home">
+        <a href="/">
+          <i class="icon-home"></i>
+        </a>
+      </li>
+
+      <li class="separator">
+        <i class="icon-arrow-right"></i>
+      </li>
+
+      <li class="nav-item">
+        <a href="#">Ekonomi</a>
+      </li>
+
+      <li class="separator">
+        <i class="icon-arrow-right"></i>
+      </li>
+
+      <li class="nav-item">
+        <a href="#">Realisasi APBD</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CARD -->
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card card-stats card-primary">
+        <div class="card-body">
+          <div class="numbers">
+            <p class="card-category">Jumlah Data</p>
+
+            <h4 class="card-title">{{ jumlah_data }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card card-stats card-success">
+        <div class="card-body">
+          <div class="numbers">
+            <p class="card-category">Jenis Belanja</p>
+
+            <h4 class="card-title">{{ jumlah_jenis }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card card-stats card-warning">
+        <div class="card-body">
+          <div class="numbers">
+            <p class="card-category">Tahun</p>
+
+            <h4 class="card-title">{{ tahun }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABEL -->
+
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="card-title">Tabel Realisasi APBD</h4>
+
+        <a href="{% url 'download_realisasi_apbd' %}" class="btn btn-success">
+          <i class="fas fa-file-excel"></i>
+          Download Excel
+        </a>
+      </div>
+
+      <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#apiModal">REST API</button>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>No</th>
+
+              <th>Jenis Belanja</th>
+
+              <th>2021</th>
+
+              <th>2022</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for item in data %}
+
+            <tr>
+              <td>{{ forloop.counter }}</td>
+
+              <td>{{ item.jenis_belanja }}</td>
+
+              <td>{{ item.tahun_2021 }}</td>
+
+              <td>{{ item.tahun_2022 }}</td>
+            </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRAFIK -->
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Perbandingan Realisasi APBD</h4>
+        </div>
+
+        <div style="height: 420px">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Komposisi Belanja Tahun 2022</h4>
+        </div>
+
+        <div style="height: 420px">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+  const labels = {{ labels|safe }};
+
+  const tahun2021 = {{ tahun2021|safe }};
+
+  const tahun2022 = {{ tahun2022|safe }};
+
+  new Chart(
+
+      document.getElementById("barChart"),
+
+      {
+
+          type:"bar",
+
+          data:{
+
+              labels:labels,
+
+              datasets:[
+
+                  {
+
+                      label:"2021",
+
+                      data:tahun2021
+
+                  },
+
+                  {
+
+                      label:"2022",
+
+                      data:tahun2022
+
+                  }
+
+              ]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false
+
+          }
+
+      }
+
+  );
+
+  new Chart(
+
+      document.getElementById("pieChart"),
+
+      {
+
+          type:"doughnut",
+
+          data:{
+
+              labels:{{ pie_labels|safe }},
+
+              datasets:[{
+
+                  data:{{ pie_data|safe }}
+
+              }]
+
+          },
+
+          options:{
+
+              responsive:true,
+
+              maintainAspectRatio:false
+
+          }
+
+      }
+
+  );
+</script>
+
+{% include "dashboard/components/api_modal.html" %} {% endblock %}

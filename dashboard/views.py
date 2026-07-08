@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import json
 import pandas as pd
+from django.urls import reverse
 
 from .models import (
     Dataset,
@@ -21,6 +22,7 @@ from .models import (
     RasioBelanja,
     RealisasiPerizinan,
     ProyekInvestasi,
+    RealisasiAPBD
 )
 
 # =====================================================
@@ -124,6 +126,52 @@ def home(request):
         sum(x.sumur_terlindung for x in air),
     ]
 
+    # =====================================================
+    # CHART PENDUDUK USIA 60-64
+    # =====================================================
+
+    usia6064 = PendudukUsia6064.objects.all()
+
+    usia_labels = [x.nama_wilayah.replace("Kecamatan ", "") for x in usia6064]
+    usia_values = [x.jumlah for x in usia6064]
+
+    # =====================================================
+    # CHART Penduduk Berdasarkan Jenis Kelamin
+    # =====================================================
+
+    penduduk = PendudukJenisKelamin.objects.all()
+
+    jk_labels = [x.kecamatan for x in penduduk]
+
+    laki = [x.laki_laki for x in penduduk]
+
+    perempuan = [x.perempuan for x in penduduk]
+
+    # =====================================================
+    # CHART Penyandang Disabilitas
+    # =====================================================
+
+    disabilitas = PenyandangDisabilitas.objects.all()
+
+    dis_labels = [x.kecamatan for x in disabilitas]
+
+    tuna_fisik = [x.tuna_fisik for x in disabilitas]
+    tuna_netra = [x.tuna_netra for x in disabilitas]
+    tuna_rungu = [x.tuna_rungu_wicara for x in disabilitas]
+    tuna_mental = [x.tuna_mental_jiwa for x in disabilitas]
+    ganda = [x.tuna_fisik_dan_mental for x in disabilitas]
+    lainnya = [x.lainnya for x in disabilitas]
+
+    # =====================================================
+    # CHART PPKS dan DTKS
+    # =====================================================
+
+    ppks = PPKSDTKS.objects.all()
+
+    ppks_labels = [x.kecamatan.title() for x in ppks]
+
+    ppks_values = [x.persentase_dtks for x in ppks]
+
     context = {
 
         # "api_status": "Database",
@@ -159,6 +207,26 @@ def home(request):
 
         "air_labels": json.dumps(air_labels),
         "air_values": json.dumps(air_values),
+
+        "usia_labels": json.dumps(usia_labels),
+        "usia_values": json.dumps(usia_values),
+
+        "jk_labels": json.dumps(jk_labels),
+        "jk_laki": json.dumps(laki),
+        "jk_perempuan": json.dumps(perempuan),
+
+        "dis_labels": json.dumps(dis_labels),
+
+        "tuna_fisik": json.dumps(tuna_fisik),
+        "tuna_netra": json.dumps(tuna_netra),
+        "tuna_rungu": json.dumps(tuna_rungu),
+        "tuna_mental": json.dumps(tuna_mental),
+        "tuna_ganda": json.dumps(ganda),
+        "tuna_lain": json.dumps(lainnya),
+
+        "ppks_labels": json.dumps(ppks_labels),
+        "ppks_values": json.dumps(ppks_values),
+
     }
 
     return render(request, "dashboard/home.html", context)
@@ -2001,3 +2069,293 @@ def download_proyek_investasi(request):
     )
 
     return response
+
+# =====================================================
+# HALAMAN REALISASI APBD
+# =====================================================
+
+def realisasi_apbd(request):
+
+    queryset = RealisasiAPBD.objects.all()
+
+    data = []
+
+    for item in queryset:
+
+        data.append({
+
+            "jenis_belanja": item.jenis_belanja,
+
+            "tahun_2021": item.tahun_2021,
+
+            "tahun_2022": item.tahun_2022,
+
+        })
+
+    context = {
+
+        "jumlah_data": queryset.count(),
+
+        "jumlah_jenis": queryset.count(),
+
+        "tahun": "2021 - 2022",
+
+        "data": data,
+
+        "labels": json.dumps(
+            [x["jenis_belanja"] for x in data]
+        ),
+
+        "tahun2021": json.dumps(
+            [x["tahun_2021"] for x in data]
+        ),
+
+        "tahun2022": json.dumps(
+            [x["tahun_2022"] for x in data]
+        ),
+
+        "pie_labels": json.dumps(
+            [x["jenis_belanja"] for x in data]
+        ),
+
+        "pie_data": json.dumps(
+            [x["tahun_2022"] for x in data]
+        ),
+
+        "api_endpoint": "/api/realisasi-apbd/",
+
+        "api_dataset": "Realisasi APBD",
+
+    }
+
+    return render(
+
+        request,
+
+        "dashboard/realisasi_apbd.html",
+
+        context,
+
+    )
+
+# =====================================================
+# DOWNLOAD REALISASI APBD
+# =====================================================
+
+def download_realisasi_apbd(request):
+
+    df = queryset_to_excel(
+
+        RealisasiAPBD.objects.all(),
+
+        fields=[
+
+            "jenis_belanja",
+
+            "tahun_2021",
+
+            "tahun_2022",
+
+        ]
+
+    )
+
+    response = HttpResponse(
+
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+    response["Content-Disposition"] = (
+
+        'attachment; filename="realisasi_apbd.xlsx"'
+
+    )
+
+    df.to_excel(
+
+        response,
+
+        index=False,
+
+        engine="openpyxl",
+
+    )
+
+    return response
+
+# =====================================================
+# HALAMAN KATEGORI SOSIAL
+# =====================================================
+
+def kategori_sosial(request):
+
+    datasets = [
+
+        {
+            "nama": "Jumlah Siswa Miskin Menurut Status dan Kecamatan di Kota Tangerang Selatan",
+            "dinas": "Dinas Sosial",
+            "tahun": "2020",
+            "jumlah": 7,
+            "url": reverse("siswa_miskin"),
+        },
+
+        {
+            "nama": "Jenis Air Minum yang Dikonsumsi Rumah Tangga Menurut Kecamatan di Kota Tangerang Selatan",
+            "dinas": "Dinas Sosial",
+            "tahun": "2020",
+            "jumlah": 7,
+            "url": reverse("air_minum"),
+        },
+
+        {
+            "nama": "Jumlah Kepemilikan Lahan Keluarga Menurut Status dan Kecamatan di Kota Tangerang Selatan",
+            "dinas": "Dinas Sosial",
+            "tahun": "2020",
+            "jumlah": 7,
+            "url": reverse("lahan"),
+        },
+
+        {
+            "nama": "Informasi Status Kesejahteraan Rumah Tangga dan Individu Menurut Kecamatan di Kota Tangerang Selatan",
+            "dinas": "Dinas Sosial",
+            "tahun": "2020",
+            "jumlah": 7,
+            "url": reverse("kesejahteraan"),
+        },
+
+        {
+            "nama": "Jumlah Kepemilikan Rumah Keluarga Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun",
+            "dinas": "Dinas Sosial",
+            "tahun": "2020",
+            "jumlah": 7,
+            "url": reverse("rumah"),
+        },
+
+        {
+            "nama": "Persentase PPKS dan DTKS Menurut Kecamatan di Kota Tangerang Selatan",
+            "dinas": "Dinas Sosial",
+            "tahun": "2022",
+            "jumlah": 7,
+            "url": reverse("ppks_dtks"),
+        },
+
+        {
+            "nama": "Tabel 4.1 Jumlah Penduduk Per Kecamatan Berdasarkan Jenis Kelamin",
+            "dinas": "Disdukcapil",
+            "tahun": "2024",
+            "jumlah": 8,
+            "url": reverse("penduduk_jenis_kelamin"),
+        },
+
+        {
+            "nama": "Jumlah Penduduk Menurut Usia 60-64 Tahun dan Menurut Kecamatan di Kota Tangerang Selatan",
+            "dinas": "Disdukcapil",
+            "tahun": "2024",
+            "jumlah": 8,
+            "url": reverse("usia_60_64"),
+        },
+
+        {
+            "nama": "Jumlah Penduduk Penyandang Disabilitas Menurut Jenis dan Kecamatan di Kota Tangerang Selatan",
+            "dinas": "Disdukcapil",
+            "tahun": "2024",
+            "jumlah": 7,
+            "url": reverse("disabilitas"),
+        },
+
+    ]
+
+    return render(
+        request,
+        "dashboard/kategori_sosial.html",
+        {
+            "datasets": datasets,
+            "total_dataset": len(datasets),
+            "total_dinas": 2,
+        }
+    )
+
+# =====================================================
+# HALAMAN KATEGORI EKONOMI
+# =====================================================
+
+def kategori_ekonomi(request):
+
+    datasets = [
+
+        {
+            "nama": "Jumlah Kelompok Perikanan Budidaya Menurut Jenis dan Kecamatan di Kota Tangerang Selatan",
+            "dinas": "DKPPP",
+            "tahun": "2022",
+            "jumlah": 7,
+            "url": reverse("kelompok_perikanan"),
+        },
+
+        {
+            "nama": "Jumlah UMKM Menurut Kecamatan di Kota Tangerang Selatan",
+            "dinas": "Dinas Koperasi & UKM",
+            "tahun": "2022",
+            "jumlah": 7,
+            "url": reverse("umkm"),
+        },
+
+        {
+            "nama": "Jumlah Koperasi Menurut Jumlah Aset yang Dimiliki di Kota Tangerang Selatan",
+            "dinas": "Dinas Koperasi & UKM",
+            "tahun": "2022",
+            "jumlah": 4,
+            "url": reverse("koperasi"),
+        },
+
+        {
+            "nama": "Rekapitulasi Pajak Daerah Terkait Sektor Pariwisata Menurut Jenis di Kota Tangerang Selatan",
+            "dinas": "Bapenda",
+            "tahun": "2018-2021",
+            "jumlah": 12,
+            "url": reverse("pajak_pariwisata"),
+        },
+
+        {
+            "nama": "Rasio Belanja Perangkat Daerah di Kota Tangerang Selatan",
+            "dinas": "BKAD",
+            "tahun": "2023",
+            "jumlah": 5,
+            "url": reverse("rasio_belanja"),
+        },
+
+        {
+            "nama": "Jumlah Nilai Realisasi APBD Kota Tangerang Selatan Menurut Jenis Belanja",
+            "dinas": "BKAD",
+            "tahun": "2021-2022",
+            "jumlah": 12,
+            "url": reverse("realisasi_apbd"),
+        },
+
+        {
+            "nama": "Jumlah Realisasi Perizinan Menurut Jenis di Kota Tangerang Selatan",
+            "dinas": "DPMPTSP",
+            "tahun": "2021",
+            "jumlah": 13,
+            "url": reverse("realisasi_perizinan"),
+        },
+
+        {
+            "nama": "Jumlah Proyek Investasi PMA dan PMDN Menurut Sektor di Kota Tangerang Selatan",
+            "dinas": "DPMPTSP",
+            "tahun": "2021",
+            "jumlah": 3,
+            "url": reverse("proyek_investasi"),
+        },
+
+    ]
+
+    return render(
+        request,
+        "dashboard/kategori_ekonomi.html",
+        {
+            "datasets": datasets,
+            "total_dataset": len(datasets),
+            "total_dinas": 5,
+        }
+    )

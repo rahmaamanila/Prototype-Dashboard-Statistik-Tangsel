@@ -1,32 +1,20 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Dashboard Statistik</title>
-    <meta
-      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-      name="viewport"
-    />
-    <link
-      rel="icon"
-      href="{% static 'assets/img/kaiadmin/favicon.ico' %}"
-      type="image/x-icon"
-    />
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="{% static 'assets/img/kaiadmin/favicon.ico' %}" type="image/x-icon" />
 
     <!-- Fonts and icons -->
     <script src="{% static 'assets/js/plugin/webfont/webfont.min.js' %}"></script>
     <script>
       WebFont.load({
-        google: { families: ["Public Sans:300,400,500,600,700"] },
+        google: { families: ['Public Sans:300,400,500,600,700'] },
         custom: {
-          families: [
-            "Font Awesome 5 Solid",
-            "Font Awesome 5 Regular",
-            "Font Awesome 5 Brands",
-            "simple-line-icons",
-          ],
+          families: ['Font Awesome 5 Solid', 'Font Awesome 5 Regular', 'Font Awesome 5 Brands', 'simple-line-icons'],
           urls: ["{% static 'assets/css/fonts.min.css' %}"],
         },
         active: function () {
@@ -51,12 +39,7 @@
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-              <img
-                src="{% static 'assets/img/kaiadmin/logo_dashboard.png' %}"
-                alt="navbar brand"
-                class="navbar-brand"
-                height="110"
-              />
+              <img src="{% static 'assets/img/kaiadmin/logo_dashboard.png' %}" alt="navbar brand" class="navbar-brand" height="110" />
             </a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
@@ -75,329 +58,212 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
-
-                  <!-- Dashboard -->
-                  <li class="nav-item active">
-                      <a href="{% url 'home' %}">
-                          <i class="fas fa-home"></i>
-                          <p>Dashboard</p>
-                      </a>
-                  </li>
-
-                  <!-- ========================== -->
-                  <!-- KATEGORI SOSIAL -->
-                  <!-- ========================== -->
-
-                  <li class="nav-section">
-                      <span class="sidebar-mini-icon">
-                          <i class="fa fa-circle"></i>
-                      </span>
-                      <h4 class="text-section">KATEGORI SOSIAL</h4>
-                  </li>
-
-                  <!-- DINAS SOSIAL -->
-
-                  <li class="nav-item {% if request.resolver_match.url_name == 'siswa_miskin' or request.resolver_match.url_name == 'air_minum' or request.resolver_match.url_name == 'lahan' or request.resolver_match.url_name == 'kesejahteraan' or request.resolver_match.url_name == 'rumah' or request.resolver_match.url_name == 'ppks_dtks' %}active{% endif %}">
-                      <a data-bs-toggle="collapse" href="#dinsos">
-                          <i class="fas fa-users"></i>
-                          <p>Dinas Sosial</p>
-                          <span class="caret"></span>
-                      </a>
-
-                      <div class="collapse {% if request.resolver_match.url_name in 'siswa_miskin air_minum lahan kesejahteraan rumah ppks_dtks' %}show{% endif %}" id="dinsos">
-                          <ul class="nav nav-collapse">
-
-                              <li>
-                                  <a href="{% url 'siswa_miskin' %}">
-                                      <span class="sub-item">Siswa Miskin</span>
-                                  </a>
-                              </li>
-
-                              <li>
-                                  <a href="{% url 'air_minum' %}">
-                                      <span class="sub-item">Air Minum</span>
-                                  </a>
-                              </li>
-
-                              <li>
-                                  <a href="{% url 'lahan' %}">
-                                      <span class="sub-item">Kepemilikan Lahan</span>
-                                  </a>
-                              </li>
-
-                              <li>
-                                  <a href="{% url 'kesejahteraan' %}">
-                                      <span class="sub-item">Status Kesejahteraan</span>
-                                  </a>
-                              </li>
-
-                              <li>
-                                  <a href="{% url 'rumah' %}">
-                                      <span class="sub-item">Kepemilikan Rumah</span>
-                                  </a>
-                              </li>
-
-                              <li>
-                                  <a href="{% url 'ppks_dtks' %}">
-                                      <span class="sub-item">PPKS & DTKS</span>
-                                  </a>
-                              </li>
-
-                          </ul>
-                      </div>
-
-                  </li>
-
-                  <!-- DISDUKCAPIL -->
-
-                  <li class="nav-item {% if request.resolver_match.url_name == 'usia_60_64' or request.resolver_match.url_name == 'penduduk_jenis_kelamin' or request.resolver_match.url_name == 'disabilitas' %}active{% endif %}">
-
-                      <a data-bs-toggle="collapse" href="#dukcapil">
-
-                          <i class="fas fa-id-card"></i>
-
-                          <p>Dinas Dukcapil</p>
-
-                          <span class="caret"></span>
-
-                      </a>
-
-                      <div class="collapse {% if request.resolver_match.url_name in 'usia_60_64 penduduk_jenis_kelamin disabilitas' %}show{% endif %}" id="dukcapil">
-
-                          <ul class="nav nav-collapse">
-
-                              <li>
-
-                                  <a href="{% url 'usia_60_64' %}">
-
-                                      <span class="sub-item">Penduduk Usia 60–64</span>
-
-                                  </a>
-
-                              </li>
-
-                              <li>
-
-                                  <a href="{% url 'penduduk_jenis_kelamin' %}">
-
-                                      <span class="sub-item">Jenis Kelamin</span>
-
-                                  </a>
-
-                              </li>
-
-                              <li>
-
-                                  <a href="{% url 'disabilitas' %}">
-
-                                      <span class="sub-item">Penyandang Disabilitas</span>
-
-                                  </a>
-
-                              </li>
-
-                          </ul>
-
-                      </div>
-
-                  </li>
-
-                  <!-- ========================== -->
-                  <!-- KATEGORI EKONOMI -->
-                  <!-- ========================== -->
-
-                  <li class="nav-section">
-
-                      <span class="sidebar-mini-icon">
-
-                          <i class="fa fa-circle"></i>
-
-                      </span>
-
-                      <h4 class="text-section">KATEGORI EKONOMI</h4>
-
-                  </li>
-
-                  <!-- DKPPP -->
-
-                  <li class="nav-item {% if request.resolver_match.url_name == 'kelompok_perikanan' %}active{% endif %}">
-
-                      <a data-bs-toggle="collapse" href="#dkppp">
-
-                          <i class="fas fa-fish"></i>
-
-                          <p>Dinas Ketahanan Pangan</p>
-
-                          <span class="caret"></span>
-
-                      </a>
-
-                      <div class="collapse {% if request.resolver_match.url_name == 'kelompok_perikanan' %}show{% endif %}" id="dkppp">
-
-                          <ul class="nav nav-collapse">
-
-                              <li>
-
-                                  <a href="{% url 'kelompok_perikanan' %}">
-
-                                      <span class="sub-item">Kelompok Perikanan</span>
-
-                                  </a>
-
-                              </li>
-
-                          </ul>
-
-                      </div>
-
-                  </li>
-
-                  <!-- DISKOP UKM -->
-
-                  <li class="nav-item {% if request.resolver_match.url_name == 'umkm' %}active{% endif %}">
-
-                      <a data-bs-toggle="collapse" href="#diskop">
-
-                          <i class="fas fa-store"></i>
-
-                          <p>Dinas Koperasi & UKM</p>
-
-                          <span class="caret"></span>
-
-                      </a>
-
-                      <div class="collapse {% if request.resolver_match.url_name == 'umkm' %}show{% endif %}" id="diskop">
-
-                          <ul class="nav nav-collapse">
-
-                              <li>
-
-                                  <a href="{% url 'umkm' %}">
-
-                                      <span class="sub-item">Jumlah UMKM</span>
-
-                                  </a>
-
-                              </li>
-
-                          </ul>
-
-                      </div>
-
-                  </li>
-
-                  <!-- DPMPTSP -->
-
-                  <li class="nav-item {% if request.resolver_match.url_name == 'realisasi_perizinan' or request.resolver_match.url_name == 'proyek_investasi' %}active{% endif %}">
-
-                      <a data-bs-toggle="collapse" href="#dpmptsp">
-
-                          <i class="fas fa-briefcase"></i>
-
-                          <p>DPMPTSP</p>
-
-                          <span class="caret"></span>
-
-                      </a>
-
-                      <div class="collapse {% if request.resolver_match.url_name == 'realisasi_perizinan' or request.resolver_match.url_name == 'proyek_investasi' %}show{% endif %}" id="dpmptsp">
-
-                          <ul class="nav nav-collapse">
-
-                              <li>
-
-                                  <a href="{% url 'realisasi_perizinan' %}" class="{% if request.resolver_match.url_name == 'realisasi_perizinan' %}active{% endif %}">
-
-                                      <span class="sub-item">Realisasi Perizinan</span>
-
-                                  </a>
-
-                              </li>
-
-                              <li>
-
-                                  <a href="{% url 'proyek_investasi' %}">
-
-                                      <span class="sub-item">Proyek Investasi</span>
-
-                                  </a>
-
-                              </li>
-
-                          </ul>
-
-                      </div>
-
-                  </li>
-
-                  <!-- BAPENDA -->
-
-                  <li class="nav-item {% if request.resolver_match.url_name == 'pajak_pariwisata' %}active{% endif %}">
-
-                      <a data-bs-toggle="collapse" href="#bapenda">
-
-                          <i class="fas fa-coins"></i>
-
-                          <p>Bapenda</p>
-
-                          <span class="caret"></span>
-
-                      </a>
-                      
-                      <div class="collapse {% if request.resolver_match.url_name == 'pajak_pariwisata' %}show{% endif %}" id="bapenda">
-
-                          <ul class="nav nav-collapse">
-
-                              <li>
-
-                                  <a href="{% url 'pajak_pariwisata' %}">
-
-                                      <span class="sub-item">Realisasi Pajak Pariwisata </span>
-
-                                  </a>
-
-                              </li>
-
-                          </ul>
-
-                      </div>
-                  </li>
-
-                  <!-- BKAD -->
-
-                  <li class="nav-item {% if request.resolver_match.url_name == 'rasio_belanja' %}active{% endif %}">
-
-                      <a data-bs-toggle="collapse" href="#bkad">
-
-                          <i class="fas fa-wallet"></i>
-
-                          <p>BKAD</p>
-
-                          <span class="caret"></span>
-
-                      </a>
-
-                      <div class="collapse {% if request.resolver_match.url_name == 'rasio_belanja' %}show{% endif %}" id="bkad">
-
-                          <ul class="nav nav-collapse">
-
-                              <li>
-
-                                  <a href="{% url 'rasio_belanja' %}">
-
-                                      <span class="sub-item">Rasio Belanja</span>
-
-                                  </a>
-
-                              </li>
-
-                          </ul>
-
-                      </div>
-
-                  </li>
-
-              </ul>
+              <!-- Dashboard -->
+
+              <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <a href="{% url 'home' %}">
+                  <i class="fas fa-home"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+
+              <li class="nav-section mt-3">
+                <h4 class="text-section">DAFTAR DINAS</h4>
+              </li>
+
+              <!-- Dinas Sosial -->
+
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#dinsos">
+                  <i class="fas fa-users"></i>
+                  <p>Dinas Sosial</p>
+                  <span class="caret"></span>
+                </a>
+
+                <div class="collapse" id="dinsos">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{% url 'siswa_miskin' %}"><span class="sub-item">Siswa Miskin</span></a>
+                    </li>
+
+                    <li>
+                      <a href="{% url 'air_minum' %}"><span class="sub-item">Air Minum</span></a>
+                    </li>
+
+                    <li>
+                      <a href="{% url 'lahan' %}"><span class="sub-item">Kepemilikan Lahan</span></a>
+                    </li>
+
+                    <li>
+                      <a href="{% url 'rumah' %}"><span class="sub-item">Kepemilikan Rumah</span></a>
+                    </li>
+
+                    <li>
+                      <a href="{% url 'kesejahteraan' %}"><span class="sub-item">Status Kesejahteraan</span></a>
+                    </li>
+
+                    <li>
+                      <a href="{% url 'ppks_dtks' %}"><span class="sub-item">PPKS & DTKS</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <!-- Dukcapil -->
+
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#dukcapil">
+                  <i class="fas fa-id-card"></i>
+
+                  <p>Dinas Dukcapil</p>
+
+                  <span class="caret"></span>
+                </a>
+
+                <div class="collapse" id="dukcapil">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{% url 'penduduk_jenis_kelamin' %}"><span class="sub-item">Penduduk Jenis Kelamin</span></a>
+                    </li>
+
+                    <li>
+                      <a href="{% url 'usia_60_64' %}"><span class="sub-item">Penduduk Usia 60-64</span></a>
+                    </li>
+
+                    <li>
+                      <a href="{% url 'disabilitas' %}"><span class="sub-item">Penyandang Disabilitas</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <!-- DKPPP -->
+
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#dkppp">
+                  <i class="fas fa-fish"></i>
+
+                  <p>Dinas Ketahanan Pangan</p>
+
+                  <span class="caret"></span>
+                </a>
+
+                <div class="collapse" id="dkppp">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{% url 'kelompok_perikanan' %}"><span class="sub-item">Kelompok Perikanan</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <!-- Diskop -->
+
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#diskop">
+                  <i class="fas fa-store"></i>
+
+                  <p>Dinas Koperasi</p>
+
+                  <span class="caret"></span>
+                </a>
+
+                <div class="collapse" id="diskop">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{% url 'umkm' %}"><span class="sub-item">Jumlah UMKM</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <!-- DPMPTSP -->
+
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#dpmptsp">
+                  <i class="fas fa-briefcase"></i>
+
+                  <p>DPMPTSP</p>
+
+                  <span class="caret"></span>
+                </a>
+
+                <div class="collapse" id="dpmptsp">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{% url 'realisasi_perizinan' %}"><span class="sub-item">Realisasi Perizinan</span></a>
+                    </li>
+
+                    <li>
+                      <a href="{% url 'proyek_investasi' %}"><span class="sub-item">Proyek Investasi</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <!-- Bapenda -->
+
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#bapenda">
+                  <i class="fas fa-coins"></i>
+
+                  <p>Bapenda</p>
+
+                  <span class="caret"></span>
+                </a>
+
+                <div class="collapse" id="bapenda">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{% url 'pajak_pariwisata' %}"><span class="sub-item">Pajak Pariwisata</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <!-- BKAD -->
+
+              <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#bkad">
+                  <i class="fas fa-wallet"></i>
+
+                  <p>BKAD</p>
+
+                  <span class="caret"></span>
+                </a>
+
+                <div class="collapse" id="bkad">
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{% url 'rasio_belanja' %}"><span class="sub-item">Rasio Belanja</span></a>
+                    </li>
+                    <li>
+                      <a href="{% url 'realisasi_apbd' %}"><span class="sub-item">Realisasi APBD</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <hr class="mx-3" />
+
+              <li class="nav-section">
+                <h4 class="text-section">SEKTOR</h4>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url 'kategori_sosial' %}">
+                  <i class="fas fa-globe-asia"></i>
+                  <p>Sosial</p>
+                </a>
+              </li>
+
+              <li class="nav-item active">
+                <a href="{% url 'kategori_ekonomi' %}">
+                  <i class="fas fa-globe-asia"></i>
+                  <p>Ekonomi</p>
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -409,12 +275,7 @@
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
               <a href="index.html" class="logo">
-                <img
-                  src="{% static 'assets/img/kaiadmin/logo_dash.png' %}"
-                  alt="navbar brand"
-                  class="navbar-brand"
-                  height="20"
-                />
+                <img src="{% static 'assets/img/kaiadmin/logo_dash.png' %}" alt="navbar brand" class="navbar-brand" height="20" />
               </a>
               <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -431,38 +292,25 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
-          <nav
-            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
-          >
-             <button class="btn btn-toggle me-3" id="toggleSidebar">
-                <i class="fas fa-bars"></i>
-              </button>
+          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+            <button class="btn btn-toggle me-3" id="toggleSidebar">
+              <i class="fas fa-bars"></i>
+            </button>
 
             <div class="container-fluid">
-
               <!-- Judul Dashboard -->
               <div class="d-flex align-items-center">
-
                 <div class="ms-2">
-
-                  <h5 class="mb-0 fw-bold">
-                    Dashboard Statistik Sosial Ekonomi Kota Tangerang Selatan
-                  </h5>
-
+                  <h5 class="mb-0 fw-bold">Dashboard Statistik Sosial Ekonomi Kota Tangerang Selatan</h5>
                 </div>
-
               </div>
-
             </div>
           </nav>
           <!-- End Navbar -->
         </div>
 
         <div class="container">
-          <div class="page-inner">
-            {% block content %}
-            {% endblock %}
-          </div>
+          <div class="page-inner">{% block content %} {% endblock %}</div>
         </div>
 
         <footer class="footer">
@@ -474,7 +322,6 @@
           </div>
         </footer>
       </div>
-
     </div>
     <!--   Core JS Files   -->
     <script src="{% static 'assets/js/core/jquery-3.7.1.min.js' %}"></script>
@@ -513,33 +360,32 @@
     <!-- <script src="{% static 'assets/js/setting-demo.js' %}"></script> -->
     <!-- <script src="{% static 'assets/js/demo.js' %}"></script> -->
     <script>
-      $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#177dff",
-        fillColor: "rgba(23, 125, 255, 0.14)",
+      $('#lineChart').sparkline([102, 109, 120, 99, 110, 105, 115], {
+        type: 'line',
+        height: '70',
+        width: '100%',
+        lineWidth: '2',
+        lineColor: '#177dff',
+        fillColor: 'rgba(23, 125, 255, 0.14)',
       });
 
-      $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#f3545d",
-        fillColor: "rgba(243, 84, 93, .14)",
+      $('#lineChart2').sparkline([99, 125, 122, 105, 110, 124, 115], {
+        type: 'line',
+        height: '70',
+        width: '100%',
+        lineWidth: '2',
+        lineColor: '#f3545d',
+        fillColor: 'rgba(243, 84, 93, .14)',
       });
 
-      $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#ffa534",
-        fillColor: "rgba(255, 165, 52, .14)",
+      $('#lineChart3').sparkline([105, 103, 123, 100, 95, 105, 115], {
+        type: 'line',
+        height: '70',
+        width: '100%',
+        lineWidth: '2',
+        lineColor: '#ffa534',
+        fillColor: 'rgba(255, 165, 52, .14)',
       });
     </script>
-    
   </body>
 </html>
