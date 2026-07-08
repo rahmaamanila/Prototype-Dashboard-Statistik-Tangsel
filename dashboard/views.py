@@ -172,6 +172,120 @@ def home(request):
 
     ppks_values = [x.persentase_dtks for x in ppks]
 
+
+    # =====================================================
+    # CHART UMKM
+    # =====================================================
+
+    umkm = UMKM.objects.all()
+
+    umkm_labels = [x.kecamatan for x in umkm]
+    umkm_values = [x.jumlah_umkm for x in umkm]
+
+
+    # =====================================================
+    # CHART KELOMPOK PERIKANAN
+    # =====================================================
+
+    perikanan = KelompokPerikanan.objects.all()
+
+    perikanan_labels = [x.kecamatan for x in perikanan]
+
+    pengolah = [x.pengolah for x in perikanan]
+    pemasaran = [x.pemasaran for x in perikanan]
+
+
+    # =====================================================
+    # CHART PROYEK INVESTASI
+    # =====================================================
+
+    investasi = ProyekInvestasi.objects.all()
+
+    investasi_labels = [x.sektor for x in investasi]
+
+    pma = [x.pma for x in investasi]
+    pmdn = [x.pmdn for x in investasi]
+
+
+    # =====================================================
+    # CHART REALISASI PERIZINAN
+    # =====================================================
+
+    izin = RealisasiPerizinan.objects.all()
+
+    izin_labels = [x.nama_izin for x in izin]
+
+    izin_masuk = [x.izin_masuk for x in izin]
+    izin_terbit = [x.izin_terbit for x in izin]
+    
+
+    # =====================================================
+    # CHART PAJAK PARIWISATA
+    # =====================================================
+
+    pajak = PajakPariwisata.objects.all()
+
+    pajak_labels = [
+        f"{x.tahun} - {x.jenis_pajak}"
+        for x in pajak
+    ]
+
+    pajak_values = [
+        x.realisasi
+        for x in pajak
+    ]
+
+    # =====================================================
+    # CHART REALISASI APBD
+    # =====================================================
+
+    apbd = RealisasiAPBD.objects.all()
+
+    apbd_labels = [x.jenis_belanja for x in apbd]
+
+    apbd_2021 = [x.tahun_2021 for x in apbd]
+
+    apbd_2022 = [x.tahun_2022 for x in apbd]
+
+
+    # =====================================================
+    # CHART RASIO BELANJA
+    # =====================================================
+
+    rasio = RasioBelanja.objects.all()
+
+    rasio_labels = [x.uraian for x in rasio]
+
+    rasio_values = [x.rasio for x in rasio]
+
+
+    # =====================================================
+    # CHART RASIO BELANJA
+    # =====================================================
+
+    rasio = RasioBelanja.objects.all()
+
+    rasio_labels = [x.uraian for x in rasio]
+
+    rasio_values = [x.rasio for x in rasio]
+
+    # =====================================================
+    # CHART KOPERASI
+    # =====================================================
+
+    koperasi = Koperasi.objects.all()
+
+    koperasi_labels = [
+        x.jumlah_aset
+        for x in koperasi
+    ]
+
+    koperasi_values = [
+        x.jumlah
+        for x in koperasi
+    ]
+
+
     context = {
 
         # "api_status": "Database",
@@ -227,9 +341,40 @@ def home(request):
         "ppks_labels": json.dumps(ppks_labels),
         "ppks_values": json.dumps(ppks_values),
 
+        "umkm_labels": json.dumps(umkm_labels),
+        "umkm_values": json.dumps(umkm_values),
+
+        "perikanan_labels": json.dumps(perikanan_labels),
+        "pengolah": json.dumps(pengolah),
+        "pemasaran": json.dumps(pemasaran),
+
+        "investasi_labels": json.dumps(investasi_labels),
+        "pma": json.dumps(pma),
+        "pmdn": json.dumps(pmdn),
+
+        "izin_labels": json.dumps(izin_labels),
+        "izin_masuk": json.dumps(izin_masuk),
+        "izin_terbit": json.dumps(izin_terbit),
+
+        "pajak_labels": json.dumps(pajak_labels),
+        "pajak_values": json.dumps(pajak_values),
+
+        "apbd_labels": json.dumps(apbd_labels),
+        "apbd_2021": json.dumps(apbd_2021),
+        "apbd_2022": json.dumps(apbd_2022),
+
+        "rasio_labels": json.dumps(rasio_labels),
+        "rasio_values": json.dumps(rasio_values),
+
+        "koperasi_labels": json.dumps(koperasi_labels),
+        "koperasi_values": json.dumps(koperasi_values),
+
     }
 
     return render(request, "dashboard/home.html", context)
+
+
+
 
 
 # =====================================================

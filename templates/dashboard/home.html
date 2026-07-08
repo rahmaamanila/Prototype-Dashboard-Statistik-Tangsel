@@ -405,6 +405,125 @@
   </div>
 </div>
 
+<div class="row mt-5">
+    <div class="col-12">
+        <h3 class="fw-bold">Statistik Ekonomi</h3>
+        <hr>
+    </div>
+</div>
+
+<div class="row mt-4">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Jumlah UMKM per Kecamatan</h4>
+            </div>
+
+            <div class="card-body" style="height:400px">
+                <canvas id="umkmChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Kelompok Perikanan</h4>
+            </div>
+
+            <div class="card-body" style="height:400px">
+                <canvas id="perikananChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Proyek Investasi PMA & PMDN</h4>
+            </div>
+
+            <div class="card-body" style="height:400px">
+                <canvas id="investasiChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Realisasi Perizinan</h4>
+            </div>
+
+            <div class="card-body" style="height:400px">
+                <canvas id="izinChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Realisasi Pajak Pariwisata</h4>
+            </div>
+
+            <div class="card-body" style="height:400px">
+                <canvas id="pajakChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Realisasi APBD</h4>
+            </div>
+
+            <div class="card-body" style="height:400px">
+                <canvas id="apbdChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Rasio Belanja</h4>
+            </div>
+
+            <div class="card-body" style="height:400px">
+                <canvas id="rasioChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Kategori Koperasi</h4>
+            </div>
+
+            <div class="card-body" style="height:400px">
+                <canvas id="koperasiChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -854,6 +973,292 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+    }
+
+
+    // ==========================
+    // CHART UMKM
+    // ==========================
+
+    new Chart(document.getElementById("umkmChart"), {
+        type: "bar",
+        data: {
+            labels: JSON.parse('{{ umkm_labels|escapejs }}'),
+            datasets: [{
+                label: "Jumlah UMKM",
+                data: JSON.parse('{{ umkm_values|escapejs }}'),
+                backgroundColor: "#36A2EB"
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            }
+        }
+    });
+
+    // ==========================
+    // CHART KELOMPOK PERIKANAN
+    // ==========================
+
+    new Chart(document.getElementById("perikananChart"), {
+        type: "bar",
+        data: {
+            labels: JSON.parse('{{ perikanan_labels|escapejs }}'),
+            datasets: [
+                {
+                    label: "Pengolah",
+                    data: JSON.parse('{{ pengolah|escapejs }}'),
+                    backgroundColor: "#4BC0C0"
+                },
+                {
+                    label: "Pemasaran",
+                    data: JSON.parse('{{ pemasaran|escapejs }}'),
+                    backgroundColor: "#FF6384"
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // ==========================
+    // CHART PROYEK INVESTASI
+    // ==========================
+
+    new Chart(document.getElementById("investasiChart"), {
+        type: "bar",
+        data: {
+            labels: JSON.parse('{{ investasi_labels|escapejs }}'),
+            datasets: [
+                {
+                    label: "PMA",
+                    data: JSON.parse('{{ pma|escapejs }}'),
+                    backgroundColor: "#9966FF"
+                },
+                {
+                    label: "PMDN",
+                    data: JSON.parse('{{ pmdn|escapejs }}'),
+                    backgroundColor: "#FF9F40"
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // ==========================
+    // CHART REALISASI PERIZINAN
+    // ==========================
+
+    new Chart(document.getElementById("izinChart"), {
+        type: "bar",
+        data: {
+            labels: JSON.parse('{{ izin_labels|escapejs }}'),
+            datasets: [
+                {
+                    label: "Izin Masuk",
+                    data: JSON.parse('{{ izin_masuk|escapejs }}'),
+                    backgroundColor: "#36A2EB"
+                },
+                {
+                    label: "Izin Terbit",
+                    data: JSON.parse('{{ izin_terbit|escapejs }}'),
+                    backgroundColor: "#2ECC71"
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: "y"
+        }
+    });
+
+    new Chart(document.getElementById("pajakChart"), {
+
+        type: "line",
+
+        data: {
+
+            labels: JSON.parse('{{ pajak_labels|escapejs }}'),
+
+            datasets: [{
+
+                label: "Realisasi Pajak",
+
+                data: JSON.parse('{{ pajak_values|escapejs }}'),
+
+                borderColor: "#36A2EB",
+
+                backgroundColor: "rgba(54,162,235,.2)",
+
+                fill: true,
+
+                tension: .3
+
+            }]
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false
+
+        }
+
+    });
+
+
+    new Chart(document.getElementById("rasioChart"), {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: JSON.parse('{{ rasio_labels|escapejs }}'),
+
+            datasets: [{
+
+                data: JSON.parse('{{ rasio_values|escapejs }}'),
+
+                backgroundColor: [
+                    "#4e73df",
+                    "#1cc88a",
+                    "#36b9cc",
+                    "#f6c23e",
+                    "#e74a3b",
+                    "#6f42c1",
+                    "#fd7e14",
+                    "#20c997"
+                ],
+
+                borderColor: "#ffffff",
+                borderWidth: 2
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+                    position: "top"
+                }
+
+            }
+
+        }
+
+    });
+
+    new Chart(document.getElementById("koperasiChart"), {
+
+        type: "pie",
+
+        data: {
+
+            labels: JSON.parse('{{ koperasi_labels|escapejs }}'),
+
+            datasets: [{
+
+                data: JSON.parse('{{ koperasi_values|escapejs }}'),
+
+                backgroundColor: [
+                    "#4e73df",
+                    "#1cc88a",
+                    "#36b9cc",
+                    "#f6c23e",
+                    "#e74a3b",
+                    "#6f42c1",
+                    "#fd7e14",
+                    "#20c997"
+                ],
+
+                borderColor: "#ffffff",
+                borderWidth: 2
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+                    position: "top"
+                }
+
+            }
+
+        }
+
+    });
+
+    // =====================================================
+    // CHART REALISASI APBD
+    // =====================================================
+
+    const apbdCtx = document.getElementById("apbdChart");
+
+    if (apbdCtx) {
+        new Chart(apbdCtx, {
+            type: "bar",
+            data: {
+                labels: JSON.parse('{{ apbd_labels|escapejs }}'),
+                datasets: [
+                    {
+                        label: "Tahun 2021",
+                        data: JSON.parse('{{ apbd_2021|escapejs }}'),
+                        backgroundColor: "#4e73df"
+                    },
+                    {
+                        label: "Tahun 2022",
+                        data: JSON.parse('{{ apbd_2022|escapejs }}'),
+                        backgroundColor: "#1cc88a"
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        position: "top"
+                    },
+                    title: {
+                        display: false
+                    }
+                },
+
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
     }
 
 });
