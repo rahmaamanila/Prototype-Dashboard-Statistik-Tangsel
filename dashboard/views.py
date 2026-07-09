@@ -463,6 +463,74 @@ def siswa(request):
         "api_dataset": "Jumlah Siswa Miskin",
     }
 
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi informasi mengenai jumlah siswa dari keluarga miskin pada setiap kecamatan di Kota Tangerang Selatan tahun 2020 berdasarkan jenjang dan jenis pendidikan."
+        ),
+
+        "variabel": [
+
+            "Kecamatan : wilayah administrasi tempat pendataan.",
+
+            "SD/SDLB : jumlah siswa miskin pada jenjang Sekolah Dasar dan Sekolah Dasar Luar Biasa.",
+
+            "SMP/SMPLB : jumlah siswa miskin pada jenjang Sekolah Menengah Pertama dan Sekolah Menengah Pertama Luar Biasa.",
+
+            "SMA/SMK/SMALB : jumlah siswa miskin pada jenjang Sekolah Menengah Atas, Sekolah Menengah Kejuruan, dan Sekolah Menengah Atas Luar Biasa.",
+
+            "Madrasah Aliyah : jumlah siswa miskin pada jenjang Madrasah Aliyah.",
+
+            "Madrasah Ibtidaiyah : jumlah siswa miskin pada jenjang Madrasah Ibtidaiyah.",
+
+            "Madrasah Tsanawiyah : jumlah siswa miskin pada jenjang Madrasah Tsanawiyah.",
+
+            "Paket A : jumlah peserta didik miskin pada Program Paket A.",
+
+            "Paket B : jumlah peserta didik miskin pada Program Paket B.",
+
+            "Paket C : jumlah peserta didik miskin pada Program Paket C.",
+
+            "Perguruan Tinggi : jumlah mahasiswa dari keluarga miskin.",
+
+            "Lainnya : jumlah siswa miskin pada jenjang pendidikan lainnya.",
+
+            "Grand Total : total seluruh siswa miskin pada setiap kecamatan."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Oktober 15, 2022",
+
+            "dibuat": "	Oktober 14, 2022",
+
+            "produsen": "Dinas Sosial",
+
+            "ukuran": "Jumlah siswa miskin berdasarkan jenjang pendidikan dan kecamatan.",
+
+            "satuan": "Orang/Siswa",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 29666250"
+
+        }
+
+    })
+
     return render(
         request,
         "dashboard/siswa_miskin.html",
@@ -613,6 +681,59 @@ def air_minum(request):
         "api_dataset": "Jenis Air Minum",
     }
 
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": "Data berisi informasi mengenai jumlah penggunaan sumber air minum pada setiap kecamatan di Kota Tangerang Selatan tahun 2020 berdasarkan jenis sumber air yang digunakan.",
+
+        "variabel": [
+            "Kecamatan : wilayah administrasi.",
+            "Air Isi Ulang : jumlah rumah tangga yang menggunakan air isi ulang.",
+            "Air Kemasan Bermerk : jumlah rumah tangga yang menggunakan air kemasan bermerk.",
+            "Air Sungai/Danau/Waduk : jumlah rumah tangga yang menggunakan air permukaan.",
+            "Lainnya : sumber air minum selain kategori yang tersedia.",
+            "Leding Eceran : rumah tangga pengguna leding eceran.",
+            "Leding Meteran : rumah tangga pengguna PDAM berlangganan.",
+            "Air Hujan : rumah tangga pengguna air hujan.",
+            "Mata Air Tak Terlindung.",
+            "Mata Air Terlindung.",
+            "Sumur Bor/Pompa.",
+            "Sumur Tak Terlindung.",
+            "Sumur Terlindung.",
+            "Grand Total : jumlah seluruh rumah tangga."
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "dibuat": "Oktober 14, 2022",
+
+            "diperbarui": "Oktober 15, 2022",
+
+            "produsen": "Dinas Sosial",
+
+            "ukuran": "Jumlah penggunaan sumber air berdasarkan jenis dan kecamatan.",
+
+            "satuan": "-",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 29666250"
+
+        }
+
+    })
+
     return render(
         request,
         "dashboard/air_minum.html",
@@ -709,6 +830,60 @@ def lahan(request):
         "api_dataset": "Kepemilikan Lahan",
     }
 
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi informasi mengenai jumlah kepemilikan lahan atau tempat tinggal keluarga pada setiap kecamatan di Kota Tangerang Selatan tahun 2020 berdasarkan status kepemilikannya."
+        ),
+
+        "variabel": [
+
+            "Kecamatan : wilayah administrasi tempat pendataan.",
+
+            "Milik Sendiri : jumlah rumah tangga yang menempati lahan milik sendiri.",
+
+            "Milik Orang Lain : jumlah rumah tangga yang menempati lahan milik orang lain.",
+
+            "Tanah Negara : jumlah rumah tangga yang menempati lahan milik negara.",
+
+            "Lainnya : jumlah rumah tangga dengan status kepemilikan lahan selain kategori di atas.",
+
+            "Grand Total : jumlah seluruh rumah tangga pada setiap kecamatan."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "October 15, 2022",
+
+            "dibuat": "Oktober 14, 2022",
+
+            "produsen": "Dinas Sosial",
+
+            "ukuran": "Jumlah kepemilikan lahan keluarga berdasarkan status dan kecamatan.",
+
+            "satuan": "-",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 29666250"
+
+        }
+
+    })
+
     return render(
         request,
         "dashboard/lahan.html",
@@ -795,6 +970,56 @@ def kesejahteraan(request):
         "api_endpoint": "/api/status_kesejahteraan/",
         "api_dataset": "Status Kesejahteraan",
     }
+
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi informasi mengenai jumlah individu berdasarkan jenis kelamin yang termasuk dalam pendataan status kesejahteraan rumah tangga dan individu pada setiap kecamatan di Kota Tangerang Selatan tahun 2020."
+        ),
+
+        "variabel": [
+
+            "Kecamatan : wilayah administrasi tempat pendataan.",
+
+            "Laki-laki : jumlah penduduk laki-laki berdasarkan status kesejahteraan.",
+
+            "Perempuan : jumlah penduduk perempuan berdasarkan status kesejahteraan.",
+
+            "Grand Total : jumlah keseluruhan penduduk berdasarkan status kesejahteraan."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Oktober 14, 2022",
+
+            "dibuat": "Oktober 13, 2022",
+
+            "produsen": "Dinas Sosial",
+
+            "ukuran": "Jumlah individu berdasarkan jenis kelamin dan kecamatan.",
+
+            "satuan": "Orang/Jiwa",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 29666250"
+
+        }
+
+    })
 
     return render(
         request,
@@ -893,6 +1118,62 @@ def rumah(request):
         "api_dataset": "Kepemilikan Rumah",
     }
 
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi informasi mengenai jumlah kepemilikan atau status hunian rumah keluarga pada setiap kecamatan di Kota Tangerang Selatan tahun 2020 berdasarkan kategori kepemilikan rumah."
+        ),
+
+        "variabel": [
+
+            "Kecamatan : wilayah administrasi tempat pendataan.",
+
+            "Milik Sendiri : jumlah rumah tangga yang menempati rumah milik sendiri.",
+
+            "Kontrak/Sewa : jumlah rumah tangga yang menempati rumah kontrak atau sewa.",
+
+            "Bebas Sewa : jumlah rumah tangga yang menempati rumah tanpa membayar sewa.",
+
+            "Rumah Dinas : jumlah rumah tangga yang menempati rumah dinas.",
+
+            "Lainnya : jumlah rumah tangga dengan status kepemilikan rumah selain kategori yang tersedia.",
+
+            "Grand Total : total seluruh rumah tangga berdasarkan status kepemilikan rumah."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Oktober 14, 2022",
+
+            "dibuat": "	Oktober 13, 2022",
+
+            "produsen": "Dinas Sosial",
+
+            "ukuran": "Jumlah kepemilikan rumah keluarga berdasarkan status dan kecamatan.",
+
+            "satuan": "Rumah Tangga",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 29666250"
+
+        }
+
+    })
+
     return render(
         request,
         "dashboard/rumah.html",
@@ -975,6 +1256,47 @@ def usia_60_64(request):
 
         "api_endpoint": "/api/penduduk-usia/",
         "api_dataset": "Penduduk Usia",
+
+                # =====================================================
+        # DEFINISI
+        # =====================================================
+
+        "deskripsi": (
+            "Data berisi informasi mengenai jumlah penduduk berusia 60–64 tahun yang tercatat dalam Data Konsolidasi Bersih (DKB) Kementerian Dalam Negeri Semester 2 Tahun 2023 berdasarkan wilayah administrasi kecamatan di Kota Tangerang Selatan."
+        ),
+
+        "variabel": [
+            "Kode Wilayah: ",
+            "Nama Wilayah (Kecamatan): ",
+            "Kelompok Usia: ",
+            "Jumlah Penduduk: ",
+        ],
+
+        # =====================================================
+        # METADATA
+        # =====================================================
+
+        "metadata": {
+
+            "diperbarui": "	Juli 7, 2024",
+
+            "dibuat": "	Juli 7, 2024",
+
+            "produsen": "Dinas Kependudukan dan Pencatatan Sipil",
+
+            "ukuran": "Jumlah penduduk usia 60–64 tahun pada setiap wilayah administrasi.",
+
+            "satuan": "Jiwa",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Kota Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 5370230/0296",
+
+        },
 
     }
 
@@ -1067,6 +1389,54 @@ def ppks_dtks(request):
         "api_dataset": "PPKS DTKS",
 
     }
+
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi informasi mengenai jumlah PPKS yang mandiri serta PPKS anak terlantar yang tertangani dan DTKS yang telah terverifikasi dan tervalidasi pada setiap kecamatan di Kota Tangerang Selatan tahun 2022."
+        ),
+
+        "variabel": [
+
+            "Kecamatan : wilayah administrasi tempat pendataan.",
+
+            "Jumlah PPKS Mandiri : jumlah Pemerlu Pelayanan Kesejahteraan Sosial (PPKS) yang terdata secara mandiri.",
+
+            "Persentase DTKS : persentase penduduk yang terdaftar dalam Data Terpadu Kesejahteraan Sosial (DTKS)."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Agustus 9, 2023",
+
+            "dibuat": "Agustus 9, 2023",
+
+            "produsen": "Dinas Sosial",
+
+            "ukuran": "Jumlah PPKS dan DTKS berdasarkan kecamatan.",
+
+            "satuan": "-",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 29666250"
+
+        }
+
+    })
 
     return render(
 
@@ -1171,6 +1541,58 @@ def penduduk_jenis_kelamin(request):
         "api_dataset": "Penduduk Jenis Kelamin",
 
     }
+
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Tabel 4.1 menyajikan jumlah penduduk Kota Tangerang Selatan berdasarkan jenis kelamin menurut kecamatan pada DKB Semester II Tahun 2024. Data ini menunjukkan persebaran penduduk laki-laki dan perempuan di setiap kecamatan, dengan jumlah penduduk terbesar berada di Kecamatan Pamulang dan yang terkecil di Kecamatan Setu."
+        ),
+
+        "variabel": [
+
+            "Kode Wilayah : kode administrasi wilayah kecamatan.",
+
+            "Kecamatan : nama kecamatan di Kota Tangerang Selatan.",
+
+            "Laki-laki : jumlah penduduk berjenis kelamin laki-laki.",
+
+            "Perempuan : jumlah penduduk berjenis kelamin perempuan.",
+
+            "Jumlah : total penduduk laki-laki dan perempuan."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "June 4, 2026",
+
+            "dibuat": "	June 4, 2026",
+
+            "produsen": "Dinas Kependudukan dan Pencatatan Sipil",
+
+            "ukuran": "Jumlah penduduk berdasarkan jenis kelamin pada setiap kecamatan.",
+
+            "satuan": "Jiwa",
+
+            "frekuensi": "Enam Bulanan",
+
+            "sumber": "Portal Satu Data Tangsel",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 5370230/0296"
+
+        }
+
+    })
 
     return render(
 
@@ -1303,6 +1725,54 @@ def disabilitas(request):
 
     }
 
+    context.update({
+
+        "deskripsi": (
+            "Data berisi informasi mengenai jumlah penduduk penyandang disabilitas yang dikelompokkan berdasarkan jenis disabilitas, yaitu tuna fisik, tuna netra, tuna rungu/wicara, tuna mental/jiwa, tuna fisik dan mental, serta kategori lainnya pada setiap kecamatan di Kota Tangerang Selatan tahun 2022."
+        ),
+
+        "variabel": [
+
+            "Kecamatan : wilayah administrasi tempat pendataan.",
+
+            "Tuna Fisik : jumlah penyandang disabilitas fisik.",
+
+            "Tuna Netra : jumlah penyandang disabilitas netra.",
+
+            "Tuna Rungu Wicara : jumlah penyandang disabilitas rungu dan wicara.",
+
+            "Tuna Mental Jiwa : jumlah penyandang disabilitas mental atau jiwa.",
+
+            "Tuna Fisik dan Mental : jumlah penyandang disabilitas ganda.",
+
+            "Lainnya : jumlah penyandang disabilitas selain kategori yang telah disebutkan."
+
+        ],
+
+        "metadata": {
+
+            "diperbarui": "Juli 22, 2023",
+
+            "dibuat": "Mei 10, 2023",
+
+            "produsen": "Dinas Sosial",
+
+            "ukuran": "Jumlah penduduk penyandang disabilitas pada masing-masing jenis disabilitas dan kecamatan.",
+
+            "satuan": "Jiwa",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 29666250"
+
+        }
+
+    })
+
     return render(
 
         request,
@@ -1416,6 +1886,56 @@ def kelompok_perikanan(request):
 
     }
 
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi informasi jumlah kelompok perikanan budidaya yang bergerak di bidang pengolahan dan pemasaran pada masing-masing kecamatan di Kota Tangerang Selatan tahun 2022."
+        ),
+
+        "variabel": [
+
+            "Kecamatan : wilayah administrasi tempat kelompok perikanan berada.",
+
+            "Pengolah : jumlah kelompok usaha yang bergerak pada bidang pengolahan hasil perikanan.",
+
+            "Pemasaran : jumlah kelompok usaha yang bergerak pada bidang pemasaran hasil perikanan.",
+
+            "Total : jumlah seluruh kelompok perikanan pada setiap kecamatan."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Agustus 30, 2023",
+
+            "dibuat": "Mei 26, 2023",
+
+            "produsen": "Dinas Ketahanan Pangan, Pertanian, dan Perikanan",
+
+            "ukuran": "Jumlah kelompok perikanan budidaya berdasarkan jenis kegiatan dan wilayah kecamatan.",
+
+            "satuan": "Kelompok",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "-"
+
+        }
+
+    })
+
     return render(
 
         request,
@@ -1507,6 +2027,42 @@ def umkm(request):
         "jumlah_umkm": json.dumps(
             [x["jumlah_umkm"] for x in data]
         ),
+
+        # =====================================================
+        # DEFINISI & METADATA
+        # =====================================================
+
+        "deskripsi": (
+            "Data berisi jumlah UMKM yang terdata pada masing-masing kecamatan di Kota Tangerang Selatan selama tahun 2022."
+        ),
+
+        "variabel": [
+             "Kecamatan : wilayah administrasi tempat kelompok perikanan berada.",
+             
+             "Jumlah UMKM: Jumlah pelaku Usaha Mikro, Kecil, dan Menengah pada masing-masing kecamatan."
+        ],
+
+        "metadata": {
+
+            "diperbarui": "Agustus 20, 2025",
+
+            "dibuat": "Agustus 20, 2025",
+
+            "produsen": "Dinas Koperasi dan Usaha Kecil Menengah",
+
+            "ukuran": "Jumlah UMKM pada setiap kecamatan.",
+
+            "satuan": "Unit Usaha",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 003024630820",
+
+        },
 
         "api_endpoint": "/api/umkm/",
         "api_dataset": "UMKM",
@@ -1609,6 +2165,52 @@ def koperasi(request):
         "api_dataset": "Koperasi",
 
     }
+
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi jumlah koperasi yang dikelompokkan berdasarkan rentang jumlah aset yang dimiliki di Kota Tangerang Selatan selama tahun 2021."
+        ),
+
+        "variabel": [
+
+            "Jumlah Aset : kategori aset yang dimiliki koperasi.",
+
+            "Jumlah : banyaknya koperasi pada masing-masing kategori aset."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Oktober 15, 2022",
+
+            "dibuat": "Oktober 14, 2022",
+
+            "produsen": "Dinas Koperasi dan Usaha Kecil Menengah",
+
+            "ukuran": "Jumlah koperasi pada masing-masing kategori aset.",
+
+            "satuan": "Unit koperasi",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 003024630820"
+
+        }
+
+    })
 
     return render(
 
@@ -1767,6 +2369,54 @@ def pajak_pariwisata(request):
 
     }
 
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi informasi realisasi penerimaan pajak daerah sektor pariwisata yang meliputi pajak hotel, pajak restoran, dan pajak hiburan di Kota Tangerang Selatan tahun 2018–2021."
+        ),
+
+        "variabel": [
+
+            "Tahun : tahun realisasi penerimaan pajak.",
+
+            "Jenis Pajak : kategori pajak pariwisata yang terdiri dari Pajak Hotel, Pajak Restoran, dan Pajak Hiburan.",
+
+            "Realisasi : nilai realisasi penerimaan pajak pada tahun dan jenis pajak tertentu."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Juli 12, 2023",
+
+            "dibuat": "Agustus 31, 2022",
+
+            "produsen": "Badan Pendapatan Daerah",
+
+            "ukuran": "Nilai realisasi penerimaan pajak daerah sektor pariwisata.",
+
+            "satuan": "Rupiah",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 53157219"
+
+        }
+
+    })
+
     return render(
 
         request,
@@ -1879,6 +2529,56 @@ def rasio_belanja(request):
         "api_dataset": "Rasio Belanja",
 
     }
+
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi informasi mengenai pagu anggaran dan rasio masing-masing jenis belanja daerah di Kota Tangerang Selatan dalam periode tertentu."
+        ),
+
+        "variabel": [
+
+            "Uraian : kategori atau jenis belanja dalam Anggaran Pendapatan dan Belanja Daerah (APBD).",
+
+            "Pagu : jumlah anggaran yang dialokasikan untuk setiap kategori belanja.",
+
+            "Rasio : persentase proporsi pagu terhadap total belanja."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Agustus 21, 2025",
+
+            "dibuat": "Juni 12, 2025",
+
+            "produsen": "Badan Pengelola Keuangan dan Aset Daerah",
+
+            "klasifikasi": "Data Terbuka",
+
+            "ukuran": "Nilai pagu anggaran dan Rasio belanja daerah",
+
+            "satuan": "Rupiah dan Persen (%)",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "-"
+
+        }
+
+    })
 
     return render(
 
@@ -2027,6 +2727,58 @@ def realisasi_perizinan(request):
 
     }
 
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Report Realisasi Penerimaan Izin Tahun 2021, Berdasarkan Peraturan Walikota di Kota Tangerang Selatan tahun 2021 merujuk pada Peraturan Walikota Tangerang Selatan Nomor 30 Tahun 2021. Tentang Pendelegasian Wewenang penyelenggaraan perizinan berusaha berbasis risiko dan nonperizinan."
+        ),
+
+        "variabel": [
+
+            "Nama Izin : jenis layanan perizinan yang diselenggarakan.",
+
+            "Izin Masuk : jumlah permohonan izin yang diterima.",
+
+            "Izin Terbit : jumlah izin yang telah diterbitkan.",
+
+            "Izin Ditolak : jumlah permohonan izin yang ditolak.",
+
+            "Dalam Proses : jumlah permohonan izin yang masih diproses."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Juli 24, 2025",
+
+            "dibuat": "Oktober 14, 2022",
+
+            "produsen": "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu",
+
+            "ukuran": "Jumlah realisasi perizinan berdasarkan jenis dan status perizinan.",
+
+            "satuan": "Dokumen/Permohonan",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 53150120"
+
+        }
+
+    })
+
     return render(
 
         request,
@@ -2159,6 +2911,54 @@ def proyek_investasi(request):
 
     }
 
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi informasi mengenai jumlah proyek investasi PMA dan PMDN yang dikelompokkan berdasarkan sektor investasi di Kota Tangerang Selatan tahun 2020."
+        ),
+
+        "variabel": [
+
+            "Sektor : bidang atau sektor usaha penerima investasi.",
+
+            "PMA : jumlah proyek Penanaman Modal Asing pada sektor terkait.",
+
+            "PMDN : jumlah proyek Penanaman Modal Dalam Negeri pada sektor terkait."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Desember 22, 2023",
+
+            "dibuat": "Oktober 13, 2022",
+
+            "produsen": "Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu",
+
+            "ukuran": "Jumlah proyek investasi PMA dan PMDN pada setiap sektor.",
+
+            "satuan": "Proyek",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Terbuka",
+
+            "kontak": "(021) 53150120"
+
+        }
+
+    })
+
     return render(
 
         request,
@@ -2275,6 +3075,54 @@ def realisasi_apbd(request):
         "api_dataset": "Realisasi APBD",
 
     }
+
+    context.update({
+
+        # =====================================
+        # DEFINISI DATASET
+        # =====================================
+
+        "deskripsi": (
+            "Data berisi informasi mengenai realisasi pengeluaran APBD Kota Tangerang Selatan yang dikelompokkan berdasarkan jenis belanja untuk tahun anggaran 2021 dan 2022."
+        ),
+
+        "variabel": [
+
+            "Jenis Belanja : kategori belanja dalam APBD Pemerintah Kota Tangerang Selatan.",
+
+            "Tahun 2021 : nilai realisasi anggaran pada Tahun Anggaran 2021.",
+
+            "Tahun 2022 : nilai realisasi anggaran pada Tahun Anggaran 2022."
+
+        ],
+
+        # =====================================
+        # METADATA
+        # =====================================
+
+        "metadata": {
+
+            "diperbarui": "Juli 22, 2023",
+
+            "dibuat": "Juli 12, 2023",
+
+            "produsen": "Badan Pengelola Keuangan dan Aset Daerah",
+
+            "ukuran": "Nilai realisasi belanja APBD berdasarkan jenis belanja dan tahun anggaran.",
+
+            "satuan": "Rupiah",
+
+            "frekuensi": "Tahunan",
+
+            "sumber": "Portal Satu Data Tangerang Selatan",
+
+            "sifat": "Publik",
+
+            "kontak": "-"
+
+        }
+
+    })
 
     return render(
 
