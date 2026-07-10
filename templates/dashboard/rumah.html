@@ -33,14 +33,10 @@
 
 <div class="page-header">
 
-    <h3 class="fw-bold mb-3">
-        Jumlah Kepemilikan Rumah Keluarga Menurut Status dan Kecamatan
-    </h3>
-
     <ul class="breadcrumbs mb-3">
 
         <li class="nav-home">
-            <a href="/">
+            <a href="{% url 'home' %}">
                 <i class="icon-home"></i>
             </a>
         </li>
@@ -50,15 +46,7 @@
         </li>
 
          <li class="nav-item">
-                <a href="#">Sosial</a>
-            </li>
-
-            <li class="separator">
-                <i class="icon-arrow-right"></i>
-            </li>
-
-            <li class="nav-item">
-                <a href="#">Dinas Sosial</a>
+                <a href="{% url 'kategori_sosial' %}">Sosial</a>
             </li>
 
             <li class="separator">
@@ -66,10 +54,19 @@
             </li>
 
         <li class="nav-item">
-            <a href="#">Kepemilikan Rumah</a>
+            <a href="#">Jumlah Kepemilikan Rumah Keluarga Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun 2020</a>
         </li>
 
     </ul>
+
+</div>
+<div class="page-inner">
+
+<div class="page-header">
+
+    <h3 class="fw-bold mb-3">
+        Jumlah Kepemilikan Rumah Keluarga Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun 2020
+    </h3>
 
 </div>
 
@@ -199,7 +196,7 @@
     </div>
 
 <!-- CARD -->
- <div class="row">
+ <!-- <div class="row">
 
     <div class="col-md-4">
 
@@ -273,7 +270,7 @@
 
     </div>
 
-</div>
+</div> -->
 
 <!-- TABEL -->
  <div class="card">
@@ -413,6 +410,7 @@
 
     </div>
 
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

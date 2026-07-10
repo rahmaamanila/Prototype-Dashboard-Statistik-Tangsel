@@ -33,18 +33,12 @@
 
 </style>
 
-<div class="page-inner">
-
-  <div class="page-header">
-
-    <h3 class="fw-bold mb-3">
-      Proyek Investasi PMA PMDN
-    </h3>
+<div class="page-header">
 
     <ul class="breadcrumbs mb-3">
 
       <li class="nav-home">
-        <a href="/">
+        <a href="{% url 'home' %}">
           <i class="icon-home"></i>
         </a>
       </li>
@@ -54,7 +48,7 @@
       </li>
 
       <li class="nav-item">
-        <a href="#">Ekonomi</a>
+        <a href="{% url 'kategori_ekonomi' %}">Ekonomi</a>
       </li>
 
       <li class="separator">
@@ -62,10 +56,20 @@
       </li>
 
       <li class="nav-item">
-        <a href="#">Proyek Investasi</a>
+        <a href="#">Jumlah Proyek Investasi PMA dan PMDN Menurut Sektor di Kota Tangerang Selatan Tahun 2020</a>
       </li>
 
     </ul>
+
+  </div>
+
+<div class="page-inner">
+
+  <div class="page-header">
+
+    <h3 class="fw-bold mb-3">
+      Jumlah Proyek Investasi PMA dan PMDN Menurut Sektor di Kota Tangerang Selatan Tahun 2020
+    </h3>
 
   </div>
 
@@ -196,7 +200,7 @@
 
   <!-- CARD -->
 
-  <div class="row">
+  <!-- <div class="row">
 
     <div class="col-md-4">
 
@@ -272,85 +276,100 @@
 
     </div>
 
-  </div>
+  </div> -->
 
 
 
   <!-- TABEL -->
 
-  <div class="card">
+<div class="card">
 
-    <div class="card-header">
+  <div class="card-header d-flex justify-content-between align-items-center">
 
-      <div class="d-flex justify-content-between align-items-center">
+    <h4 class="card-title mb-0">
+      Data Proyek Investasi PMA dan PMDN
+    </h4>
 
-        <h4 class="card-title">
-          Tabel Proyek Investasi PMA PMDN
-        </h4>
+    <div class="d-flex gap-2">
 
-        <a href="{% url 'download_proyek_investasi' %}" class="btn btn-success">
+      <a href="{% url 'download_proyek_investasi' %}"
+         class="btn btn-success">
+        Download Excel
+      </a>
 
-          Download Excel
+      <a href="{% url 'download_csv' 'investasi' %}"
+         class="btn btn-success">
+        Download CSV
+      </a>
 
-        </a>
-        <a href="{% url 'download_csv' 'investasi' %}" class="btn btn-success"> 
-          Download CSV 
-        </a>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#apiModal">REST API</button>
-
-      </div>
-
-    </div>
-
-    <div class="card-body">
-
-      <div class="table-responsive">
-
-        <table class="table table-bordered table-striped">
-
-          <thead>
-
-            <tr>
-
-              <th>No</th>
-
-              <th>Sektor</th>
-
-              <th>PMA</th>
-
-              <th>PMDN</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {% for item in data %}
-
-            <tr>
-
-              <td>{{ forloop.counter }}</td>
-
-              <td>{{ item.sektor }}</td>
-
-              <td>{{ item.pma }}</td>
-
-              <td>{{ item.pmdn }}</td>
-
-            </tr>
-
-            {% endfor %}
-
-          </tbody>
-
-        </table>
-
-      </div>
+      <button type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#apiModal">
+        REST API
+      </button>
 
     </div>
 
   </div>
+
+  <div class="card-body">
+
+    <div class="table-responsive">
+
+      <table class="table table-bordered table-striped table-hover align-middle">
+
+        <thead class="table-light">
+
+          <tr>
+
+            <th width="70">No</th>
+
+            <th>Sektor</th>
+
+            <th width="180" class="text-center">
+              PMA
+            </th>
+
+            <th width="180" class="text-center">
+              PMDN
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {% for item in data %}
+
+          <tr>
+
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ item.sektor }}</td>
+
+            <td class="text-center">
+              {{ item.pma }}
+            </td>
+
+            <td class="text-center">
+              {{ item.pmdn }}
+            </td>
+
+          </tr>
+
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
 
 
 

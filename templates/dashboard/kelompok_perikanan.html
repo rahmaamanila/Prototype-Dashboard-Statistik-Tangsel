@@ -29,18 +29,12 @@
 
 </style>
 
-<div class="page-inner">
-
-    <div class="page-header">
-
-        <h3 class="fw-bold mb-3">
-            Kelompok Perikanan
-        </h3>
+ <div class="page-header">
 
         <ul class="breadcrumbs mb-3">
 
             <li class="nav-home">
-                <a href="/">
+                <a href="{% url 'home' %}">
                     <i class="icon-home"></i>
                 </a>
             </li>
@@ -50,7 +44,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="#">Ekonomi</a>
+                <a href="{% url 'kategori_ekonomi' %}">Ekonomi</a>
             </li>
 
             <li class="separator">
@@ -66,15 +60,25 @@
             </li>
 
             <li class="nav-item">
-                <a href="#">Kelompok Perikanan</a>
+                <a href="#">Jumlah Kelompok Perikanan Budidaya Menurut Jenis dan Kecamatan di Kota Tangerang Selatan Tahun 2022</a>
             </li>
 
         </ul>
 
     </div>
 
+<div class="page-inner">
+
+    <div class="page-header">
+
+        <h3 class="fw-bold mb-3">
+            Jumlah Kelompok Perikanan Budidaya Menurut Jenis dan Kecamatan di Kota Tangerang Selatan Tahun 2022
+        </h3>
+
+    </div>
+
 <!-- CARD -->
- <div class="row">
+ <!-- <div class="row">
 
     <div class="col-md-4">
 
@@ -148,7 +152,7 @@
 
     </div>
 
-</div>
+</div> -->
 
 <!-- ================================================= -->
 <!-- INFORMASI DATASET -->

@@ -6,6 +6,10 @@ from django.urls import reverse
 import csv
 from django.http import HttpResponse
 from django.db.models import ForeignKey
+from dashboard.models import Dataset
+from dashboard.models import Dataset
+from django.shortcuts import get_object_or_404
+from .models import Dataset
 
 from .models import (
     Dataset,
@@ -288,6 +292,54 @@ def home(request):
         for x in koperasi
     ]
 
+    # Semua dataset untuk ditampilkan di Dashboard
+
+    datasets = Dataset.objects.select_related("kategori").order_by(
+        "kategori__nama_kategori",
+        "nama_dataset"
+    )
+
+    dataset_urls = {
+        "Jumlah Siswa Miskin Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun 2020": "siswa_miskin",
+
+        "Jenis Air Minum yang Dikonsumsi Rumah Tangga Menurut Kecamatan di Kota Tangerang Selatan Tahun 2020": "air_minum",
+
+        "Jumlah Kepemilikan Lahan Keluarga Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun 2020": "lahan",
+
+        "Informasi Status Kesejahteraan Rumah Tangga dan Individu Menurut Kecamatan di Kota Tangerang Selatan Tahun 2020": "kesejahteraan",
+
+        "Jumlah Kepemilikan Rumah Keluarga Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun 2020": "rumah",
+
+        "Persentase PPKS dan DTKS": "ppks_dtks",
+
+        "Jumlah Penduduk Menurut Usia 60-64 Tahun": "usia_60_64",
+
+        "Jumlah Penduduk Berdasarkan Jenis Kelamin": "penduduk_jenis_kelamin",
+
+        "Jumlah Penduduk Penyandang Disabilitas": "disabilitas",
+
+        "Jumlah Kelompok Perikanan Budidaya Menurut Jenis dan Kecamatan di Kota Tangerang Selatan Tahun 2022": "kelompok_perikanan",
+
+        "Jumlah UMKM Menurut Kecamatan di Kota Tangerang Selatan Tahun 2022": "umkm",
+
+        "Jumlah Koperasi Menurut Jumlah Aset yang Dimiliki di Kota Tangerang Selatan Tahun 2021": "koperasi",
+
+        "Rekapitulasi Pajak Daerah Terkait Sektor Pariwisata Menurut Jenis di Kota Tangerang Selatan Tahun 2018-2021": "pajak_pariwisata",
+
+        "Rasio Belanja Perangkat Daerah di Kota Tangerang Selatan Tahun 2023": "rasio_belanja",
+
+        "Jumlah Realisasi Perizinan Menurut Jenis di Kota Tangerang Selatan Tahun 2021": "realisasi_perizinan",
+
+        "Jumlah Proyek Investasi PMA dan PMDN Menurut Sektor di Kota Tangerang Selatan Tahun 2020": "proyek_investasi",
+
+        "Jumlah Nilai Realisasi APBD Kota Tangerang Selatan Menurut Jenis Belanja Tahun 2022": "realisasi_apbd",
+    }
+
+    for d in datasets:
+        d.url_name = dataset_urls.get(d.nama_dataset)
+        print(d.nama_dataset, "=>", d.url_name)
+
+
 
     context = {
 
@@ -296,6 +348,7 @@ def home(request):
         # "api_badge": "success",
 
         # "api_icon": "fas fa-database",
+        
 
         "total_dataset": total_dataset,
 
@@ -371,6 +424,10 @@ def home(request):
 
         "koperasi_labels": json.dumps(koperasi_labels),
         "koperasi_values": json.dumps(koperasi_values),
+
+         "datasets": datasets,
+         "total_dataset": datasets.count(),
+
 
     }
 
@@ -1266,10 +1323,10 @@ def usia_60_64(request):
         ),
 
         "variabel": [
-            "Kode Wilayah: ",
-            "Nama Wilayah (Kecamatan): ",
-            "Kelompok Usia: ",
-            "Jumlah Penduduk: ",
+            "Kode Wilayah: kode administrasi wilayah kecamatan.",
+            "Nama Wilayah (Kecamatan): nama kecamatan di Kota Tangerang Selatan.",
+            "Kelompok Usia: kategori usia penduduk (60–64 tahun).",
+            "Jumlah Penduduk: banyaknya penduduk usia 60–64 tahun pada masing-masing kecamatan (satuan: jiwa).",
         ],
 
         # =====================================================
@@ -3408,3 +3465,15 @@ def download_csv(request, dataset):
         writer.writerow([getattr(obj, field) for field in fields])
 
     return response
+
+
+def detail_dataset(request, id):
+    dataset = get_object_or_404(Dataset, id=id)
+
+    return render(
+        request,
+        "dashboard/detail_dataset.html",
+        {
+            "dataset": dataset,
+        },
+    )

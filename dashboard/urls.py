@@ -354,5 +354,11 @@ urlpatterns = [
         api_views.api_proyek_investasi,
         name="api_proyek_investasi",
     ),
+    
+    path(
+        "dataset/<int:id>/",
+        views.detail_dataset,
+        name="detail_dataset",
+    ),
 
 ]

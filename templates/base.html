@@ -56,6 +56,7 @@
           <!-- End Logo Header -->
         </div>
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          {% with current=request.resolver_match.url_name %}
           <div class="sidebar-content">
             <ul class="nav nav-secondary">
               <!-- Dashboard -->
@@ -73,14 +74,14 @@
 
               <!-- Dinas Sosial -->
 
-              <li class="nav-item">
+              <li class="nav-item submenu {% if current in 'siswa_miskin air_minum lahan rumah kesejahteraan ppks_dtks' %}active{% endif %}">
                 <a data-bs-toggle="collapse" href="#dinsos">
                   <i class="fas fa-users"></i>
                   <p>Dinas Sosial</p>
                   <span class="caret"></span>
                 </a>
 
-                <div class="collapse" id="dinsos">
+                <div class="collapse {% if current == 'siswa_miskin' or current == 'air_minum' or current == 'lahan' or current == 'rumah' or current == 'kesejahteraan' or current == 'ppks_dtks' %}show{% endif %}" id="dinsos">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'siswa_miskin' %}"><span class="sub-item">Siswa Miskin</span></a>
@@ -111,7 +112,7 @@
 
               <!-- Dukcapil -->
 
-              <li class="nav-item">
+              <li class="nav-item submenu {% if current == 'penduduk_jenis_kelamin' or current == 'usia_60_64' or current == 'disabilitas' %}active{% endif %}">
                 <a data-bs-toggle="collapse" href="#dukcapil">
                   <i class="fas fa-id-card"></i>
 
@@ -120,7 +121,7 @@
                   <span class="caret"></span>
                 </a>
 
-                <div class="collapse" id="dukcapil">
+                <div class="collapse {% if current == 'penduduk_jenis_kelamin' or current == 'usia_60_64' or current == 'disabilitas' %}show{% endif %}" id="dukcapil">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'penduduk_jenis_kelamin' %}"><span class="sub-item">Penduduk Jenis Kelamin</span></a>
@@ -139,7 +140,7 @@
 
               <!-- DKPPP -->
 
-              <li class="nav-item">
+              <li class="nav-item submenu {% if current == 'kelompok_perikanan' %}active{% endif %}">
                 <a data-bs-toggle="collapse" href="#dkppp">
                   <i class="fas fa-fish"></i>
 
@@ -148,7 +149,7 @@
                   <span class="caret"></span>
                 </a>
 
-                <div class="collapse" id="dkppp">
+                <div class="collapse {% if current == 'kelompok_perikanan' %}show{% endif %}" id="dkppp">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'kelompok_perikanan' %}"><span class="sub-item">Kelompok Perikanan</span></a>
@@ -159,7 +160,7 @@
 
               <!-- Diskop -->
 
-              <li class="nav-item">
+              <li class="nav-item submenu {% if current == 'umkm' %}active{% endif %}">
                 <a data-bs-toggle="collapse" href="#diskop">
                   <i class="fas fa-store"></i>
 
@@ -168,7 +169,7 @@
                   <span class="caret"></span>
                 </a>
 
-                <div class="collapse" id="diskop">
+                <div class="collapse {% if current == 'umkm' %}show{% endif %}" id="diskop">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'umkm' %}"><span class="sub-item">Jumlah UMKM</span></a>
@@ -179,7 +180,7 @@
 
               <!-- DPMPTSP -->
 
-              <li class="nav-item">
+              <li class="nav-item submenu {% if current == 'realisasi_perizinan' or current == 'proyek_investasi' %}active{% endif %}">
                 <a data-bs-toggle="collapse" href="#dpmptsp">
                   <i class="fas fa-briefcase"></i>
 
@@ -188,7 +189,7 @@
                   <span class="caret"></span>
                 </a>
 
-                <div class="collapse" id="dpmptsp">
+                <div class="collapse {% if current == 'realisasi_perizinan' or current == 'proyek_investasi' %}show{% endif %}" id="dpmptsp">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'realisasi_perizinan' %}"><span class="sub-item">Realisasi Perizinan</span></a>
@@ -203,7 +204,7 @@
 
               <!-- Bapenda -->
 
-              <li class="nav-item">
+              <li class="nav-item submenu {% if current == 'pajak_pariwisata' %}active{% endif %}">
                 <a data-bs-toggle="collapse" href="#bapenda">
                   <i class="fas fa-coins"></i>
 
@@ -212,7 +213,7 @@
                   <span class="caret"></span>
                 </a>
 
-                <div class="collapse" id="bapenda">
+                <div class="collapse {% if current == 'pajak_pariwisata' %}show{% endif %}" id="bapenda">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'pajak_pariwisata' %}"><span class="sub-item">Pajak Pariwisata</span></a>
@@ -223,7 +224,7 @@
 
               <!-- BKAD -->
 
-              <li class="nav-item">
+              <li class="nav-item submenu {% if current == 'rasio_belanja' or current == 'realisasi_apbd' %}active{% endif %}">
                 <a data-bs-toggle="collapse" href="#bkad">
                   <i class="fas fa-wallet"></i>
 
@@ -232,7 +233,7 @@
                   <span class="caret"></span>
                 </a>
 
-                <div class="collapse" id="bkad">
+                <div class="collapse {% if current == 'rasio_belanja' or current == 'realisasi_apbd' %}show{% endif %}" id="bkad">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'rasio_belanja' %}"><span class="sub-item">Rasio Belanja</span></a>
@@ -250,14 +251,14 @@
                 <h4 class="text-section">SEKTOR</h4>
               </li>
 
-              <li class="nav-item">
+              <li class="nav-item {% if request.resolver_match.url_name == 'kategori_sosial' %}active{% endif %}">
                 <a href="{% url 'kategori_sosial' %}">
                   <i class="fas fa-globe-asia"></i>
                   <p>Sosial</p>
                 </a>
               </li>
 
-              <li class="nav-item active">
+              <li class="nav-item {% if request.resolver_match.url_name == 'kategori_ekonomi' %}active{% endif %}">
                 <a href="{% url 'kategori_ekonomi' %}">
                   <i class="fas fa-globe-asia"></i>
                   <p>Ekonomi</p>
@@ -265,6 +266,7 @@
               </li>
             </ul>
           </div>
+          {% endwith %}
         </div>
       </div>
       <!-- End Sidebar -->
@@ -298,12 +300,27 @@
             </button>
 
             <div class="container-fluid">
-              <!-- Judul Dashboard -->
-              <div class="d-flex align-items-center">
-                <div class="ms-2">
-                  <h5 class="mb-0 fw-bold">Dashboard Statistik Sosial Ekonomi Kota Tangerang Selatan</h5>
+
+                <div class="d-flex align-items-center">
+
+                    <!-- Logo -->
+                    <img
+                        src="{% static 'assets/img/kaiadmin/LOGO_TANGSEL.png' %}"
+                        alt="Logo Kota Tangerang Selatan"
+                        width="40"
+                        height="40"
+                        class="me-3"
+                    >
+
+                    <!-- Judul -->
+                    <div>
+                        <h5 class="mb-0 fw-bold">
+                            Kota Tangerang Selatan
+                        </h5>
+                    </div>
+
                 </div>
-              </div>
+
             </div>
           </nav>
           <!-- End Navbar -->

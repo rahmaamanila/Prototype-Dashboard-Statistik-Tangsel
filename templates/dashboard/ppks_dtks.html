@@ -31,15 +31,10 @@
 </style>
 
 <div class="page-header">
-
-    <h3 class="fw-bold mb-3">
-        Data PPKS Mandiri dan Persentase DTKS 
-    </h3>
-
     <ul class="breadcrumbs mb-3">
 
         <li class="nav-home">
-            <a href="/">
+            <a href="{% url 'home' %}">
                 <i class="icon-home"></i>
             </a>
         </li>
@@ -49,15 +44,7 @@
         </li>
 
         <li class="nav-item">
-                <a href="#">Sosial</a>
-            </li>
-
-            <li class="separator">
-                <i class="icon-arrow-right"></i>
-            </li>
-
-            <li class="nav-item">
-                <a href="#">Dinas Sosial</a>
+                <a href="{% url 'kategori_sosial' %}">Sosial</a>
             </li>
 
             <li class="separator">
@@ -66,10 +53,20 @@
 
 
         <li class="nav-item">
-            <a href="#">PPKS & DTKS</a>
+            <a href="#">Persentase PPKS dan DTKS Menurut Kecamatan di Kota Tangerang Selatan Tahun 2022</a>
         </li>
 
     </ul>
+
+</div>
+
+<div class="page-inner">
+
+<div class="page-header">
+
+    <h3 class="fw-bold mb-3">
+        Persentase PPKS dan DTKS Menurut Kecamatan di Kota Tangerang Selatan Tahun 2022
+    </h3>
 
 </div>
 
@@ -199,7 +196,7 @@
     </div>
 
 <!-- card -->
- <div class="row">
+ <!-- <div class="row">
 
     <div class="col-md-4">
 
@@ -273,7 +270,7 @@
 
     </div>
 
-</div>
+</div> -->
 
 <!-- TABEL -->
  <div class="card">
@@ -377,6 +374,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
