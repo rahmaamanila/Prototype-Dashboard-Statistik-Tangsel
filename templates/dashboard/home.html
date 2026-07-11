@@ -9,7 +9,7 @@
           <div class="col-md-7">
             <h2 class="fw-bold">Dashboard Statistik Sosial Ekonomi</h2>
 
-            <p class="text-muted">Kota Tangerang Selatan</p>
+            <!-- <p class="text-muted">Kota Tangerang Selatan</p> -->
           </div>
 
           <!-- Bagian Kanan -->
@@ -516,7 +516,7 @@
     <div class="col-md-6">
         <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Kepemilikan Rumah</h4>
+            <h4 class="card-title"> Jumlah Kepemilikan Rumah berdasarkan Status</h4>
         </div>
 
         <div class="card-body" style="height: 400px">
@@ -530,7 +530,7 @@
     <div class="col-md-6">
         <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Status Kepemilikan Lahan</h4>
+            <h4 class="card-title">Jumlah Kepemilikan Lahan berdasarkan Status</h4>
         </div>
 
         <div class="card-body">
@@ -544,7 +544,7 @@
     <div class="col-md-6">
         <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Status Kesejahteraan</h4>
+            <h4 class="card-title">Jumlah Individu berdasarkan Jenis Kelamin</h4>
         </div>
 
         <div class="card-body">
@@ -560,7 +560,7 @@
     <div class="col-md-12">
         <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Jenis Air Minum</h4>
+            <h4 class="card-title">Jumlah Pengguna berdasarkan Jenis Air Minum</h4>
         </div>
 
         <div class="card-body">
@@ -576,7 +576,7 @@
     <div class="col-md-6">
         <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Penduduk Usia 60–64 Tahun</h4>
+            <h4 class="card-title">Jumlah Penduduk Usia 60–64 Tahun per Kecamatan</h4>
         </div>
 
         <div class="card-body" style="height: 400px">
@@ -588,7 +588,7 @@
     <div class="col-md-6 kategori sosial">
         <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Penduduk Berdasarkan Jenis Kelamin</h4>
+            <h4 class="card-title">Jumlah Penduduk Berdasarkan Jenis Kelamin per Kecamatan</h4>
         </div>
 
         <div class="card-body" style="height: 400px">
@@ -602,7 +602,7 @@
     <div class="col-md-12">
         <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Jenis Penyandang Disabilitas</h4>
+            <h4 class="card-title">Jumlah Penyandang Disabilitas berdasarkan Jenis per Kecamatan</h4>
         </div>
 
         <div class="card-body" style="height: 500px">
@@ -616,7 +616,7 @@
     <div class="col-md-12">
         <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Persentase DTKS per Kecamatan</h4>
+            <h4 class="card-title">Persentase PPKS dan DTKS per Kecamatan</h4>
         </div>
 
         <div class="card-body" style="height: 420px">
@@ -1171,7 +1171,7 @@
                   labels: {{ ppks_labels|safe }},
 
                   datasets: [{
-                      label: "Persentase DTKS",
+                      label: "Persentase PPKS dan DTKS",
                       data: {{ ppks_values|safe }},
                       backgroundColor: "rgba(78, 115, 223, 0.2)",
                       borderColor: "#4e73df",

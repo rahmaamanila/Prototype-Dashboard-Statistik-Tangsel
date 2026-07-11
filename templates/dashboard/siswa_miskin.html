@@ -287,7 +287,7 @@
         <div class="d-flex justify-content-between align-items-center">
 
             <h4 class="card-title">
-                Tabel Siswa Miskin
+                Tabel Data
             </h4>
 
             <div>
@@ -323,6 +323,7 @@
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
+                        <th>_id</th>
                         <th>Kecamatan</th>
                         <th>SD/SDLB</th>
                         <th>SMP/SMPLB</th>
@@ -342,6 +343,7 @@
                 <tbody>
                     {% for row in data %}
                     <tr>
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ row.kecamatan }}</td>
                         <td>{{ row.sd }}</td>
                         <td>{{ row.smp }}</td>

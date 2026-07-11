@@ -620,20 +620,24 @@ def download_siswa(request):
         ]
     )
 
+     # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
     df.columns = [
-        "KECAMATAN",
-        "M Aliyah",
-        "M Ibtidaiyah",
-        "M Tsanawiyah",
-        "Paket A",
-        "Paket B",
-        "Paket C",
-        "Perguruan Tinggi",
-        "SD/SDLB",
-        "SMA/SMK /SMALB",
-        "SMP/ SMPLB",
-        "LAINNYA",
-        "Grand Total",
+        "_id",
+        "kecamatan",
+        "m_aliyah",
+        "m_ibtidaiyah",
+        "m_tsanawiyah",
+        "paket_a",
+        "paket_b",
+        "paket_c",
+        "perguruan_tinggi",
+        "sd_sdlb",
+        "sma_smk_smalb",
+        "smp_smplb",
+        "lainnya",
+        "grand_total",
     ]
 
     response = HttpResponse(
@@ -824,6 +828,28 @@ def download_air(request):
         ]
     )
 
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    # Ubah nama kolom
+    df.columns = [
+        "_id",
+        "kecamatan",
+        "air_isi_ulang",
+        "air_kemasan_bermerk",
+        "air_sungai_danau_waduk",
+        "lainnya",
+        "leding_eceran",
+        "leding_meteran",
+        "air_hujan",
+        "mata_air_tak_terlindung",
+        "mata_air_terlindung",
+        "sumur_bor_pompa",
+        "sumur_tak_terlindung",
+        "sumur_terlindung",
+        "grand_total",
+    ]
+
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
@@ -966,6 +992,20 @@ def download_lahan(request):
         ]
     )
 
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    # Ubah nama kolom
+    df.columns = [
+        "_id",
+        "kecamatan",
+        "milik_sendiri",
+        "milik_orang_lain",
+        "tanah_negara",
+        "lainnya",
+        "grand_total",
+    ]
+
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
@@ -1100,6 +1140,18 @@ def download_kesejahteraan(request):
             "grand_total",
         ]
     )
+
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    # Ubah nama kolom
+    df.columns = [
+        "_id",
+        "kecamatan",
+        "laki_laki",
+        "perempuan",
+        "grand_total",
+    ]
 
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -1257,6 +1309,21 @@ def download_rumah(request):
         ]
     )
 
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    # Ubah nama kolom
+    df.columns = [
+        "_id",
+        "kecamatan",
+        "bebas_sewa",
+        "dinas",
+        "kontrak_sewa",
+        "lainnya",
+        "milik_sendiri",
+        "grand_total",
+    ]
+
     response = HttpResponse(
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
@@ -1379,11 +1446,15 @@ def download_usia_60_64(request):
         ]
     )
 
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
     df.columns = [
-        "Kode Wilayah",
-        "Nama Wilayah",
-        "Usia",
-        "Jumlah",
+        "_id",
+        "kode_wilayah",
+        "nama_wilayah",
+        "usia",
+        "jumlah",
     ]
 
     response = HttpResponse(
@@ -1526,6 +1597,16 @@ def download_ppks_dtks(request):
         ]
 
     )
+
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "kecamatan",
+        "jumlah_ppks_mandiri",
+        "persentase_ppks_dtks",
+    ]
 
     response = HttpResponse(
 
@@ -1685,6 +1766,18 @@ def download_penduduk_jenis_kelamin(request):
         ]
 
     )
+
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "kode_wilayah",
+        "kecamatan",
+        "laki_laki",
+        "perempuan",
+        "jumlah",
+    ]
 
     response = HttpResponse(
 
@@ -1870,6 +1963,20 @@ def download_disabilitas(request):
 
     )
 
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "kecamatan",
+        "tuna_fisik",
+        "tuna_netra",
+        "tuna_rungu_wicara",
+        "tuna_mental_jiwa",
+        "tuna_fisik_dan_mental",
+        "lainnya",
+    ]
+
     response = HttpResponse(
 
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -2025,6 +2132,16 @@ def download_kelompok_perikanan(request):
 
     )
 
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "kecamatan",
+        "pengolah",
+        "pemasaran",
+    ]
+
     response = HttpResponse(
 
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -2155,6 +2272,15 @@ def download_umkm(request):
         ]
 
     )
+
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "kecamatan",
+        "jumlah_umkm",
+    ]
 
     response = HttpResponse(
 
@@ -2300,6 +2426,14 @@ def download_koperasi(request):
         )
 
     )
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "jumlah_aset",
+        "jumlah",
+    ]
 
     response = HttpResponse(
 
@@ -2508,6 +2642,16 @@ def download_pajak_pariwisata(request):
 
     )
 
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "tahun",
+        "jenis_pajak",
+        "realisasi",
+    ]
+
     response = HttpResponse(
 
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -2670,6 +2814,16 @@ def download_rasio_belanja(request):
         )
 
     )
+
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "uraian",
+        "pagu",
+        "rasio",
+    ]
 
     response = HttpResponse(
 
@@ -2875,6 +3029,18 @@ def download_realisasi_perizinan(request):
 
     )
 
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "nama_izin",
+        "izin_masuk",
+        "izin_terbit",
+        "izin_ditolak",
+        "dalam_proses",
+    ]
+
     response = HttpResponse(
 
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -3051,6 +3217,16 @@ def download_proyek_investasi(request):
 
     )
 
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "sektor",
+        "pma",
+        "pmdn",
+    ]
+
     response = HttpResponse(
 
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -3213,6 +3389,16 @@ def download_realisasi_apbd(request):
 
     )
 
+    # Tambahkan kolom _id
+    df.insert(0, "_id", range(1, len(df) + 1))
+
+    df.columns = [
+        "_id",
+        "jenis_belanja",
+        "tahun_2021",
+        "tahun_2022",
+    ]
+
     response = HttpResponse(
 
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -3297,7 +3483,7 @@ def kategori_sosial(request):
             "nama": "Tabel 4.1 Jumlah Penduduk Per Kecamatan Berdasarkan Jenis Kelamin",
             "dinas": "Disdukcapil",
             "tahun": "2024",
-            "jumlah": 8,
+            "jumlah": 7,
             "url": reverse("penduduk_jenis_kelamin"),
         },
 
@@ -3305,7 +3491,7 @@ def kategori_sosial(request):
             "nama": "Jumlah Penduduk Menurut Usia 60-64 Tahun dan Menurut Kecamatan di Kota Tangerang Selatan",
             "dinas": "Disdukcapil",
             "tahun": "2024",
-            "jumlah": 8,
+            "jumlah": 7,
             "url": reverse("usia_60_64"),
         },
 
@@ -3381,7 +3567,7 @@ def kategori_ekonomi(request):
             "nama": "Jumlah Nilai Realisasi APBD Kota Tangerang Selatan Menurut Jenis Belanja",
             "dinas": "BKAD",
             "tahun": "2021-2022",
-            "jumlah": 12,
+            "jumlah": 7,
             "url": reverse("realisasi_apbd"),
         },
 
@@ -3389,7 +3575,7 @@ def kategori_ekonomi(request):
             "nama": "Jumlah Realisasi Perizinan Menurut Jenis di Kota Tangerang Selatan",
             "dinas": "DPMPTSP",
             "tahun": "2021",
-            "jumlah": 13,
+            "jumlah": 5,
             "url": reverse("realisasi_perizinan"),
         },
 
@@ -3450,19 +3636,33 @@ def download_csv(request, dataset):
 
     writer = csv.writer(response)
 
-    fields = [
-        field.name
-        for field in model._meta.fields
-        if (
-            field.name not in ["id", "created_at", "updated_at"]
-            and not isinstance(field, ForeignKey)
-        )
-    ]
+    fields = []
 
-    writer.writerow(fields)
+    for field in model._meta.fields:
 
-    for obj in model.objects.all():
-        writer.writerow([getattr(obj, field) for field in fields])
+        if field.name in ["created_at", "updated_at"]:
+            continue
+
+        if isinstance(field, ForeignKey):
+            continue
+
+        fields.append(field.name)
+    
+    # Hilangkan field id bawaan Django jika ada
+    fields = [field for field in fields if field != "id"]
+
+    # Header CSV
+    writer.writerow(["_id"] + fields)
+
+    # Isi data
+    for no, obj in enumerate(model.objects.all(), start=1):
+
+        row = [no]
+
+        for field in fields:
+            row.append(getattr(obj, field))
+
+        writer.writerow(row)
 
     return response
 
