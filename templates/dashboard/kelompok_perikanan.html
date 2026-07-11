@@ -290,18 +290,55 @@
                 Tabel Data
             </h4>
 
-            <div>
+            <div class="d-flex">
 
-                <a href="{% url 'download_kelompok_perikanan' %}" class="btn btn-success">
+                <!-- Dropdown Download -->
+                <div class="dropdown me-2">
 
-                    Download Excel
+                    <button
+                        class="btn btn-success dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown">
 
-                </a>
-                <a href="{% url 'download_csv' 'perikanan' %}" class="btn btn-success">
+                        Download
 
-                    Download CSV
+                    </button>
 
-                </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        <li>
+
+                            <a
+                                class="dropdown-item"
+                                href="{% url 'download_kelompok_perikanan' %}">
+
+                                <i class="fas fa-file-excel text-success me-2"></i>
+
+                                Download Excel
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a
+                                class="dropdown-item"
+                                href="{% url 'download_csv' 'perikanan' %}">
+
+                                <i class="fas fa-table text-success me-2"></i>
+
+                                Download CSV
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- REST API -->
 
                 <button
                     class="btn btn-primary"

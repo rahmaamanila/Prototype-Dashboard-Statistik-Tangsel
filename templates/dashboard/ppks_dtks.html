@@ -275,7 +275,7 @@
 <!-- TABEL -->
  <div class="card">
 
-    <div class="card-header">
+   <div class="card-header">
 
         <div class="d-flex justify-content-between align-items-center">
 
@@ -283,16 +283,55 @@
                 Tabel Data
             </h4>
 
-            <div>
+            <div class="d-flex">
 
-                <a href="{% url 'download_ppks_dtks' %}" class="btn btn-success">
+                <!-- Dropdown Download -->
+                <div class="dropdown me-2">
 
-                    Download Excel
+                    <button
+                        class="btn btn-success dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown">
 
-                </a>
-                <a href="{% url 'download_csv' 'ppksdtks' %}" class="btn btn-success"> 
-                    Download CSV 
-                </a>
+                        Download
+
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        <li>
+
+                            <a
+                                class="dropdown-item"
+                                href="{% url 'download_ppks_dtks' %}">
+
+                                <i class="fas fa-file-excel text-success me-2"></i>
+
+                                Download Excel
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a
+                                class="dropdown-item"
+                                href="{% url 'download_csv' 'ppksdtks' %}">
+
+                                <i class="fas fa-table text-success me-2"></i>
+
+                                Download CSV
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- REST API -->
 
                 <button
                     class="btn btn-primary"

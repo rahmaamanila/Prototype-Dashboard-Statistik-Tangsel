@@ -160,7 +160,7 @@
 
               <!-- Diskop -->
 
-              <li class="nav-item submenu {% if current == 'umkm' %}active{% endif %}">
+              <li class="nav-item submenu {% if current == 'umkm' or current == 'koperasi' %}active{% endif %}">
                 <a data-bs-toggle="collapse" href="#diskop">
                   <i class="fas fa-store"></i>
 
@@ -169,7 +169,7 @@
                   <span class="caret"></span>
                 </a>
 
-                <div class="collapse {% if current == 'umkm' %}show{% endif %}" id="diskop">
+                <div class="collapse {% if current == 'umkm' or current == 'koperasi' %}show{% endif %}" id="diskop">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="{% url 'umkm' %}"><span class="sub-item">Jumlah UMKM</span></a>
