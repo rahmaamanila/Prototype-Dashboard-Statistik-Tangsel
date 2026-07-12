@@ -517,7 +517,7 @@ def siswa(request):
         "lainnya": json.dumps([x["lainnya"] for x in data]),
 
         "api_endpoint": "/api/siswa-miskin/",
-        "api_dataset": "Jumlah Siswa Miskin",
+        "api_dataset": "Jumlah Siswa Miskin Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun 2020",
     }
 
     context.update({
@@ -574,7 +574,7 @@ def siswa(request):
 
             "ukuran": "Jumlah siswa miskin berdasarkan jenjang pendidikan dan kecamatan.",
 
-            "satuan": "Orang/Siswa",
+            "satuan": "Jiwa",
 
             "frekuensi": "Tahunan",
 
@@ -739,7 +739,7 @@ def air_minum(request):
         "sumur_ter": json.dumps([x["sumur_ter"] for x in data]),
 
         "api_endpoint": "/api/air-minum/",
-        "api_dataset": "Jenis Air Minum",
+        "api_dataset": "Jenis Air Minum yang Dikonsumsi Rumah Tangga Menurut Kecamatan di Kota Tangerang Selatan Tahun 2020",
     }
 
     context.update({
@@ -781,7 +781,7 @@ def air_minum(request):
 
             "ukuran": "Jumlah penggunaan sumber air berdasarkan jenis dan kecamatan.",
 
-            "satuan": "-",
+            "satuan": "Rumah Tangga",
 
             "frekuensi": "Tahunan",
 
@@ -910,7 +910,7 @@ def lahan(request):
         "lainnya": json.dumps([x["lainnya"] for x in data]),
 
         "api_endpoint": "/api/kepemilikan-lahan/",
-        "api_dataset": "Kepemilikan Lahan",
+        "api_dataset": "Jumlah Kepemilikan Lahan Keluarga Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun 2020",
     }
 
     context.update({
@@ -953,7 +953,7 @@ def lahan(request):
 
             "ukuran": "Jumlah kepemilikan lahan keluarga berdasarkan status dan kecamatan.",
 
-            "satuan": "-",
+            "satuan": "Bidang Lahan",
 
             "frekuensi": "Tahunan",
 
@@ -1065,7 +1065,7 @@ def kesejahteraan(request):
         "perempuan": json.dumps([x["perempuan"] for x in data]),
         
         "api_endpoint": "/api/status_kesejahteraan/",
-        "api_dataset": "Status Kesejahteraan",
+        "api_dataset": "Informasi Status Kesejahteraan Rumah Tangga dan Individu Menurut Kecamatan di Kota Tangerang Selatan Tahun 2020",
     }
 
     context.update({
@@ -1104,7 +1104,7 @@ def kesejahteraan(request):
 
             "ukuran": "Jumlah individu berdasarkan jenis kelamin dan kecamatan.",
 
-            "satuan": "Orang/Jiwa",
+            "satuan": "Jiwa",
 
             "frekuensi": "Tahunan",
 
@@ -1224,7 +1224,7 @@ def rumah(request):
         "lainnya": json.dumps([x["lainnya"] for x in data]),
 
         "api_endpoint": "/api/kepemilikan-rumah/",
-        "api_dataset": "Kepemilikan Rumah",
+        "api_dataset": "Jumlah Kepemilikan Rumah Keluarga Menurut Status dan Kecamatan di Kota Tangerang Selatan Tahun 2020",
     }
 
     context.update({
@@ -1379,7 +1379,7 @@ def usia_60_64(request):
         "jumlah": json.dumps([x["jumlah"] for x in data]),
 
         "api_endpoint": "/api/penduduk-usia/",
-        "api_dataset": "Penduduk Usia",
+        "api_dataset": "Jumlah Penduduk Menurut Usia 60-64 Tahun dan Menurut Kecamatan di Kota Tangerang Selatan Tahun 2023",
 
                 # =====================================================
         # DEFINISI
@@ -1514,7 +1514,7 @@ def ppks_dtks(request):
         ),
 
         "api_endpoint": "/api/ppks-dtks/",
-        "api_dataset": "PPKS DTKS",
+        "api_dataset": "Persentase PPKS dan DTKS Menurut Kecamatan di Kota Tangerang Selatan Tahun 2022",
 
     }
 
@@ -1552,7 +1552,7 @@ def ppks_dtks(request):
 
             "ukuran": "Jumlah PPKS dan DTKS berdasarkan kecamatan.",
 
-            "satuan": "-",
+            "satuan": "Jiwa",
 
             "frekuensi": "Tahunan",
 
@@ -1676,7 +1676,7 @@ def penduduk_jenis_kelamin(request):
         "jumlah": json.dumps([x["jumlah"] for x in data]),
 
         "api_endpoint": "/api/penduduk-jenis-kelamin/",
-        "api_dataset": "Penduduk Jenis Kelamin",
+        "api_dataset": "Tabel 4.1 Jumlah Penduduk Per Kecamatan Berdasarkan Jenis Kelamin",
 
     }
 
@@ -1871,7 +1871,7 @@ def disabilitas(request):
         "lainnya": json.dumps([x["lainnya"] for x in data]),
 
         "api_endpoint": "/api/penyandang-disabilitas/",
-        "api_dataset": "Penyandang Disabilitas",
+        "api_dataset": "Jumlah Penduduk Penyandang Disabilitas Menurut Jenis dan Kecamatan di Kota Tangerang Selatan Tahun 2022",
 
     }
 
@@ -2046,7 +2046,7 @@ def kelompok_perikanan(request):
         "pemasaran": json.dumps([x["pemasaran"] for x in data]),
 
         "api_endpoint": "/api/kelompok-perikanan/",
-        "api_dataset": "Kelompok Perikanan",
+        "api_dataset": "Jumlah Kelompok Perikanan Budidaya Menurut Jenis dan Kecamatan di Kota Tangerang Selatan Tahun 2022",
 
     }
 
@@ -2239,7 +2239,7 @@ def umkm(request):
         },
 
         "api_endpoint": "/api/umkm/",
-        "api_dataset": "UMKM",
+        "api_dataset": "Jumlah UMKM Menurut Kecamatan di Kota Tangerang Selatan Tahun 2022",
 
     }
 
@@ -2345,7 +2345,7 @@ def koperasi(request):
         ),
 
         "api_endpoint": "/api/koperasi/",
-        "api_dataset": "Koperasi",
+        "api_dataset": "Jumlah Koperasi Menurut Jumlah Aset yang Dimiliki di Kota Tangerang Selatan Tahun 2021",
 
     }
 
@@ -2556,7 +2556,7 @@ def pajak_pariwisata(request):
         "hiburan": json.dumps(hiburan),
 
         "api_endpoint": "/api/pajak-pariwisata/",
-        "api_dataset": "Pajak Pariwisata",
+        "api_dataset": "Rekapitulasi Pajak Daerah Terkait Sektor Pariwisata Menurut Jenis di Kota Tangerang Selatan Tahun 2018-2021",
 
     }
 
@@ -2727,7 +2727,7 @@ def rasio_belanja(request):
         "rasio": json.dumps(rasio),
 
         "api_endpoint": "/api/rasio-belanja/",
-        "api_dataset": "Rasio Belanja",
+        "api_dataset": "Rasio Belanja Perangkat Daerah di Kota Tangerang Selatan Tahun 2023",
 
     }
 
@@ -2934,7 +2934,7 @@ def realisasi_perizinan(request):
         ]),
 
         "api_endpoint": "/api/realisasi-perizinan/",
-        "api_dataset": "Realisasi Perizinan",
+        "api_dataset": "Jumlah Realisasi Perizinan Menurut Jenis di Kota Tangerang Selatan Tahun 2021",
 
     }
 
@@ -3130,7 +3130,7 @@ def proyek_investasi(request):
         ]),
 
         "api_endpoint": "/api/proyek-investasi/",
-        "api_dataset": "Proyek Investasi",
+        "api_dataset": "Jumlah Proyek Investasi PMA dan PMDN Menurut Sektor di Kota Tangerang Selatan Tahun 2020",
 
     }
 
@@ -3305,7 +3305,7 @@ def realisasi_apbd(request):
 
         "api_endpoint": "/api/realisasi-apbd/",
 
-        "api_dataset": "Realisasi APBD",
+        "api_dataset": "Jumlah Nilai Realisasi APBD Kota Tangerang Selatan Menurut Jenis Belanja Tahun 2022",
 
     }
 
